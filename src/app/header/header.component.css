@@ -1,0 +1,119 @@
+
+
+
+nav{
+  display: flex;
+  padding: 20px 10px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+/* searchbar */
+.searchbar
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F3F3F3;
+}
+
+
+input{
+  border: 0px;
+  border-left: 1px solid black;
+  height: 20px;
+  background-color: #F3F3F3;
+  width: 400px;
+}
+
+input::placeholder{
+  color: #ADADAD
+  ;
+}
+
+.searchbar .btn{
+  height: 36px;
+  border-radius: 0px;
+  font-size: 12px;
+  background-color: #F3F3F3;
+  color: black;
+  border: 0px;
+}
+
+.bar{
+  position: relative;
+}
+.bar button{
+  position: absolute;
+  top: -5px;
+  right: 0;
+  border: 0px;
+  background: #3BB77E;
+border-radius: 0px 2px 2px 0px;
+width: 55px;
+height: 36px;
+
+}
+
+/* cart */
+
+.cart{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.cart .btn{
+  width: 69px;
+  height: 45px;
+  font-size: 12px;
+}
+
+.cart .total{
+  color: #3BB77E;
+  font-size: 12px;
+}
+
+.totalItems
+{
+  position: absolute;
+  top: 4px;
+  left: 9px;
+  background-color: #3BB77E;
+  color: white;
+  width: 14px;
+  height: 15px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 11px;
+}
+
+
+/* barSecond */
+
+.barSecond{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 70px;
+
+}
+
+.brows{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3BB77E;
+  color: white;
+  padding: 20px 10px;
+  width: 218px;
+height: 52px;
+}
+
+.number{
+
+  color: #3BB77E;
+}

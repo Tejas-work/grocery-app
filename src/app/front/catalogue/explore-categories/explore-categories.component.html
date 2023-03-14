@@ -1,127 +1,127 @@
 
-<section style="margin: 20px 30px;">
+<section style="margin: 20px 30px; position: relative;">
   <div id="header">
     <h3>Explore Categories
     </h3>
     <ul>
-      <li>All</li>
-      <li>Vegetable</li>
-      <li>Fruits</li>
-      <li>Meat</li>
+      <li *ngFor="let category of categories"><a [routerLink]="['/grocery-category', category]">{{ category }}</a></li>
+
     </ul>
   </div>
-  <div class="swiper-container">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 1</h5>
-          <p>10 items</p>
+  <div class="container" style="overflow: hidden;">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 1</h5>
+            <p>10 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-          <img src="../assets/image 3.png" alt="">
-          <h5>Product 2</h5>
-          <p>5 items</p>
+        <div class="swiper-slide">
+          <div id="card">
+            <img src="../assets/image 3.png" alt="">
+            <h5>Product 2</h5>
+            <p>5 items</p>
+          </div>
         </div>
+        <!-- add more product cards here -->
       </div>
-      <!-- add more product cards here -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
     </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
   </div>
 
 

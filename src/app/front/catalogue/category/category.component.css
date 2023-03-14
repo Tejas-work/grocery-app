@@ -1,0 +1,84 @@
+
+header{
+  background-image: url('../../../../assets/Rectangle 1.png');
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter{
+  text-align: right;
+  font-size: 30px;
+  padding: 20px;
+  position: relative;
+}
+.options{
+  width: 200px;
+  background-color: #F2F3F2;
+  padding: 10px;
+  position: absolute;
+  bottom: -91px;
+  right: 40px;
+display: none;
+border-radius: 10px;
+}
+.option{
+  font-size: 12px;
+  text-align: left;
+}
+ul,p{
+  margin: 0;
+  padding: 0;
+
+}
+
+input[type=checkbox]{
+  margin-right: 5px;
+}
+
+.container{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  gap: 20px;
+}
+
+
+#card
+{
+  width: 242px;
+  height: 345px;
+  padding: 10px;
+  border: 1px solid #ADADAD;
+}
+
+.cart{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+span{
+  color: #3BB77E;
+}
+
+button{
+  background-color: #3BB77E;
+  color: white;
+  border: 0;
+  padding: 5px 10px;
+
+}
+
+.original-price{
+  color: #ADADAD
+  ;
+}
+
+.cate
+{
+  font-size: 10px;
+  color: #ADADAD;
+
+}

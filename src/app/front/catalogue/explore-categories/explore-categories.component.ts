@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { GroceriesService } from 'src/app/groceries.service';
 import Swiper from 'swiper';
 
 @Component({
@@ -7,11 +8,17 @@ import Swiper from 'swiper';
   styleUrls: ['./explore-categories.component.css']
 })
 export class ExploreCategoriesComponent {
+  categories:string[]=['']
+  constructor(private groceriesService:GroceriesService){}
+
+  ngOnInit(){
+    this.categories=this.groceriesService.getCategories();
+  }
   ngAfterViewInit() {
     const mySwiper = new Swiper('.swiper-container', {
       // Optional parameters
-      cssMode: false,
-      slidesPerView: 6,
+
+      slidesPerView: 5,
       spaceBetween: 30,
       loop: false,
       wrapperClass: 'swiper-wrapper',
@@ -30,4 +37,6 @@ export class ExploreCategoriesComponent {
       },
     });
   }
+
+
 }

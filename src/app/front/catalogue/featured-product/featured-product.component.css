@@ -1,4 +1,4 @@
-@import 'swiper/swiper-bundle.css';
+@import '../../../../../node_modules/swiper/swiper-bundle.css';
 
 
 
@@ -19,30 +19,14 @@ li{
   margin-right: 10px;
 }
 
-#card-grp{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 #card
 {
   width: 242px;
   height: 345px;
   padding: 10px;
+  margin-right: 30px;
   border: 1px solid #ADADAD;
 }
-
-
-.prev,
-.next{
-  background-color: #F2F3F4;
-  color: black;
-  text-align: center;
-  border-radius: 50%;
-  padding: 10px 12px;
-}
-
-
 
 .cart{
   display: flex;
@@ -75,3 +59,6 @@ button{
   color: #ADADAD;
 
 }
+
+
+

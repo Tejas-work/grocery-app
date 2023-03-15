@@ -229,19 +229,33 @@ export class GroceriesService {
 
 
 
-   categories = [
-    'All',
-      'Vegetables',
-      'Fruits',
-      'Meat'
-    ];
+    categories: Set<string> = new Set<string>(['All']);
+    brands:Set<string> = new Set<string>();
 
 
-
-
-    getCategories(){
-      return this.categories;
+    getGrocery(){
+      return this.groceryList;
     }
+
+
+    getCategories(): string[] {
+      this.groceryList.forEach((grocery: Grocery) => {
+        this.categories.add(grocery.category);
+      });
+
+      return Array.from(this.categories);
+    }
+
+    getGroceriesBrand(){
+
+      this.groceryList.forEach((grocery: Grocery) => {
+        this.brands.add(grocery.store);
+      });
+      return Array.from(this.brands);
+
+    }
+
+
 
     getGroceriesByCategory(category:string)
     {
@@ -252,10 +266,7 @@ export class GroceriesService {
 
     }
 
-    getGroceriesBrand(){
 
-      return this.groceryList.map(brand => brand.store)
-    }
 
 
   constructor() { }

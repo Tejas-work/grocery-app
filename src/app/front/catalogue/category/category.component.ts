@@ -11,7 +11,7 @@ export class CategoryComponent {
   groceries: Grocery[] = [];
   brands: string[] = [];
   groceryCategory: string | undefined;
-  word:string|undefined;
+  word: string | undefined;
   selectedBrands: string[] = [];
 
   constructor(private groceriesService: GroceriesService, private route: ActivatedRoute, private router: Router) { };
@@ -28,13 +28,17 @@ export class CategoryComponent {
 
       this.groceryCategory = params['category'];
       this.word = params['word'];
-      if(this.groceryCategory){
+
+      if (this.groceryCategory) {
         this.groceries = this.groceriesService.getGroceriesByCategory(this.groceryCategory);
-        this.brands = this.groceriesService.getGroceriesBrand(this.groceryCategory);
+      }
+
+      if (this.word) {
+        this.groceries = this.groceriesService.getGroceriesBySearchWord(this.word);
 
       }
-      if(this.word){
-        this.groceries=this.groceriesService.getGroceriesBySearchWord(this.word)
+      if(this.groceries&&this.groceries.length>0){
+        this.brands = this.groceriesService.getGroceriesBrand(this.groceries);
       }
 
     })
@@ -45,9 +49,7 @@ export class CategoryComponent {
 
 
   //filter
-  onBrandChecked(event:any) {
-
-
+  onBrandChecked(event: any) {
     //check brands add
     const brandValue = event.target.value;
     if (event.target.checked) {
@@ -64,12 +66,12 @@ export class CategoryComponent {
     }
     console.log(this.selectedBrands);
 
-    if(this.groceryCategory){
+    if (this.groceryCategory) {
       this.getFilterData(this.groceryCategory)
     }
 
   }
-  getFilterData(category:string){
+  getFilterData(category: string) {
     const duplicateGroceries = this.groceriesService.getGroceriesByCategory(category);
     //filter using brands
     if (this.selectedBrands && this.selectedBrands.length > 0) {

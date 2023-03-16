@@ -246,21 +246,25 @@ export class GroceriesService {
       return Array.from(this.categories);
     }
 
-    getGroceriesBrand(category:string){
+    getGroceriesBrand(data:any){
      let brands:Set<string> = new Set<string>();
 
-      if(category=='All'){
-       this.groceryList.forEach((grocery: Grocery) => {
+      // if(category=='All'){
+      //  this.groceryList.forEach((grocery: Grocery) => {
 
-          brands.add(grocery.store);
-        });
-      }else{
-        this.groceryList.forEach((grocery: Grocery) => {
-          if(grocery.category==category){
-            brands.add(grocery.store);
-          }
-        });
-      }
+      //     brands.add(grocery.store);
+      //   });
+      // }else{
+      //   this.groceryList.forEach((grocery: Grocery) => {
+      //     if(grocery.category==category){
+      //       brands.add(grocery.store);
+      //     }
+      //   });
+      // }
+      data.forEach((grocery: Grocery) => {
+
+        brands.add(grocery.store);
+      });
       return Array.from(brands);
 
     }

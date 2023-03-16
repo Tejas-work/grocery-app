@@ -21,28 +21,28 @@
 <section>
 
   <div class="container">
-    <ng-template *ngIf="groceries">
-      <div id="card" *ngFor="let grocery of groceries">
-        <img src="{{grocery.imageUrl}}" alt="">
-       <p class="cate">{{grocery.category}}</p>
-       <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
-       <p>Rating : {{grocery.rating}}☆</p>
-       <p>By <span>{{grocery.store}}</span></p>
-       <div class="cart">
-         <div class="price">
-           <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"
-             [style.text-decoration]="grocery.discountPrice ? 'line-through' : 'none'">
-             {{grocery.price | currency}}
-           </span>
-           </p>
+    <ng-container *ngIf="groceries">
+
+        <div id="card" *ngFor="let grocery of groceries">
+          <img src="{{grocery.imageUrl}}" alt="">
+         <p class="cate">{{grocery.category}}</p>
+         <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
+         <p>Rating : {{grocery.rating}}☆</p>
+         <p>By <span>{{grocery.store}}</span></p>
+         <div class="cart">
+           <div class="price">
+             <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"
+               [style.text-decoration]="grocery.discountPrice ? 'line-through' : 'none'">
+               {{grocery.price | currency}}
+             </span>
+             </p>
+           </div>
+           <button><i class="fa-solid fa-cart-shopping"></i>add</button>
          </div>
-         <button><i class="fa-solid fa-cart-shopping"></i>add</button>
        </div>
-     </div>
-    </ng-template>
 
-
-    <div *ngIf="!groceries  && groceries>0">
+    </ng-container>
+    <div *ngIf="!groceries  && groceries">
       <h1>Grocery not found</h1>
     </div>
 

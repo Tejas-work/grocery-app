@@ -12,6 +12,9 @@ const routes: Routes = [
   {
     path: 'grocery-category/:category',
     component: CategoryComponent
+  },{
+    path:'search-groceries/:word',
+    component:CategoryComponent
   }
 
 

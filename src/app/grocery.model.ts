@@ -4,7 +4,7 @@ export interface Grocery {
   store: string;
   price: number;
   discountPrice?: number|null;
-  rating?: number;
+  rating: number;
   quantity: string;
   category: string;
   imageUrl:string

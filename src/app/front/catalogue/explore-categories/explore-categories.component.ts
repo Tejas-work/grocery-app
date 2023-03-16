@@ -8,12 +8,24 @@ import Swiper from 'swiper';
   styleUrls: ['./explore-categories.component.css']
 })
 export class ExploreCategoriesComponent {
-  categories:string[]=['']
-  constructor(private groceriesService:GroceriesService){}
+  groceries:any;
+  categories: string[] = ['']
+  groceryCountByCategory: any = {};
+  constructor(private groceriesService: GroceriesService) { }
 
-  ngOnInit(){
-    this.categories=this.groceriesService.getCategories();
+  ngOnInit() {
+    //All Categories
+    this.groceries = this.groceriesService.getGrocery();
+    this.categories = this.groceriesService.getCategories();
+    this.groceryCountByCategory = this.categories.reduce((acc:any, category:any) => {
+      acc[category]=this.groceriesService.getGroceriesByCategory(category).length
+      return acc;
+    }, {});
+
+    console.log(this.groceryCountByCategory);
   }
+  //swiper
+
   ngAfterViewInit() {
     const mySwiper = new Swiper('.swiper-container', {
       // Optional parameters
@@ -22,7 +34,7 @@ export class ExploreCategoriesComponent {
       spaceBetween: 30,
       loop: false,
       wrapperClass: 'swiper-wrapper',
-  slideClass: 'swiper-slide',
+      slideClass: 'swiper-slide',
 
       // Navigation arrows
       navigation: {

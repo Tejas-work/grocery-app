@@ -230,7 +230,7 @@ export class GroceriesService {
 
 
     categories: Set<string> = new Set<string>(['All']);
-    brands:Set<string> = new Set<string>();
+
 
 
     getGrocery(){
@@ -246,12 +246,22 @@ export class GroceriesService {
       return Array.from(this.categories);
     }
 
-    getGroceriesBrand(){
+    getGroceriesBrand(category:string){
+     let brands:Set<string> = new Set<string>();
 
-      this.groceryList.forEach((grocery: Grocery) => {
-        this.brands.add(grocery.store);
-      });
-      return Array.from(this.brands);
+      if(category=='All'){
+       this.groceryList.forEach((grocery: Grocery) => {
+
+          brands.add(grocery.store);
+        });
+      }else{
+        this.groceryList.forEach((grocery: Grocery) => {
+          if(grocery.category==category){
+            brands.add(grocery.store);
+          }
+        });
+      }
+      return Array.from(brands);
 
     }
 
@@ -259,14 +269,31 @@ export class GroceriesService {
 
     getGroceriesByCategory(category:string)
     {
-      if(category!='All'){
+      if(category&&category!='All'){
         return this.groceryList.filter(grocery => grocery.category === category );
       }
+
       return this.groceryList;
 
     }
 
+    getTopRatedGroceries(){
+      let topRated = this.groceryList.sort((a,b)=>{
+       return a.rating-b.rating
+      })
+      return topRated.slice(0,4);
 
+    }
+
+    getGroceriesBySearchWord(word:string){
+      console.log(word);
+     let search= this.groceryList.filter((grocery)=>{
+
+        return grocery.grocery_name.indexOf(word)!=-1
+      })
+      console.log(search);
+      return search;
+    }
 
 
   constructor() { }

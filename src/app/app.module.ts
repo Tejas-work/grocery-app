@@ -13,6 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SwiperModule } from 'swiper/types/shared';
 import { SliderComponent } from './slider/slider.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { SliderComponent } from './slider/slider.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    CatalogueModule
+    CatalogueModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -66,4 +66,11 @@ button{
 .image{
   background-color: #F4F6FA;
   height: 100%;
+  width: 101px;
+  height: 101px;
+}
+
+img{
+  width: 100%;
+  height: 100%;
 }

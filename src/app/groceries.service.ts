@@ -246,7 +246,7 @@ export class GroceriesService {
       return Array.from(this.categories);
     }
 
-    getGroceriesBrand(data:any){
+    getGroceriesBrand(data:Grocery[]){
      let brands:Set<string> = new Set<string>();
 
       // if(category=='All'){
@@ -299,6 +299,26 @@ export class GroceriesService {
       return search;
     }
 
+    getSearchCategory(category:string,word:string){
+      let matchCategoryData = this.getGroceriesByCategory(category);
+      let search = matchCategoryData.filter((grocery)=>{
+        return grocery.grocery_name.toLowerCase().indexOf(word.toLowerCase())!=-1
+      })
+      console.log(search);
+      return search;
+    }
+
+    get countGroceriesByCategories():{ [key: string]: number }{
+
+      let groceryCountByCategory: { [key: string]: number } = {};
+      let categories = this.getCategories();
+      for (const category of this.categories) {
+        const groceries = this.getGroceriesByCategory(category);
+        groceryCountByCategory[category] = groceries.length;
+      }
+      return groceryCountByCategory;
+
+    }
 
   constructor() { }
 }

@@ -5,61 +5,79 @@ import { Grocery } from 'src/app/grocery.model';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.css']
+  styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent {
   groceries: Grocery[] = [];
+  total:number=0;
+  duplicate:Grocery[]=[]
   brands: string[] = [];
   groceryCategory: string | undefined;
   word: string | undefined;
   selectedBrands: string[] = [];
 
-  constructor(private groceriesService: GroceriesService, private route: ActivatedRoute, private router: Router) { };
-
-
+  constructor(
+    private groceriesService: GroceriesService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     //start top
     window.scrollTo(0, 0);
 
-
     //get category from route and get data
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
 
       this.groceryCategory = params['category'];
       this.word = params['word'];
 
-      if (this.groceryCategory) {
-        this.groceries = this.groceriesService.getGroceriesByCategory(this.groceryCategory);
-      }
-
-      if (this.word) {
-        this.groceries = this.groceriesService.getGroceriesBySearchWord(this.word);
+      if (this.word && this.groceryCategory) {
+        this.getSearchCategoryData(this.groceryCategory, this.word);
 
       }
-      if(this.groceries&&this.groceries.length>0){
-        this.brands = this.groceriesService.getGroceriesBrand(this.groceries);
+      else if (this.groceryCategory) {
+        this.getGroceriesByCategoryData(this.groceryCategory);
       }
-
-    })
-
-
+    });
   }
 
+  // Function to get data for search category
+getSearchCategoryData(category: string, word: string) {
+  this.groceries = this.groceriesService.getSearchCategory(category, word);
+  this.duplicate = this.groceriesService.getSearchCategory(category, word);
+  if (this.groceries && this.groceries.length > 0) {
+    this.updateBrandAndTotal();
+  }
+}
 
+// Function to get data for groceries by category
+getGroceriesByCategoryData(category: string) {
+  this.groceries = this.groceriesService.getGroceriesByCategory(category);
+  this.duplicate = this.groceriesService.getGroceriesByCategory(category);
+  if (this.groceries && this.groceries.length > 0) {
+    this.updateBrandAndTotal();
+  }
+}
+
+updateBrandAndTotal(){
+  this.brands = this.groceriesService.getGroceriesBrand(this.groceries);
+  this.total=this.groceries.length;
+
+}
 
   //filter
-  onBrandChecked(event: any) {
+  onBrandChecked(event: Event) {
     //check brands add
-    const brandValue = event.target.value;
-    if (event.target.checked) {
-
+    console.log(event);
+    const brandElement = event.target as HTMLInputElement;
+    const brandValue = brandElement.value;
+    if (brandElement.checked) {
       this.selectedBrands.push(brandValue);
-
     }
     //unchecked brand remove
     else {
-      const index = this.selectedBrands.indexOf(brandValue)
+      const index = this.selectedBrands.indexOf(brandValue);
       if (index != -1) {
         this.selectedBrands.splice(index, 1);
       }
@@ -67,35 +85,29 @@ export class CategoryComponent {
     console.log(this.selectedBrands);
 
     if (this.groceryCategory) {
-      this.getFilterData(this.groceryCategory)
+      this.getFilterData();
     }
-
   }
-  getFilterData(category: string) {
-    const duplicateGroceries = this.groceriesService.getGroceriesByCategory(category);
+
+
+  getFilterData() {
     //filter using brands
     if (this.selectedBrands && this.selectedBrands.length > 0) {
-
-      this.groceries = duplicateGroceries.filter((grocery) => {
-
+      this.groceries = this.duplicate.filter((grocery) => {
         return this.selectedBrands.includes(grocery.store);
-      })
+      });
       console.log(this.groceries);
     } else {
-      this.groceries = this.groceriesService.getGroceriesByCategory(category);
+      this.groceries = this.duplicate;
     }
   }
 
-
-
   ngOnChanges() {
-    console.log("change");
+    console.log('change');
   }
-
 
   ischange = false;
   display() {
     this.ischange = !this.ischange;
   }
-
 }

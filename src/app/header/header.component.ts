@@ -9,17 +9,24 @@ import {  Router } from '@angular/router';
 })
 export class HeaderComponent {
 
+  selectedCategory:string='All'
+
+
+  getSelectedCategory(category:string) {
+  this.selectedCategory = category;
+}
+
 
   @ViewChild('search')
   searchInput!: ElementRef;
 
-  myValue: any;
+  myValue?: HTMLImageElement;
 
   onSubmit(event:Event) {
     event.preventDefault();
     const inputValue =this.myValue;
     if(inputValue){
-      this.router.navigate(['search-groceries',inputValue])
+      this.router.navigate(['search-groceries',this.selectedCategory,inputValue])
     }
 
   }

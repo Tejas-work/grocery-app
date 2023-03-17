@@ -10,12 +10,14 @@ const routes: Routes = [
     component:HomeComponent
   },
   {
+    path:'search-groceries/:category/:word',
+    component:CategoryComponent
+  },
+  {
     path: 'grocery-category/:category',
     component: CategoryComponent
-  },{
-    path:'search-groceries/:word',
-    component:CategoryComponent
   }
+  
 
 
 ];

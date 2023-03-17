@@ -1,5 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { GroceriesService } from 'src/app/groceries.service';
+import { Grocery } from 'src/app/grocery.model';
 import Swiper from 'swiper';
 
 @Component({
@@ -8,19 +9,19 @@ import Swiper from 'swiper';
   styleUrls: ['./explore-categories.component.css']
 })
 export class ExploreCategoriesComponent {
-  groceries:any;
+  groceries:Grocery[] = [];
   categories: string[] = ['']
-  groceryCountByCategory: any = {};
+ groceryCountByCategory: { [key: string]: number } = {};
   constructor(private groceriesService: GroceriesService) { }
 
   ngOnInit() {
     //All Categories
     this.groceries = this.groceriesService.getGrocery();
     this.categories = this.groceriesService.getCategories();
-    this.groceryCountByCategory = this.categories.reduce((acc:any, category:any) => {
-      acc[category]=this.groceriesService.getGroceriesByCategory(category).length
-      return acc;
-    }, {});
+
+    //count groceries by categories
+    this.groceryCountByCategory=this.groceriesService.countGroceriesByCategories;
+    console.log(typeof(this.groceryCountByCategory));
 
     console.log(this.groceryCountByCategory);
   }

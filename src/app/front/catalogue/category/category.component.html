@@ -19,7 +19,7 @@
   </div>
 </div>
 <section>
-
+  <h5 style="margin: 50px;">Total grocery : {{total}}</h5>
   <div class="container">
     <ng-container *ngIf="groceries">
 
@@ -42,7 +42,7 @@
        </div>
 
     </ng-container>
-    <div *ngIf="!groceries  && groceries">
+    <div *ngIf="!(groceries && groceries.length>0)">
       <h1>Grocery not found</h1>
     </div>
 

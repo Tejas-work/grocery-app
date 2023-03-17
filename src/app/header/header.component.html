@@ -10,10 +10,11 @@
       <div class="categories">
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            All Categories
+            {{selectedCategory}}
           </button>
           <ul class="dropdown-menu">
-            <li  *ngFor="let category of categories"><a class="dropdown-item" [routerLink]="['/grocery-category', category]">{{ category }}</a></li>
+            <!-- <li  *ngFor="let category of categories"><a class="dropdown-item" [routerLink]="['/grocery-category', category]">{{ category }}</a></li> -->
+            <li  *ngFor="let category of categories"><a class="dropdown-item" (click)="getSelectedCategory(category)">{{ category }}</a></li>
 
           </ul>
         </div>

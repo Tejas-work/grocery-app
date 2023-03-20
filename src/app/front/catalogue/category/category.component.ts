@@ -15,6 +15,7 @@ export class CategoryComponent {
   groceryCategory: string | undefined;
   word: string | undefined;
   selectedBrands: string[] = [];
+  brand: string='';
 
   constructor(
     private groceriesService: GroceriesService,
@@ -31,8 +32,14 @@ export class CategoryComponent {
 
       this.groceryCategory = params['category'];
       this.word = params['word'];
+      this.brand = params['brand'];
 
-      if (this.word && this.groceryCategory) {
+      if(this.brand){
+        this.getGroceriesByBrandData(this.brand);
+        }
+
+
+     else if (this.word && this.groceryCategory) {
         this.getSearchCategoryData(this.groceryCategory, this.word);
 
       }
@@ -47,7 +54,7 @@ getSearchCategoryData(category: string, word: string) {
   this.groceries = this.groceriesService.getSearchCategory(category, word);
   this.duplicate = this.groceriesService.getSearchCategory(category, word);
   if (this.groceries && this.groceries.length > 0) {
-    this.updateBrandAndTotal();
+    this.updateBrandAndTotal=this.groceries;
   }
 }
 
@@ -56,14 +63,24 @@ getGroceriesByCategoryData(category: string) {
   this.groceries = this.groceriesService.getGroceriesByCategory(category);
   this.duplicate = this.groceriesService.getGroceriesByCategory(category);
   if (this.groceries && this.groceries.length > 0) {
-    this.updateBrandAndTotal();
+    this.updateBrandAndTotal=this.groceries;
   }
+
 }
 
-updateBrandAndTotal(){
-  this.brands = this.groceriesService.getGroceriesBrand(this.groceries);
-  this.total=this.groceries.length;
+getGroceriesByBrandData(brand:string){
+  this.groceries = this.groceriesService.getGroceriesByBrand(brand);
+  this.duplicate = this.groceriesService.getGroceriesByBrand(brand);
+  if (this.groceries && this.groceries.length > 0) {
+    this.updateBrandAndTotal=this.groceries;
+  }
 
+
+}
+
+set updateBrandAndTotal(groceries:Grocery[]){
+  this.brands = this.groceriesService.getGroceriesBrand(groceries);
+  this.total=groceries.length;
 }
 
   //filter
@@ -106,8 +123,8 @@ updateBrandAndTotal(){
     console.log('change');
   }
 
-  ischange = false;
+  isChange = false;
   display() {
-    this.ischange = !this.ischange;
+    this.isChange = !this.isChange;
   }
 }

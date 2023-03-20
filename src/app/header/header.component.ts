@@ -17,8 +17,8 @@ export class HeaderComponent {
 }
 
 
-  @ViewChild('search')
-  searchInput!: ElementRef;
+  // @ViewChild('search')
+  // searchInput!: ElementRef;
 
   myValue?: HTMLImageElement;
 

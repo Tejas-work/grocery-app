@@ -7,7 +7,7 @@
   <div class="icon">
     <i class="fa-solid fa-filter"  (click)="display()"></i>
   </div>
-  <div class="options" [style.display]="ischange ? 'block':'none'">
+  <div class="options" [style.display]="isChange ? 'block':'none'">
     <p style="text-align: center;">Filter Option</p>
     <div class="option">
       <ul>
@@ -19,7 +19,7 @@
   </div>
 </div>
 <section>
-  <h5 style="margin: 50px;">Total grocery : {{total}}</h5>
+  <h5 style="margin: 50px;">Total grocery : {{groceries.length}}</h5>
   <div class="container">
     <ng-container *ngIf="groceries">
 
@@ -28,7 +28,7 @@
          <p class="cate">{{grocery.category}}</p>
          <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
          <p>Rating : {{grocery.rating}}☆</p>
-         <p>By <span>{{grocery.store}}</span></p>
+         <p>By <a [routerLink]="['groceries-brand', groceryCategory, grocery.store]">{{grocery.store}}</a></p>
          <div class="cart">
            <div class="price">
              <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"

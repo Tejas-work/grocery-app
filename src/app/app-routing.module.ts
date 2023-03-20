@@ -16,8 +16,15 @@ const routes: Routes = [
   {
     path: 'grocery-category/:category',
     component: CategoryComponent
+  },
+  {
+    path: 'grocery-category/All/groceries-brand/All/:brand',
+    component: CategoryComponent
   }
-  
+
+
+
+
 
 
 ];

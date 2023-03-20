@@ -289,15 +289,15 @@ export class GroceriesService {
 
     }
 
-    getGroceriesBySearchWord(word:string){
-      console.log(word);
-     let search= this.groceryList.filter((grocery)=>{
+    // getGroceriesBySearchWord(word:string){
 
-        return grocery.grocery_name.indexOf(word)!=-1
-      })
-      console.log(search);
-      return search;
-    }
+    //  let search= this.groceryList.filter((grocery)=>{
+
+    //     return grocery.grocery_name.indexOf(word)!=-1
+    //   })
+    //   console.log(search);
+    //   return search;
+    // }
 
     getSearchCategory(category:string,word:string){
       let matchCategoryData = this.getGroceriesByCategory(category);
@@ -318,6 +318,11 @@ export class GroceriesService {
       }
       return groceryCountByCategory;
 
+    }
+
+    getGroceriesByBrand(brand:string){
+      let groceriesByBrandData= this.groceryList.filter(grocery=>brand==grocery.store);
+      return groceriesByBrandData;
     }
 
   constructor() { }

@@ -8,6 +8,8 @@ import { ExploreCategoriesComponent } from './explore-categories/explore-categor
 import { FeaturedProductComponent } from './featured-product/featured-product.component';
 import { TrendingItemsComponent } from './trending-items/trending-items.component';
 import { GrocerySectionComponent } from './grocery-section/grocery-section.component';
+import { ProductHeaderComponent } from './product-header/product-header.component';
+import { CartComponent } from './cart/cart.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { GrocerySectionComponent } from './grocery-section/grocery-section.compo
     ExploreCategoriesComponent,
     FeaturedProductComponent,
     TrendingItemsComponent,
-    GrocerySectionComponent
+    GrocerySectionComponent,
+    ProductHeaderComponent,
+    CartComponent
   ],
   imports: [
     CommonModule,

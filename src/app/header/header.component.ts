@@ -8,6 +8,9 @@ import {  Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+navigateCart() {
+this.router.navigate(['cart']);
+}
 
   selectedCategory:string='All'
 

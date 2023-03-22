@@ -16,7 +16,7 @@ export class ExploreCategoriesComponent {
 
   ngOnInit() {
     //All Categories
-    this.groceries = this.groceriesService.getGrocery();
+    this.groceries = this.groceriesService.getGroceryList();
     this.categories = this.groceriesService.getCategories();
 
     //count groceries by categories

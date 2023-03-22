@@ -1,8 +1,4 @@
-<header>
-  <h1>
-    {{groceryCategory}}
-  </h1>
-</header>
+<app-product-header [title]="groceryCategory"></app-product-header>
 <div class="filter">
   <div class="icon">
     <i class="fa-solid fa-filter"  (click)="display()"></i>
@@ -23,7 +19,7 @@
   <div class="container">
     <ng-container *ngIf="groceries">
 
-        <div id="card" *ngFor="let grocery of groceries">
+        <div id="card" *ngFor="let grocery of groceries" (click)="navigateDetails(grocery.id)">
           <img src="{{grocery.imageUrl}}" alt="">
          <p class="cate">{{grocery.category}}</p>
          <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
@@ -37,7 +33,7 @@
              </span>
              </p>
            </div>
-           <button><i class="fa-solid fa-cart-shopping"></i>add</button>
+           <button (click)="addCart(grocery)"><i class="fa-solid fa-cart-shopping"></i>add</button>
          </div>
        </div>
 

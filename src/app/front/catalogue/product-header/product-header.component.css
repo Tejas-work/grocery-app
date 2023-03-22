@@ -1,0 +1,7 @@
+header{
+  background-image: url('../../../../assets/Rectangle 1.png');
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

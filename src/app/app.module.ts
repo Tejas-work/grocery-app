@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import 'bootstrap'
-
+import { HttpClientModule } from '@angular/common/http';
 import { CatalogueModule } from './front/catalogue/catalogue.module';
 import { ExploreCategoriesComponent } from './front/catalogue/explore-categories/explore-categories.component';
 import { FeaturedProductComponent } from './front/catalogue/featured-product/featured-product.component';
@@ -28,7 +28,8 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     NgbModule,
     CatalogueModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

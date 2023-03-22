@@ -8,14 +8,16 @@ import { Grocery } from 'src/app/grocery.model';
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent {
+
   groceries: Grocery[] = [];
   total:number=0;
   duplicate:Grocery[]=[]
   brands: string[] = [];
-  groceryCategory: string | undefined;
+  groceryCategory: string ='';
   word: string | undefined;
   selectedBrands: string[] = [];
   brand: string='';
+  cartService: any;
 
   constructor(
     private groceriesService: GroceriesService,
@@ -123,8 +125,21 @@ set updateBrandAndTotal(groceries:Grocery[]){
     console.log('change');
   }
 
+  navigateDetails(id: number) {
+
+    this.router.navigate(['product-details',id]);
+
+  }
+
   isChange = false;
   display() {
     this.isChange = !this.isChange;
   }
+
+  addCart(grocery:Grocery) {
+
+    this.cartService.addItem(1,grocery)
+    this.router.navigate(['cart']);
+    }
+
 }

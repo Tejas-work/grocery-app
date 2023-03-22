@@ -19,8 +19,8 @@
   <div class="container">
     <ng-container *ngIf="groceries">
 
-        <div id="card" *ngFor="let grocery of groceries" (click)="navigateDetails(grocery.id)">
-          <img src="{{grocery.imageUrl}}" alt="">
+        <div id="card" *ngFor="let grocery of groceries" >
+          <img src="{{grocery.imageUrl}}" alt="" (click)="navigateDetails(grocery.id)">
          <p class="cate">{{grocery.category}}</p>
          <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
          <p>Rating : {{grocery.rating}}☆</p>

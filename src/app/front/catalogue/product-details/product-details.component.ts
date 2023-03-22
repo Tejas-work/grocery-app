@@ -33,7 +33,7 @@ export class ProductDetailsComponent {
   ) {}
 
   ngOnInit(){
-
+    window.scrollTo(0, 0);
     this.route.params.subscribe((param)=>{
       let check = this.groceriesService.getGrocery(Number(param['id']))
       if(check){

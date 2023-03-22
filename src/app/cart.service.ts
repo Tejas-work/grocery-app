@@ -12,7 +12,9 @@ export class CartService {
   base_url =environment.base_url;
  private items: CartItem[]=[];
 
-  constructor(private http:HttpClient ) { }
+  constructor(private http:HttpClient ) {
+
+  }
 
 
   getItems(){
@@ -47,7 +49,7 @@ export class CartService {
   updateQuantityCount(item:CartItem){
 
     try {
-     return this.http.put<CartItem>(this.base+this.base_url+"/"+item.id,item).pipe(tap(()=>this.getSubTotalPrice()))
+     return this.http.put<CartItem>(this.base+this.base_url+"/"+item.id,item);
 
 
     } catch (error:any) {
@@ -95,4 +97,4 @@ export class CartService {
   }
 
 
-}
+

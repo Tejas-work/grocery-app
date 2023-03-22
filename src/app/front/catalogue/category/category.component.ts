@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CartService } from 'src/app/cart.service';
 import { GroceriesService } from 'src/app/groceries.service';
 import { Grocery } from 'src/app/grocery.model';
 @Component({
@@ -17,10 +18,11 @@ export class CategoryComponent {
   word: string | undefined;
   selectedBrands: string[] = [];
   brand: string='';
-  cartService: any;
+  
 
   constructor(
     private groceriesService: GroceriesService,
+    private cartService: CartService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -131,15 +133,25 @@ set updateBrandAndTotal(groceries:Grocery[]){
 
   }
 
+
+  addCart(grocery:Grocery) {
+    this.cartService.addItem(1,grocery).subscribe(
+      {
+        next:(res)=>{
+          console.log('addCart',res);
+        },
+        error:(error)=>{
+          console.log(error);
+        }
+      }
+    )
+    this.router.navigate(['cart']);
+    }
+
   isChange = false;
   display() {
     this.isChange = !this.isChange;
   }
 
-  addCart(grocery:Grocery) {
-
-    this.cartService.addItem(1,grocery)
-    this.router.navigate(['cart']);
-    }
 
 }

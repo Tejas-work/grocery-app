@@ -12,7 +12,7 @@ import { Grocery } from 'src/app/grocery.model';
 })
 export class CartComponent {
 
-  quantityCount: number = 0;
+
 
   items: CartItem[] = [];
 
@@ -50,17 +50,17 @@ export class CartComponent {
   }
 
 
-  increase(item: CartItem) {
+  increase(item:CartItem) {
     item.quantityCount++;
     this.updateQuantityCount(item);
-
+    this.getCalculation();
   }
-
-
-  decrease(item: CartItem) {
-    if (this.quantityCount > 0) {
+  decrease(item:CartItem) {
+    if (item.quantityCount > 1) {
       item.quantityCount--;
       this.updateQuantityCount(item);
+      this.getCalculation();
+
     }
 
   }
@@ -100,6 +100,7 @@ export class CartComponent {
       return item.id === id;
     });
     this.items.splice(index, 1);
+    this.getCalculation()
   }
 
   getSubTotal() {

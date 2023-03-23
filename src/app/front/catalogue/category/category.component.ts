@@ -18,7 +18,8 @@ export class CategoryComponent {
   word: string | undefined;
   selectedBrands: string[] = [];
   brand: string='';
-  
+  addCartMsg="Add successfully"
+
 
   constructor(
     private groceriesService: GroceriesService,
@@ -145,7 +146,7 @@ set updateBrandAndTotal(groceries:Grocery[]){
         }
       }
     )
-    this.router.navigate(['cart']);
+    // this.router.navigate(['cart']);
     }
 
   isChange = false;

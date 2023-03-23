@@ -14,126 +14,26 @@
 <div class="container" style="overflow: hidden;">
   <div class="swiper-container">
     <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
+      <div class="swiper-slide"  *ngFor="let grocery of groceries ">
+        <div id="card" >
+          <img src="{{grocery.imageUrl}}" alt="" (click)="navigateDetails(grocery.id)">
+         <p class="cate">{{grocery.category}}</p>
+         <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
+         <p>Rating : {{grocery.rating}}☆</p>
+         <p>By <a [routerLink]="['groceries-brand/All' , grocery.store]">{{grocery.store}}</a></p>
+         <div class="cart">
+           <div class="price">
+             <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"
+               [style.text-decoration]="grocery.discountPrice ? 'line-through' : 'none'">
+               {{grocery.price | currency}}
+             </span>
+             </p>
+           </div>
+           <button (click)="addCart(grocery)"><i class="fa-solid fa-cart-shopping"></i>add</button>
+         </div>
+       </div>
       </div>
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
-      </div>
-      <div class="swiper-slide">
-        <div id="card">
-           <img src="../../../../assets/Rectangle 19.png" alt="">
-          <p class="cate">Vegetables</p>
-          <h6>Redish 500g</h6>
-          <p>☆☆☆☆☆(4)</p>
-          <p>By <span>Mr.food</span></p>
-          <div class="cart">
-            <div class="price">
-              <p><span>$2</span><span class="origanle-price">$3.99</span></p>
-            </div>
-            <button><i class="fa-solid fa-cart-shopping"></i>add</button>
-          </div>
-        </div>
-      </div>
+      
       <!-- Repeat for each card -->
     </div>
     <div class="swiper-button-next"></div>

@@ -3,16 +3,27 @@ import { CartItem } from './cartItem.model';
 import { Grocery } from './grocery.model';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
-import { Observable, map, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom, map, tap, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
   base=environment.base;
   base_url =environment.base_url;
- private items: CartItem[]=[];
+  private items = new BehaviorSubject<CartItem[]>([]);
 
   constructor(private http:HttpClient ) {
+
+    this.getItems().subscribe({
+      next: (res) => {
+        console.log('cons',res);
+
+        this.items.next(res);
+
+      }, error: (error) => {
+        console.error(error);
+      }
+    })
 
   }
 
@@ -72,7 +83,8 @@ export class CartService {
   }
 
   async getSubTotalPrice(): Promise<number> {
-    const items = await this.getItems().toPromise();
+    const items = await firstValueFrom(this.getItems());
+
     let subTotal = 0;
     if (items && items.length > 0) {
       subTotal = items.reduce((total: number, item: CartItem) => {
@@ -83,17 +95,13 @@ export class CartService {
     return subTotal;
   }
 
-  // getSubTotalPrice(): Observable<number> {
-  //   return this.getItems().pipe(map(items => {
-  //     let subTotal = 0;
-  //     if (items && items.length > 0) {
-  //       subTotal = items.reduce((total: number, item: CartItem) => {
-  //         return total + item.quantityCount * item.price;
-  //       }, 0);
-  //     }
-  //     console.log(subTotal);
-  //     return subTotal;
-  //   }));
+
+  numberOfCartItems(){
+    let count = this.items.subscribe.length;
+    console.log('len',count);
+    return count;
+
+  }
   }
 
 

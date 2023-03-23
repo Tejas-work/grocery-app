@@ -1,5 +1,5 @@
 <header>
-  <nav>
+  <nav  [ngClass]="{ 'sticky': isSticky }">
     <div class="brand">
       <a class="navbar-brand" [routerLink]="['']">
         <img src="../../assets/brand.png" alt="Bootstrap" width="39" height="39">
@@ -28,11 +28,11 @@
     </div>
 
     <div class="cart">
-      <span class="totalItems">1</span>
+      <span class="totalItems">{{cartItemsCount}}</span>
       <i class="fa-solid fa-cart-shopping" (click)="navigateCart()"></i>
       <div class="dropdown">
         <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          My cart <br><span class="total">21$</span>
+          My cart <br><span class="total">{{total|currency}}</span>
         </button>
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="#">Action</a></li>
@@ -76,3 +76,15 @@
   </nav>
 
 </header>
+
+<script>
+  const header = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 0) {
+    header.classList.add('sticky');
+  } else {
+    header.classList.remove('sticky');
+  }
+});
+
+</script>

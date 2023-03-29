@@ -1,0 +1,40 @@
+.contact{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+ul
+,li
+{
+  list-style: none;
+  list-style-type: none;
+  margin: 0;
+}
+
+i{
+  color: #3BB77E;
+  margin-right: 5px;
+}
+
+span{
+  width: 900;
+}
+
+.social{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 60px;
+}
+
+.social i
+{
+  font-size: 40px;
+}
+
+
+
+
+
+

@@ -1,0 +1,89 @@
+<div class="container">
+  <form [formGroup]="profileForm">
+
+    <div class="row">
+      <div class="col">
+        <label for="First Name">First Name</label><br>
+        <input type="text" name="firstName" id="" formControlName="firstName">
+        <div *ngIf="firstName!.invalid && firstName!.touched">
+          <small [style.display]="firstName?.errors?.['required']">
+            Please enter firstName
+          </small>
+        </div>
+      </div>
+      <div class="col">
+        <label for="Last Name">Last Name</label><br>
+        <input type="text" name="lastName" id="" formControlName="lastName">
+        <div *ngIf="lastName!.invalid && lastName!.touched">
+          <small [style.display]="lastName?.errors?.['required']">
+            Please enter Last Name
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="Email">Email</label><br>
+        <input type="email" name="email" id="email" formControlName="email">
+        <div *ngIf="email?.invalid && email?.touched">
+          <small *ngIf="email?.errors?.['required']">
+            Please enter email
+          </small>
+          <small *ngIf="email?.errors?.['email']">
+            Please enter a valid email address
+          </small>
+        </div>
+
+      </div>
+      <div class="col">
+        <label for="conract">Contact</label><br>
+        <input type="text" name="contact" id="" formControlName="contact">
+        <div *ngIf="contact!.invalid && contact!.touched">
+          <small *ngIf="contact?.errors?.['required']">
+            Please enter contact
+          </small>
+          <small *ngIf="contact?.errors?.['minlength']">
+            Contact must be at least {{contact?.errors?.['minlength'].requiredLength}} characters long
+          </small>
+          <small *ngIf="contact?.errors?.['maxlength']">
+            Contact cannot be more than {{contact?.errors?.['maxlength'].requiredLength}} characters long
+          </small>
+          <small *ngIf="contact?.errors?.['pattern']">
+            Contact must contain only digits (0-9)
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="">Alternate Contact Email</label><br>
+        <input type="email" name="altEmail" id="" formControlName="altEmail">
+      </div>
+      <div class="col">
+        <label for="">Alternate Contact Number</label><br>
+        <input type="text" name="altContact" id="" formControlName="altContact">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="">Date of Birth</label><br>
+        <input type="date" name="" id="" formControlName="dob">
+        <div *ngIf="dob!.invalid && dob!.touched">
+          <small [style.display]="dob?.errors?.['required']">
+            Please enter dob
+          </small>
+        </div>
+      </div>
+
+
+    </div>
+  </form>
+
+  <div class="submit">
+    <button [disabled]="profileForm.invalid">save</button>
+  </div>
+
+</div>

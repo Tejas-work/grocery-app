@@ -1,30 +1,22 @@
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { GrocerySectionComponent } from './front/catalogue/grocery-section/grocery-section.component';
-import { CategoryComponent } from './front/catalogue/category/category.component';
-import { ProductDetailsComponent } from './front/catalogue/product-details/product-details.component';
-import { CartComponent } from './front/catalogue/cart/cart.component';
-import { CheckOutComponent } from './front/check-out/check-out.component';
-import { SuccessComponent } from './front/success/success.component';
+import { HomeComponent } from './shared/components/home/home.component';
+import { CategoryComponent } from './modules/catalogue/category/category.component';
+import { ProductDetailsComponent } from './modules/catalogue/product-details/product-details.component';
+import { CartComponent } from './modules/cart/cart/cart.component';
+import { CheckOutComponent } from './modules/cart/check-out/check-out.component';
+import { SuccessComponent } from './modules/cart/success/success.component';
+import { ProfileComponent } from './modules/user/profile/profile.component';
+import { DashboardComponent } from './modules/user/dashboard/dashboard.component';
+import { SignUpComponent } from './modules/user/sign-up/sign-up.component';
+import { LoginComponent } from './modules/user/login/login.component';
 
 const routes: Routes = [
   {
     path:'',
     component:HomeComponent
   },
-  {
-    path:'search-groceries/:category/:word',
-    component:CategoryComponent
-  },
-  {
-    path: 'grocery-category/:category',
-    component: CategoryComponent
-  },
-  {
-    path: 'grocery-category/All/groceries-brand/All/:brand',
-    component: CategoryComponent
-  },
+
   {
     path:'product-details/:id',
     component:ProductDetailsComponent
@@ -39,12 +31,23 @@ const routes: Routes = [
   {
     path:'success',
     component:SuccessComponent
+  },{
+    path:'users',loadChildren:()=>import('./modules/user/user.module').then(c => c.UserModule)
   }
-
-
-
-
-
+  ,{
+    path:'groceries',loadChildren:()=>import('./modules/catalogue/catalogue.module').then(c => c.CatalogueModule)
+  },
+  {
+    path:"signUp",
+    component:SignUpComponent
+  },
+  {
+    path:"login",
+    component:LoginComponent
+  },{
+    path:"**",
+    component:HomeComponent
+  }
 
 ];
 

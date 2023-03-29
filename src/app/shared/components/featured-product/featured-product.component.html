@@ -1,0 +1,38 @@
+<section style="margin: 20px 30px; margin-bottom: 100px; position: relative;">
+  <div id="header">
+    <h3>Featured Products
+    </h3>
+    <ul>
+      <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category]">{{ category }}</a></li>
+
+    </ul>
+  </div>
+
+
+
+
+  <div class="container" style="overflow: hidden; margin-top: 20px;">
+    <carousel style="height: 310px">
+      <div class="carousel-cell" *ngFor="let grocery of groceries ">
+        <div id="card">
+          <img src="{{grocery.imageUrl}}" alt="" (click)="navigateDetails(grocery.id)">
+          <p class="cate">{{grocery.category}}</p>
+          <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
+          <p>Rating : {{grocery.rating}}☆</p>
+          <p>By <a [routerLink]="['groceries-brand/All' , grocery.store]">{{grocery.store}}</a></p>
+          <div class="cart">
+            <div class="price">
+              <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"
+                  [style.text-decoration]="grocery.discountPrice ? 'line-through' : 'none'">
+                  {{grocery.price | currency}}
+                </span>
+              </p>
+            </div>
+            <button (click)="addCart(grocery)"><i class="fa-solid fa-cart-shopping"></i>add</button>
+          </div>
+        </div>
+      </div>
+    </carousel>
+  </div>
+
+</section>

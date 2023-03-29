@@ -1,0 +1,25 @@
+
+<section style="margin: 20px 30px; position: relative;">
+  <div id="header">
+    <h3>Explore Categories
+    </h3>
+    <ul>
+      <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category]">{{ category }}</a></li>
+
+    </ul>
+  </div>
+  <carousel style="height: 220px;">
+    <div class="carousel-cell"  *ngFor="let category of categories">
+      <div id="card" [routerLink]="['groceries',category]">
+        <div class="img">
+          <img src="../assets/image 3.png" alt="">
+        </div>
+        <h5>{{category}}</h5>
+        <p>{{groceryCountByCategory[category]}}</p>
+      </div>
+    </div>
+  </carousel>
+
+
+
+</section>

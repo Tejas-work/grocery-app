@@ -1,0 +1,36 @@
+<app-product-header [title]="'Login'"></app-product-header>
+<div class="container">
+  <form  [formGroup]="loginForm" (submit)="onSubmit()">
+    <div class="row">
+      <div class="col">
+        <label for="userName">User Name</label><br>
+        <input type="email" name="userName" id="" formControlName="userName">
+        <div *ngIf="userName!.invalid && userName!.touched">
+          <small [style.display]="userName?.errors?.['required']">
+            Please enter userName
+          </small>
+        </div>
+      </div>
+      <div class="col">
+        <label for="password">Password</label><br>
+        <input type="password" name="password" id="" formControlName="password">
+        <div *ngIf="password!.invalid && password!.touched">
+          <small [style.display]="password?.errors?.['required']">
+            Please enter password
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div  class="submit">
+      <button type="submit">LogIn</button>
+    </div>
+
+
+
+
+  </form>
+
+
+
+</div>

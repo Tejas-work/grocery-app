@@ -1,0 +1,32 @@
+#card{
+  width: 270px;
+  margin: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+#card i{
+  font-size: 50px;
+  transform: rotate(100deg);
+}
+
+
+.right
+{
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.right p{
+  color: #ADADAD
+  ;
+}
+.facilities
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}

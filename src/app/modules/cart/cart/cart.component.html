@@ -1,0 +1,142 @@
+
+<app-product-header [title]="'Cart'"></app-product-header>
+<!-- {{tes|json}} -->
+<!-- <ng-container *ngIf="items && items.length>0">
+  <div class="container">
+    <div class="items">
+      <div class="grocery" *ngFor="let grocery of items">
+        <div class="col2
+        ">
+          <img src="{{grocery.imageUrl}}" alt="">
+        </div>
+        <div class="col">
+
+            <div class="col">
+              <h6>{{grocery.grocery_name}}</h6>
+              <p>{{grocery.quantity}}</p>
+            </div>
+
+
+          <div class="row">
+            <div class="col"><button class=" btn" (click)="decrease(grocery)">-</button><span
+                class="count">{{grocery.quantityCount}}</span><button class="increase btn" (click)="increase(grocery)">+</button>
+            </div>
+            <div class="col">
+              $6.00
+            </div>
+          </div>
+        </div>
+
+        <i class="fa-solid fa-xmark" (click)="removeCartItem(grocery.id)" style="margin-left: 30px;"></i>
+      </div>
+    </div>
+    <div class="total">
+      <table>
+        <tr>
+          <td>Sub-Total</td>
+          <td>{{subTotal|currency}}</td>
+        </tr>
+        <tr>
+          <td>
+            GST
+          </td>
+          <td>
+            {{gst|currency}}
+          </td>
+        </tr>
+        <tr>
+          <td>total</td>
+          <td>{{total|currency}}</td>
+        </tr>
+        <tr>
+          <td colspan="2""><a>CheckOut</a></td>
+
+      </table>
+    </div>
+  </div>
+
+</ng-container> -->
+<!-- {{itemsByCategories|json}} -->
+
+<div class="container">
+  <ng-container *ngIf="items && items.length > 0">
+    <table>
+      <tr style="background-color: #b7b7b7; padding: 20px">
+        <th>ITEM DESCRIPTION</th>
+        <th>UNIT PRICE</th>
+        <th>QUANTITY</th>
+        <th>SUBTOTAL</th>
+      </tr>
+      <ng-container *ngFor="let category of itemsByCategories | keyvalue">
+        <tr style="background-color: #dbdada; font-size: 17px">
+          <td colspan="4" style="font-size: 17px">
+            {{ category.key }} &nbsp;<span style="font-size: 12px"
+              >{{ category.value.items.length }} items {{
+                category.value.total | currency : "CAD" : "symbol-narrow"
+              }}</span
+            >
+          </td>
+        </tr>
+        <tr *ngFor="let grocery of category.value.items">
+          <td class="one">
+            <p style="font-size: 17px">
+              <span style="font-size: 12px">{{ grocery.store }}</span
+              ><br />{{ grocery.grocery_name }}
+            </p>
+            <h6>{{ grocery.quantity }}</h6>
+          </td>
+          <td *ngIf="grocery.discountPrice">
+            <h6> {{ grocery.discountPrice | currency : "CAD" : "symbol-narrow"}}</h6>
+            <p style="font-size: 17px">
+
+              <span style="text-decoration: line-through">
+                {{grocery.price| currency : "CAD" : "symbol-narrow" }}</span>
+            </p>
+          </td>
+          <td *ngIf="!grocery.discountPrice">
+            <h6> {{ grocery.price | currency : "CAD" : "symbol-narrow"}}</h6>
+          </td>
+          <td style="font-size: 17px">
+            <button class="btn" (click)="decrease(grocery)">-</button>
+
+            <!-- <input type="text" name="count" id="" class="count" [(ngModel)]="count" (change)="changeCount()" > -->
+            <span class="count" (change)="changeCount()">{{
+              grocery.quantityCount
+            }}</span>
+            <button class="increase btn" (click)="increase(grocery)">+</button>
+          </td>
+          <td style="font-size: 17px">
+            {{ grocery.subtotal | currency : "CAD" : "symbol-narrow" }}
+            <i
+              class="fa-solid fa-xmark"
+              (click)="removeCartItem(grocery.id)"
+              style="margin-left: 30px"
+            ></i>
+          </td>
+        </tr>
+      </ng-container>
+    </table>
+  </ng-container>
+</div>
+
+<div class="container two">
+  <div class="row">
+    <div class="col">Sub Total</div>
+    <div class="col">{{ subTotal | currency : "CAD" : "symbol-narrow" }}</div>
+  </div>
+
+  <div class="row">
+    <div class="col">Delivery Charges⍰</div>
+    <div class="col">....</div>
+  </div>
+  <div class="row total">
+    <div class="col">Total</div>
+    <div class="col">{{ subTotal | currency : "CAD" : "symbol-narrow" }}</div>
+  </div>
+  <div class="row "  (click)="checkOut()">
+   <div class="col checkBtn">
+    CheckOut
+   </div>
+  </div>
+</div>
+

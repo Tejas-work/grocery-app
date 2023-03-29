@@ -1,0 +1,9 @@
+.container{
+  display: grid;
+  grid-template-columns: 200px auto ;
+  margin-top: 60px;
+
+}
+router-outlet{
+  display: none;
+}

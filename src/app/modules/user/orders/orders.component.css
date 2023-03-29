@@ -1,0 +1,55 @@
+/* .container{
+  display: grid;
+  grid-template-columns: 20px auto auto auto auto;
+
+  background-color: #D3D0D0 ;
+}
+.col{
+  padding: 10px 0px;
+  border-left:1px solid black ;
+} */
+
+table{
+  width: 100%;
+}
+td{
+  text-align: center;
+  margin: 10px 0px;
+  background-color: #D3D0D0 ;
+  height: 40px;
+}
+
+
+p{
+  margin: 0;
+  border-right: 1px solid black;
+}
+
+h6 {
+  position: relative;
+  text-align: center;
+}
+
+h6::before,
+h6::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 50%;
+  border-bottom: 1px solid black;
+}
+
+h6::before {
+  left: 0;
+}
+
+h6::after {
+  right: 0;
+}
+
+h6 span {
+  background-color: white;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1;
+}

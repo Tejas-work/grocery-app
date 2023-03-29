@@ -1,0 +1,138 @@
+
+<app-product-header [title]="'Sign Up'"></app-product-header>
+<div class="container">
+
+  <form  [formGroup]="registrationForm" (submit)="onSubmit()">
+
+    <small *ngIf="status==400">{{message}}</small>
+    <small>{{message}}</small>
+    <div class="row">
+      <div class="col">
+        <label for="userName">User Name</label><br>
+        <input type="text" name="userName" id="" formControlName="username">
+        <div *ngIf="username!.invalid && username!.touched">
+          <small [style.display]="username?.errors?.['required']">
+            Please enter userName
+          </small>
+          <small *ngIf="username?.errors?.['unique']">
+            Please change user name
+            </small>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row" >
+      <div class="col">
+        <label for="First Name">First Name</label><br>
+        <input type="text" name="firstName" id="" formControlName="firstName">
+        <div *ngIf="firstName!.invalid && firstName!.touched">
+          <small [style.display]="firstName?.errors?.['required']">
+            Please enter firstName
+          </small>
+        </div>
+      </div>
+      <div class="col">
+        <label for="Last Name">Last Name</label><br>
+        <input type="text" name="lastName" id="" formControlName="lastName">
+        <div *ngIf="lastName!.invalid && lastName!.touched">
+          <small [style.display]="lastName?.errors?.['required']">
+            Please enter Last Name
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="Email">Email</label><br>
+        <input type="email" name="email" id="" formControlName="primary_email">
+        <div *ngIf="primary_email?.invalid && primary_email?.touched">
+          <small *ngIf="primary_email?.errors?.['required']">
+            Please enter email
+          </small>
+          <small *ngIf="primary_email?.errors?.['email']">
+            Please enter a valid email address
+          </small>
+          <small *ngIf="primary_email?.errors?.['unique']">
+            email address already exist please change email
+            </small>
+        </div>
+      </div>
+      <div class="col">
+        <label for="conract">Contact</label><br>
+        <input type="text" name="contact" id=""  formControlName="primary_mobile_number"  pattern="[0-9]*">
+        <div *ngIf="primary_mobile_number!.invalid && primary_mobile_number!.touched">
+          <small *ngIf="primary_mobile_number?.errors?.['required']">
+            enter contact <br>
+          </small>
+          <small *ngIf="primary_mobile_number?.errors?.['minlength']">
+            Contact must be at least {{primary_mobile_number?.errors?.['minlength'].requiredLength}} characters long <br>
+          </small>
+          <small *ngIf="primary_mobile_number?.errors?.['maxlength']">
+            <br>Contact cannot be more than {{primary_mobile_number?.errors?.['maxlength'].requiredLength}} characters long
+          </small>
+          <small *ngIf="primary_mobile_number?.errors?.['pattern']">
+            Contact must contain only digits (0-9)
+          </small>
+          <small *ngIf="primary_mobile_number?.errors?.['unique']">
+            Contact already exist please change contact
+            </small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="password">Password</label><br>
+        <input type="password" name="password" id="" formControlName="password">
+        <div *ngIf="password?.invalid && password?.touched">
+          <small *ngIf="password?.errors?.['required']">
+            Password is required<br>
+          </small>
+          <small *ngIf="password?.errors?.['minlength']">
+            Password must be at least {{ password?.errors?.['minlength'].requiredLength }} characters long<br>
+          </small>
+          <small *ngIf="password?.errors?.['pattern']">
+            <br> must contain at least one uppercase letter,<br> one lowercase letter, and one number
+          </small>
+        </div>
+
+      </div>
+
+
+      <div class="col">
+
+
+        <label for="rePassword">Re Enter Password</label><br>
+        <input type="password" name="rePassword" id="" formControlName="rePassword">
+
+
+        <div *ngIf="rePassword?.invalid && rePassword?.touched">
+          <small *ngIf="rePassword?.errors?.['required']||rePassword?.errors?.['minlength']">
+            Please enter rePassword
+          </small>
+          <small *ngIf="rePassword?.errors?.['mismatch']">
+            {{ rePassword?.errors?.['message'] }}
+          </small>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="submit">
+      <button type="submit" [disabled]="registrationForm.invalid">SignUp</button>
+    </div>
+
+
+
+
+  </form>
+
+
+
+</div>
+
+
+
+
+

@@ -1,0 +1,43 @@
+.container
+{
+  display: grid;
+  grid-template-columns: auto 100px;
+  margin-top: 30px;
+ justify-content: center;
+}
+
+
+input{
+  min-width: 413px;
+  background-color: #F0F0F0;
+  border:1px solid #D4D4D4;
+  margin: 9px 0px;
+}
+
+.row{
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-bottom: 25px;
+justify-content: flex-start;
+}
+
+button{
+  background: #53B175;
+border: 1px solid #53B175;
+border-radius: 10px;
+width: 139px;
+height: 37px;
+color: white;
+font-weight: 700;
+font-size: 15px;
+
+}
+.submit{
+  text-align: center;
+}
+
+
+small
+{
+  color:red
+}

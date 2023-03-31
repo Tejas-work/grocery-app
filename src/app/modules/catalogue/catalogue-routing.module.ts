@@ -4,10 +4,10 @@ import { CategoryComponent } from './category/category.component';
 
 const routes: Routes = [
   {
-    path:'groceries',
+    path:'',
     children:[
       {
-        path:':category/:word',
+        path:'grocery-search/:category/:word',
         component:CategoryComponent
       },
       {

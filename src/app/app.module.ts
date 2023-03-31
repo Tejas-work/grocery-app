@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import 'bootstrap'
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CatalogueModule } from './modules/catalogue/catalogue.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,7 @@ import { FeaturedProductComponent } from './shared/components/featured-product/f
 import { TrendingItemsComponent } from './layout/trending-items/trending-items.component';
 import { GoodThingsComponent } from './layout/good-things/good-things.component';
 import { AuthService } from './shared/services/auth.service';
+import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 
 
 

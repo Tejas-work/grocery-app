@@ -1,5 +1,7 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Register } from 'src/app/shared/models/register.model';
 
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -15,7 +17,7 @@ export class SignUpComponent {
   field:string='';
   registrationForm!: FormGroup
 
-  constructor(private fb: FormBuilder,private authService:AuthService) {
+  constructor(private fb: FormBuilder,private authService:AuthService,private router:Router) {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       username: ['', Validators.required],
@@ -79,7 +81,9 @@ export class SignUpComponent {
       {
         next:(res)=>{
           console.log(res);
-          this.message="Register Successfully"
+          this.message="Register Successfully";
+
+          this.router.navigate(['/login']);
 
 
         },
@@ -88,7 +92,7 @@ export class SignUpComponent {
 
 
          if(error.status!=400){
-          // this.message=error.error.error.errors[0].message;
+          this.message=error.error.error.errors[0].message;
           this.field=error.error.error.fields;
 
           // console.log(this.message);
@@ -100,8 +104,8 @@ export class SignUpComponent {
          }
 
          if(error.status==400){
-          console.log(error.error.message);
-          // this.message=error.error.message;
+          console.log(error.error.message,error.status);
+          
           this.status=error.status
          }
 

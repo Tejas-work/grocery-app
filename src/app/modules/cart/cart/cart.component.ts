@@ -10,6 +10,8 @@ import { CartItem } from 'src/app/shared/models/cartItem.model';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
+
+  categoriesAll:any;
   count: number = 0
   changeCount() {
     console.log(this.count);
@@ -37,11 +39,19 @@ export class CartComponent {
 
   ) {
     this.getCartItems();
+    // this.getAll()
   }
 
   async ngOnInit() {
     window.scrollTo(0, 0);
     this.getCalculation();
+
+    try {
+      const categories = await this.cartService.getAllCategories();
+      console.log(categories);
+    } catch (error) {
+      console.error('Error:', error);
+    }
 
   }
 
@@ -144,6 +154,16 @@ export class CartComponent {
       });
     });
   }
+
+
+  // getAll(){
+  //   this.cartService.getAllCategories().subscribe({
+  //     next:(res)=>console.log(res),
+  //     error:(error)=>console.log("component",error)
+
+
+  //   })
+  // }
 
 
 

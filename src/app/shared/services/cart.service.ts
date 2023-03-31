@@ -1,15 +1,24 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from '../models/cartItem.model';
 import { Grocery } from '../models/grocery.model';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { BehaviorSubject, Observable, firstValueFrom, map, tap, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
+
+  base_api = environment.base_url;
+  categories_url = environment.getCategory_url
+
+
+
   base = environment.base;
   base_cartItems = environment.base_cartItems;
+
+
+
   private items = new BehaviorSubject<CartItem[]>([]);
   items$ = this.items.asObservable();
   subTotal: number = 0;
@@ -19,8 +28,7 @@ export class CartService {
     this.getItems().subscribe({
       next: (res) => {
         this.items.next(res);
-
-
+        this.getCartGroceriesItemsId()
       }, error: (error) => {
         console.error(error);
       }
@@ -29,6 +37,7 @@ export class CartService {
 
 
   }
+
 
 
   getItems() {
@@ -57,11 +66,11 @@ export class CartService {
       subtotal: 0,
       imageUrl: grocery.imageUrl
     }
-      if (cartItem.discountPrice) {
-        cartItem.subtotal = cartItem.discountPrice * cartItem.quantityCount;
-      } else {
-        cartItem.subtotal = cartItem.price * cartItem.quantityCount;
-      }
+    if (cartItem.discountPrice) {
+      cartItem.subtotal = cartItem.discountPrice * cartItem.quantityCount;
+    } else {
+      cartItem.subtotal = cartItem.price * cartItem.quantityCount;
+    }
 
     try {
       console.log(this.base + this.base_cartItems);
@@ -140,47 +149,66 @@ export class CartService {
     return total;
   }
 
-clearCart(){
+  clearCart() {
 
-  this.items.getValue().forEach((item=>{
+    this.items.getValue().forEach((item => {
 
-console.log(item.id);
+      console.log(item.id);
 
-    try {
-      this.http.delete(this.base + this.base_cartItems + '/' + item.id).pipe(
-        tap(() => {
-          const items = this.items.getValue();
-          const index = items.findIndex((i) => i.id === item.id);
-          if (index !== -1) {
-            items.splice(index, 1);
-            this.items.next(items);
-          }
-        })).subscribe(
-        {
-          next:(res)=>{
-            console.log(res);
+      try {
+        this.http.delete(this.base + this.base_cartItems + '/' + item.id).pipe(
+          tap(() => {
+            const items = this.items.getValue();
+            const index = items.findIndex((i) => i.id === item.id);
+            if (index !== -1) {
+              items.splice(index, 1);
+              this.items.next(items);
+            }
+          })).subscribe(
+            {
+              next: (res) => {
+                console.log(res);
 
-          },
-          error:(error)=>console.log(error)
+              },
+              error: (error) => console.log(error)
 
-        }
-      )
-    } catch (error: any) {
-      throwError(() => new Error(error));
+            }
+          )
+      } catch (error: any) {
+        throwError(() => new Error(error));
 
-    }
+      }
 
-  }))
-
-
-}
-
-
-
-
+    }))
 
 
   }
+
+
+  getAllCategories() {
+    try {
+      return this.http.get<any>(this.base_api + this.categories_url);
+    } catch (error: any) {
+      return throwError(() => new Error(error))
+
+    }
+  }
+
+
+  getCartGroceriesItemsId(){
+    this.items$.subscribe({
+      next:(res)=>{
+        let id = res.map((item)=>item.id);
+        console.log(id);
+
+      },
+      error:(error)=>console.log(error)
+
+    })
+  }
+
+
+}
 
 
 

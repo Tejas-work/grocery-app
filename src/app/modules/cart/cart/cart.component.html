@@ -1,4 +1,4 @@
-
+{{categoriesAll}}
 <app-product-header [title]="'Cart'"></app-product-header>
 <!-- {{tes|json}} -->
 <!-- <ng-container *ngIf="items && items.length>0">
@@ -133,7 +133,7 @@
     <div class="col">Total</div>
     <div class="col">{{ subTotal | currency : "CAD" : "symbol-narrow" }}</div>
   </div>
-  <div class="row "  (click)="checkOut()">
+  <div class="row " *ngIf="items.length"  (click)="checkOut()">
    <div class="col checkBtn">
     CheckOut
    </div>

@@ -4,8 +4,8 @@
 
   <form  [formGroup]="registrationForm" (submit)="onSubmit()">
 
-    <small *ngIf="status==400">{{message}}</small>
-    <small>{{message}}</small>
+    <small *ngIf="status==400">user already exist</small>
+    <!-- <small *ngIf="!registrationForm.invalid">Register successfully</small> -->
     <div class="row">
       <div class="col">
         <label for="userName">User Name</label><br>

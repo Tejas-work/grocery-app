@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductHeaderComponent } from 'src/app/shared/components/product-header/product-header.component';
 
 
-console.warn("cata");
+
 
 @NgModule({
   declarations: [

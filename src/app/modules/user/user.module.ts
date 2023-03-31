@@ -12,9 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { CatalogueModule } from '../catalogue/catalogue.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from 'src/app/shared/interceptor/auth.interceptor';
 
-console.warn("usree");
+
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -34,6 +35,13 @@ console.warn("usree");
     CatalogueModule,
     HttpClientModule
 
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   exports:[ProfileComponent,SidebarComponent]
 })

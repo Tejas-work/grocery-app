@@ -60,7 +60,8 @@ export class HeaderComponent {
     event.preventDefault();
     const inputValue = this.myValue;
     if (inputValue) {
-      this.router.navigate(['groceries', this.selectedCategory, inputValue])
+      debugger
+      this.router.navigate(['groceries/grocery-search', this.selectedCategory, inputValue])
     }
 
   }

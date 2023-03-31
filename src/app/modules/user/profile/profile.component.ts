@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,8 +12,9 @@ export class ProfileComponent {
 
 profileForm!:FormGroup
   title: any;
+  user:any;
 
-  constructor(private fb:FormBuilder,private route:ActivatedRoute) {
+  constructor(private fb:FormBuilder,private route:ActivatedRoute,private authService:AuthService) {
 
   }
 
@@ -28,7 +30,20 @@ profileForm!:FormGroup
     })
     this.title=this.route.snapshot.data['title'];
 
-    console.log(this.title);
+    this.authService.getUserDetails().subscribe({
+      next:(res)=>{
+        this.user=res;
+        console.log("getUser component",res);
+
+      },
+      error:(error)=>{
+        console.log("get user component",error);
+
+      }
+    })
+
+
+
   }
 
   get firstName(){

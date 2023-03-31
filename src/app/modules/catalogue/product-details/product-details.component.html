@@ -25,7 +25,7 @@
       </ng-container>
 
       <div>
-        <input
+        <input *ngIf="!checkInCart(grocery.id)"
           type="number"
           name=""
           id=""
@@ -37,7 +37,8 @@
             appearance: none;
           "
         />
-        <button class="add" (click)="addCart()">Add Cart</button>
+        <button  class="add" *ngIf="!checkCart" (click)="addCart()">Add cart</button>
+        <button  class="add" *ngIf="checkCart" (click)="goCart()">Go to Cart</button>
       </div>
     </div>
   </div>
@@ -59,7 +60,8 @@
     reprehenderit quod tempora, recusandae sit ipsa quae id, magni repudiandae
     eum qui quo velit unde impedit totam. Autem, molestias quam iste, quaerat
     cum minima sequi distinctio alias voluptatibus iure aut minus. Lorem ipsum
-    dolor sit amet consectetur adipisicing elit. Tenetur soluta at eaque sunt
+    dolor sit amen consenter adipisicing elit. Te
+    netur soluta at eaque sunt
     temporibus odio quis aliquid, voluptas minus eum, corrupti architecto harum,
     iusto placeat laboriosam voluptatum deleniti enim neque iure non incidunt
     dolor nulla. Debitis in odit, maxime ad eos omnis eaque quasi, reiciendis

@@ -11,7 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class LoginComponent {
 
 
-  ress:any;
+ message:any;
   loginForm!:FormGroup
 
   get userName() {
@@ -41,10 +41,22 @@ export class LoginComponent {
     }
 
     console.log(user);
-    this.authService.logIn(user).subscribe((res)=>{
-      this.ress=res;
-      console.log(res);
-    });
+    this.authService.logIn(user).subscribe(
+      {next:(res)=>{
+        let token = res.data;
+        console.log(res);
+
+      console.log(res.data);
+
+      sessionStorage.setItem('token',token);
+
+
+
+
+    },
+  error:(error)=>{
+    this.message=error.error.message;
+  }});
 
 
   }

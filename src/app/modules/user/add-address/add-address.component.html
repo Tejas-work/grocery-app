@@ -1,0 +1,127 @@
+<div class="container">
+  <form [formGroup]="addAddressForm" (submit)="onSubmit()">
+
+    <!-- address 1,address 2 -->
+    <div class="row">
+      <div class="col">
+        <label for="addressOne">Address 1</label><br>
+        <input type="text" name="" id="" formControlName="addressOne">
+        <div *ngIf="addressOne!.invalid && addressOne!.touched">
+          <small [style.display]="addressOne?.errors?.['required']">
+            Please enter Address 1
+          </small>
+        </div>
+      </div>
+      <div class="col">
+        <label for="addressTwo">Address 1</label><br>
+        <input type="text" name="" id="" formControlName="addressTwo">
+        <div *ngIf="addressTwo!.invalid && addressTwo!.touched">
+          <small [style.display]="addressTwo?.errors?.['required']">
+            Please enter Address 2
+          </small>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  <!-- country, state -->
+  <div class="row">
+    <div class="col">
+      <label for="country">country</label><br>
+      <select formControlName="country" name="country">
+        <option *ngFor="let item of countries" [value]="item[1]">{{item[0]}}</option>
+      </select>
+      <!-- <input type="text" name="" id="" formControlName="country"> -->
+      <div *ngIf="country!.invalid && country!.touched">
+        <small [style.display]="country?.errors?.['required']">
+          Please enter country
+        </small>
+      </div>
+    </div>
+    <div class="col">
+      <label for="state">state</label><br>
+      <input type="text" name="" id="" formControlName="state">
+      <div *ngIf="state!.invalid && state!.touched">
+        <small [style.display]="state?.errors?.['required']">
+          Please enter state
+        </small>
+      </div>
+    </div>
+  </div>
+
+    <!-- city,area -->
+    <div class="row">
+      <div class="col">
+        <label for="city">city</label><br>
+
+        <input type="text" name="" id="" formControlName="city">
+        <div *ngIf="city!.invalid && city!.touched">
+          <small [style.display]="city?.errors?.['required']">
+            Please enter city
+          </small>
+        </div>
+      </div>
+      <div class="col">
+        <label for="area">area</label><br>
+        <input type="text" name="" id="" formControlName="area">
+        <div *ngIf="area!.invalid && area!.touched">
+          <small [style.display]="area?.errors?.['required']">
+            Please enter area
+          </small>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- country -->
+    <div class="row">
+
+    </div>
+    <!-- postal_code,landmark -->
+    <div class="row">
+      <div class="col">
+        <label for="landmark">landmark</label><br>
+        <input type="text" name="" id="" formControlName="landmark">
+        <div *ngIf="landmark!.invalid && landmark!.touched">
+          <small [style.display]="landmark?.errors?.['required']">
+            Please enter landmark
+          </small>
+        </div>
+      </div>
+      <div class="col">
+        <label for="postal_code">postal_code</label><br>
+        <input type="text" name="" id="" formControlName="postal_code" maxlength="6">
+        <div *ngIf="postal_code?.invalid && postal_code?.touched">
+          <small *ngIf="postal_code?.errors?.['required']">
+            postal_code is required<br>
+          </small>
+          <small *ngIf="postal_code?.errors?.['minlength']">
+            postal_code must be at least {{ postal_code?.errors?.['minlength'].requiredLength }} characters long<br>
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <!-- tag -->
+    <div class="row">
+      <div class="col">
+        <label for="tag">tag</label><br>
+        <input type="text" name="" id="" formControlName="tag">
+        <div *ngIf="tag!.invalid && tag!.touched">
+          <small [style.display]="tag?.errors?.['required']">
+            Please enter tag
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit">
+      <button type="submit" [disabled]="addAddressForm.invalid">save</button>
+    </div>
+
+  </form>
+
+
+</div>

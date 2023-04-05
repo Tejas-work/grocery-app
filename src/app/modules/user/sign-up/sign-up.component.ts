@@ -24,8 +24,8 @@ export class SignUpComponent {
       lastName: ['', Validators.required],
       primary_email: ['', [Validators.required, Validators.email]],
       primary_mobile_number: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[0-9]+$/)]],
-      password: ['', [Validators.required, Validators.minLength(1)]],
-      rePassword: ['', [Validators.required, Validators.minLength(1)]]
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      rePassword: ['', [Validators.required, Validators.minLength(8)]]
     },
       {
         validators: matchPassword('password', 'rePassword')
@@ -105,7 +105,7 @@ export class SignUpComponent {
 
          if(error.status==400){
           console.log(error.error.message,error.status);
-          
+
           this.status=error.status
          }
 

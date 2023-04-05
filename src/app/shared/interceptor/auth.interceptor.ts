@@ -17,10 +17,11 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = sessionStorage.getItem('token');
     if (token) {
       request = request.clone({
-        setHeaders: {
-          token: token,
-        }
-      });
+       setHeaders: {
+         token: token,
+         'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
+       },
+     });
 
     }
     console.log(request);
@@ -31,3 +32,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   }
 }
+
+
+

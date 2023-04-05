@@ -43,7 +43,7 @@ input[type=checkbox]{
   width: 242px;
   height: 345px;
   padding: 10px;
-  border: 1px solid #ADADAD;
+  border: 1px solid #ADADAD ;
 }
 
 .cart{
@@ -82,4 +82,14 @@ button{
   background-color: white;
   border: 1px solid #3BB77E;
   color: black;
+}
+
+ul.category{
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.category li{
+  margin-right: 10px;
 }

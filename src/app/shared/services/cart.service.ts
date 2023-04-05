@@ -4,6 +4,7 @@ import { Grocery } from '../models/grocery.model';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
 import { BehaviorSubject, Observable, firstValueFrom, map, tap, throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +23,9 @@ export class CartService {
   private items = new BehaviorSubject<CartItem[]>([]);
   items$ = this.items.asObservable();
   subTotal: number = 0;
-  constructor(private http: HttpClient) {
+
+  //constructor
+  constructor(private http: HttpClient, private toastr: ToastrService) {
     console.log("con");
 
     this.getItems().subscribe({
@@ -42,7 +45,7 @@ export class CartService {
 
   getItems() {
     try {
-      return this.http.get<CartItem[]>(this.base + this.base_cartItems).pipe(tap((res) => {
+      return this.http.get<any>(this.base + this.base_cartItems).pipe(tap((res) => {
         this.items.next(res);
 
       }))
@@ -73,16 +76,22 @@ export class CartService {
     }
 
     try {
-      console.log(this.base + this.base_cartItems);
       return this.http.post<CartItem>(this.base + this.base_cartItems, cartItem).pipe(
         tap((res) => {
+
+          //update items BehaviorSubject
           const items = this.items.getValue()
           items.push(res);
           this.items.next(items);
 
+           //toast message for user
+          this.toastr.success('Item added to cart!', 'Cart Updated');
+
         })
-      );;
+      );
     } catch (error: any) {
+      console.log(error);
+
       return throwError(() => new Error(error));
     }
   }
@@ -98,6 +107,7 @@ export class CartService {
     try {
       return this.http.put<CartItem>(this.base + this.base_cartItems + "/" + item.id, item).pipe(
         tap((res) => {
+           //update items BehaviorSubject
           const items = this.items.getValue();
           const index = items.findIndex((i) => i.id === item.id);
           if (index !== -1) {
@@ -122,12 +132,17 @@ export class CartService {
     try {
       return this.http.delete(this.base + this.base_cartItems + '/' + id).pipe(
         tap(() => {
+           //update items BehaviorSubject
           const items = this.items.getValue();
           const index = items.findIndex((i) => i.id === id);
           if (index !== -1) {
             items.splice(index, 1);
             this.items.next(items);
           }
+
+          //toast message for user
+          this.toastr.success('Item removed from cart!', 'Cart Updated');
+
         }));
 
     } catch (error: any) {
@@ -137,6 +152,9 @@ export class CartService {
 
 
   }
+
+
+
   getTotalPrice(): number {
     let total = 0;
     this.items$.subscribe(items => {
@@ -158,6 +176,7 @@ export class CartService {
       try {
         this.http.delete(this.base + this.base_cartItems + '/' + item.id).pipe(
           tap(() => {
+             //update items BehaviorSubject
             const items = this.items.getValue();
             const index = items.findIndex((i) => i.id === item.id);
             if (index !== -1) {
@@ -187,7 +206,7 @@ export class CartService {
 
   getAllCategories() {
     try {
-      return this.http.get<any>(this.base_api + this.categories_url);
+      return this.http.get<any>("https://a521-117-217-127-105.in.ngrok.io/api/v1/category/get-all-categories");
     } catch (error: any) {
       return throwError(() => new Error(error))
 

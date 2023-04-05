@@ -10,7 +10,7 @@ import { CartItem } from 'src/app/shared/models/cartItem.model';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
-
+  categories:any;
   categoriesAll:any;
   count: number = 0
   changeCount() {
@@ -47,8 +47,13 @@ export class CartComponent {
     this.getCalculation();
 
     try {
-      const categories = await this.cartService.getAllCategories();
-      console.log(categories);
+        this.cartService.getAllCategories().subscribe({
+        next:(res)=>{
+          this.categories=res;
+          console.log(this.categories);
+
+        }
+      });
     } catch (error) {
       console.error('Error:', error);
     }
@@ -73,14 +78,14 @@ export class CartComponent {
     this.count++;
     item.quantityCount++;
     this.updateQuantityCount(item);
-    this.getItemsByCategory();
+    // this.getItemsByCategory();
   }
   decrease(item: CartItem) {
     if (item.quantityCount > 1) {
       this.count--;
       item.quantityCount--;
       this.updateQuantityCount(item);
-      this.getItemsByCategory();
+      // this.getItemsByCategory();
 
     }
 
@@ -105,9 +110,9 @@ export class CartComponent {
     this.cartService.removeItem(id).subscribe({
       next: (res) => {
         console.log('remove item cartComponent', res);
-        if (res) {
-          this.removeItem(id);
-        }
+        // if (res) {
+        //   this.getItemsByCategory();
+        // }
 
       },
       error: (error) => {
@@ -118,15 +123,9 @@ export class CartComponent {
   }
 
   //removeItem in component
-  removeItem(id: number) {
 
-    this.getItemsByCategory();
-  }
 
-  getSubTotal() {
 
-    console.log(this.subTotal);
-  }
 
 
   getCalculation() {
@@ -156,14 +155,6 @@ export class CartComponent {
   }
 
 
-  // getAll(){
-  //   this.cartService.getAllCategories().subscribe({
-  //     next:(res)=>console.log(res),
-  //     error:(error)=>console.log("component",error)
-
-
-  //   })
-  // }
 
 
 

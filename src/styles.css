@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
 *{
   margin: 0;
   padding: 0;
@@ -16,4 +17,9 @@ ul,li{
 
 body{
   min-height: 100vh;
+}
+
+
+.toast-container {
+  top: 100px; /* adjust the value as needed */
 }

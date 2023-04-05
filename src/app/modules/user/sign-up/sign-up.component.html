@@ -60,7 +60,7 @@
       </div>
       <div class="col">
         <label for="conract">Contact</label><br>
-        <input type="text" name="contact" id=""  formControlName="primary_mobile_number"  pattern="[0-9]*">
+        <input type="text" name="contact" id=""  formControlName="primary_mobile_number"  pattern="[0-9]*" maxlength="10" inputmode="numeric">
         <div *ngIf="primary_mobile_number!.invalid && primary_mobile_number!.touched">
           <small *ngIf="primary_mobile_number?.errors?.['required']">
             enter contact <br>

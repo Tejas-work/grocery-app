@@ -5,11 +5,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ManageAddressesComponent } from './manage-addresses/manage-addresses.component';
+import { AddAddressComponent } from './add-address/add-address.component';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component:DashboardComponent,
+   canActivate:[AuthGuard],
     children: [
       {
         path: '',
@@ -19,6 +22,7 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+        // canActivate: [AuthGuard]
       },
       {
         path: 'changePassword',
@@ -31,6 +35,10 @@ const routes: Routes = [
       {
         path:'manageAddresses',
         component:ManageAddressesComponent
+      },
+      {
+        path:'addAddress',
+        component:AddAddressComponent
       }
     ]
   }

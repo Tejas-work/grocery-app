@@ -1,4 +1,4 @@
-import {  NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserRoutingModule } from './user-routing.module';
@@ -14,6 +14,9 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { CatalogueModule } from '../catalogue/catalogue.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/shared/interceptor/auth.interceptor';
+import { AddAddressComponent } from './add-address/add-address.component';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import { AuthInterceptor } from 'src/app/shared/interceptor/auth.interceptor';
     OrdersComponent,
     ManageAddressesComponent,
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    AddAddressComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +37,8 @@ import { AuthInterceptor } from 'src/app/shared/interceptor/auth.interceptor';
     FormsModule,
     ReactiveFormsModule,
     CatalogueModule,
-    HttpClientModule
+    HttpClientModule,
+
 
   ],
   providers: [
@@ -41,8 +46,8 @@ import { AuthInterceptor } from 'src/app/shared/interceptor/auth.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    }, AuthGuard
   ],
-  exports:[ProfileComponent,SidebarComponent]
+  exports: [ProfileComponent, SidebarComponent]
 })
 export class UserModule { }

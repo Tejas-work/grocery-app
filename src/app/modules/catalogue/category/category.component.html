@@ -15,6 +15,10 @@
   </div>
 </div>
 <section>
+  <ul class="category">
+    <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category]">{{ category }}</a></li>
+
+  </ul>
   <h5 style="margin: 50px;">Total grocery : {{groceries.length}}</h5>
   <div class="container">
     <ng-container *ngIf="groceries">
@@ -24,7 +28,7 @@
          <p class="cate">{{grocery.category}}</p>
          <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
          <p>Rating : {{grocery.rating}}☆</p>
-         <p (click)="getBrandProduct(grocery.category,grocery.store)">By {{grocery.store}}</p>
+         <p (click)="getBrandProduct(grocery.category,grocery.store)">By<u style="color: #3BB77E;cursor: pointer;"> {{grocery.store}}</u></p>
          <div class="cart">
            <div class="price">
              <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"

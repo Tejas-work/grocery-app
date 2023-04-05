@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LogIn } from 'src/app/shared/models/login.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  constructor(private fb:FormBuilder,private authService:AuthService) {
+  constructor(private fb:FormBuilder,private authService:AuthService,private toastr: ToastrService,private router:Router) {
 
   }
 
@@ -43,12 +45,18 @@ export class LoginComponent {
     console.log(user);
     this.authService.logIn(user).subscribe(
       {next:(res)=>{
-        let token = res.data;
+        let token = res.data.token;
+        let user = res.data.user
+        this.toastr.success('LogIn successfully');
         console.log(res);
 
       console.log(res.data);
 
       sessionStorage.setItem('token',token);
+      sessionStorage.setItem('user',JSON.stringify(user));
+
+
+      this.router.navigate(['']);
 
 
 

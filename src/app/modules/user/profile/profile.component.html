@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="profileForm">
+  <form [formGroup]="profileForm" (submit)="onSubmit()">
 
     <div class="row">
       <div class="col">
@@ -22,49 +22,36 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col">
-        <label for="Email">Email</label><br>
-        <input type="email" name="email" id="email" formControlName="email">
-        <div *ngIf="email?.invalid && email?.touched">
-          <small *ngIf="email?.errors?.['required']">
-            Please enter email
-          </small>
-          <small *ngIf="email?.errors?.['email']">
-            Please enter a valid email address
-          </small>
-        </div>
 
-      </div>
-      <div class="col">
-        <label for="conract">Contact</label><br>
-        <input type="text" name="contact" id="" formControlName="contact">
-        <div *ngIf="contact!.invalid && contact!.touched">
-          <small *ngIf="contact?.errors?.['required']">
-            Please enter contact
-          </small>
-          <small *ngIf="contact?.errors?.['minlength']">
-            Contact must be at least {{contact?.errors?.['minlength'].requiredLength}} characters long
-          </small>
-          <small *ngIf="contact?.errors?.['maxlength']">
-            Contact cannot be more than {{contact?.errors?.['maxlength'].requiredLength}} characters long
-          </small>
-          <small *ngIf="contact?.errors?.['pattern']">
-            Contact must contain only digits (0-9)
-          </small>
-        </div>
-      </div>
-    </div>
 
     <div class="row">
       <div class="col">
         <label for="">Alternate Contact Email</label><br>
         <input type="email" name="altEmail" id="" formControlName="altEmail">
+        <small *ngIf="altEmail?.errors?.['email']">
+          Please enter a valid email address
+        </small>
       </div>
+
+
+
+
+
       <div class="col">
         <label for="">Alternate Contact Number</label><br>
         <input type="text" name="altContact" id="" formControlName="altContact">
+        <small *ngIf="altContact?.errors?.['minlength']">
+          Alternate Contact Number must be at least {{altContact?.errors?.['minlength'].requiredLength}} characters long
+        </small>
+        <small *ngIf="altContact?.errors?.['maxlength']">
+          Alternate Contact Number cannot be more than {{altContact?.errors?.['maxlength'].requiredLength}} characters long
+        </small>
+        <small *ngIf="altContact?.errors?.['pattern']">
+          Contact must contain only digits (0-9)
+        </small>
       </div>
+
+
     </div>
 
     <div class="row">
@@ -77,13 +64,30 @@
           </small>
         </div>
       </div>
+      <div class="col">
+        <label for="">Password</label><br>
+        <input type="password" name="" id="" formControlName="password">
+        <div *ngIf="password?.invalid && password?.touched">
+          <small *ngIf="password?.errors?.['required']">
+            Password is required<br>
+          </small>
+          <small *ngIf="password?.errors?.['minlength']">
+            Password must be at least {{ password?.errors?.['minlength'].requiredLength }} characters long<br>
+          </small>
+          <small *ngIf="password?.errors?.['pattern']">
+            <br> must contain at least one uppercase letter,<br> one lowercase letter, and one number
+          </small>
+        </div>
 
+      </div>
+
+      <div class="submit">
+        <button type="submit" [disabled]="profileForm.invalid">save</button>
+      </div>
 
     </div>
   </form>
 
-  <div class="submit">
-    <button [disabled]="profileForm.invalid">save</button>
-  </div>
+
 
 </div>

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import 'bootstrap'
+
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CatalogueModule } from './modules/catalogue/catalogue.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +24,10 @@ import { TrendingItemsComponent } from './layout/trending-items/trending-items.c
 import { GoodThingsComponent } from './layout/good-things/good-things.component';
 import { AuthService } from './shared/services/auth.service';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormService } from './shared/services/form.service';
+
 
 
 
@@ -37,7 +43,7 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
         TrendingItemsComponent,
         GoodThingsComponent,
     ],
-    providers: [CartService, GroceriesService,AuthService],
+    providers: [CartService, GroceriesService,AuthService,FormService],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,
@@ -48,7 +54,9 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
         HttpClientModule,
         CartModule,
         UserModule,
-        IvyCarouselModule
-    ]
+        IvyCarouselModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot()
+    ],
 })
 export class AppModule { }

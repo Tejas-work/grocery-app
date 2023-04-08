@@ -40,13 +40,14 @@ export class CartService {
   subTotal: number = 0;
   gst: number = 0;
   total: number = 0;
-  userName:string='';
+
   isLogin: boolean = false;
   headers= new HttpHeaders(
     {
       'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
     }
   )
+  userName: any;
 
   //constructor
   constructor(private http: HttpClient, private toastr: ToastrService,private router:Router) {
@@ -257,7 +258,7 @@ let user= sessionStorage.getItem('user');
 
 
   order(deliveryId: number, billingId: number) {
- 
+
     let order_products;
 
     // Encrypt the deliveryId and billingId
@@ -367,26 +368,53 @@ let user= sessionStorage.getItem('user');
 items$ = this.items.asObservable();
 
 moveToCart() {
+  let user= sessionStorage.getItem('user');
+  if (user) {
+    let userObj=JSON.parse(user)
+    this.userName=userObj.username
+  }
+
+  console.log('con');
+
+
+
+
   return this.http.get<any>("http://localhost:3000/users/" + this.userName).pipe(
     tap((res) => {
       console.log("get data");
-      console.log(res[0].cart);
-      if (Array.isArray(res[0].cart) && res[0].cart.length > 0) {
+      console.log(res);
+
+      console.log(res?.cart);
+      if (Array.isArray(res?.cart) && res?.cart.length > 0) {
         const data = this.items.getValue();
-        res[0].cart.forEach((item: any) => data.push(item));
+        const requests:any = [];
+        res?.cart.forEach((item: any) => {
+          data.push(item);
+          requests.push(this.http.post<any>(this.base + this.base_cartItems, item));
+        });
+        forkJoin(requests).subscribe(
+          {
+            next: (res) => {
+              console.log(res);
+              this.http.delete<any>('http://localhost:3000/users/' + this.userName).subscribe(
+                {
+                  next: (res) => {
+                    console.log('deleted');
+                    this.router.navigate(['']);
+                  },
+                  error: (error) => console.log(error),
+                });
+            },
+            error: (error) => console.log(error)
+          });
         this.updateItems(data);
       }
     }),
-    switchMap((res) => {
-      const requests = res[0].cart.map((item: any) => {
-        return this.http.post<any>(this.base + this.base_cartItems, item);
-      });
-      return forkJoin(requests);
-    }),
-    catchError((error) => throwError(()=>new Error(error))),
+    catchError((error) => throwError(() => new Error(error))),
     finalize(() => console.log("HTTP request completed."))
   );
 }
+
 
 updateItems(data: CartItem[]) {
   this.items.next(data);

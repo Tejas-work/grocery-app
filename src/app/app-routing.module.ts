@@ -16,22 +16,26 @@ const routes: Routes = [
   },
 
   {
-    path:'product-details/:id',
+    path:'product-details/:id/:category',
     component:ProductDetailsComponent
   },{
     path:'cart',
-    component:CartComponent
+    component:CartComponent,
+    canActivate:[AuthGuard]
+
   },
   {
     path:'checkOut',
-    component:CheckOutComponent
+    component:CheckOutComponent,
+    canActivate:[AuthGuard]
   },
   {
     path:'success',
-    component:SuccessComponent
+    component:SuccessComponent,
+    canActivate:[AuthGuard]
   },{
     path:'users',loadChildren:()=>import('./modules/user/user.module').then(c => c.UserModule)
-   
+
   }
   ,{
     path:'groceries',loadChildren:()=>import('./modules/catalogue/catalogue.module').then(c => c.CatalogueModule),

@@ -14,8 +14,8 @@ countries:[]=[]
 
   constructor(private http:HttpClient) {
 
-    this.getCountries();
-    this.getStats('IN');
+    // this.getCountries();
+    // this.getStats('IN');
   }
 
   getCountries() {

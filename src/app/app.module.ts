@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import 'bootstrap'
 
 
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CatalogueModule } from './modules/catalogue/catalogue.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +28,7 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormService } from './shared/services/form.service';
+import { ProductsService } from './shared/services/products.service';
 
 
 
@@ -43,7 +45,7 @@ import { FormService } from './shared/services/form.service';
         TrendingItemsComponent,
         GoodThingsComponent,
     ],
-    providers: [CartService, GroceriesService,AuthService,FormService],
+    providers: [CartService, GroceriesService,AuthService,FormService,ProductsService],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

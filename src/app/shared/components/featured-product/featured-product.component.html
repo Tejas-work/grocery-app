@@ -3,7 +3,8 @@
     <h3>Featured Products
     </h3>
     <ul>
-      <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category]">{{ category }}</a></li>
+      <li > <a [routerLink]="['/groceries','All1','All']"> All</a></li>
+      <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category.slug,category.title]">{{ category?.title}}</a></li>
 
     </ul>
   </div>

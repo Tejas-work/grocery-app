@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AddAddress } from 'src/app/shared/models/addAddress.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { FormService } from 'src/app/shared/services/form.service';
@@ -14,51 +15,42 @@ export class AddAddressComponent {
 
   addAddressForm!: FormGroup;
   countries: [] = [];
+  encryptId:string=''
+  id:number=0
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private formService: FormService) {
-    formService.getCountries().subscribe({
-      next: (res) => {
-        // console.log(res);
 
-        // Extract the name property from each object in the array
-        this.countries = res.map((obj: any) => [obj.name.common,obj.cca2]);
-        this.countries.sort();
-        // console.log(this.countries);
-      }, error: (error) => {
-        console.log(error);
+  constructor(private fb: FormBuilder, private authService: AuthService, private formService: FormService,private route:ActivatedRoute,private router:Router) {
 
+    this.addAddressForm = this.fb.group(
+      {
+        addressOne: ['', Validators.required],
+        addressTwo: ['', Validators.required],
+        area: ['', Validators.required],
+        city: ['', Validators.required],
+        state: ['', Validators.required],
+        country: ['', Validators.required],
+        postal_code: ['', [Validators.required, Validators.minLength(6)]],
+        landmark: ['', Validators.required],
+        tag: ['', Validators.required],
+      }
+    )
+
+    this.route.params.subscribe((res)=>{
+      this.encryptId=res['id'];
+
+      if(this.encryptId){
+       this.displayAddress();
       }
 
-    });
+    })
 
 
-    //get stats
 
-    // formService.getStates('IN').subscribe(
-    //   {
-    //     next:(res)=>{
-    //       console.log(res);
 
-    //     },
-    //     error:(error)=>console.log(error)
 
-    //   }
-    // )
   }
   ngOnInit(){
-      this.addAddressForm = this.fb.group(
-        {
-          addressOne: ['', Validators.required],
-          addressTwo: ['', Validators.required],
-          area: ['', Validators.required],
-          city: ['', Validators.required],
-          state: ['', Validators.required],
-          country: ['IN', Validators.required],
-          postal_code: ['', [Validators.required, Validators.minLength(6)]],
-          landmark: ['', Validators.required],
-          tag: ['', Validators.required],
-        }
-      )
+
     }
 
 
@@ -95,7 +87,6 @@ export class AddAddressComponent {
   //address onsubmit
   onSubmit() {
       console.log(this.addAddressForm.getRawValue());
-
       const data: AddAddress = {
         address_line_1: this.addressOne?.value,
         address_line_2: this.addressTwo?.value,
@@ -108,6 +99,18 @@ export class AddAddressComponent {
         tag: this.tag?.value
       };
 
+
+
+
+      if(this.encryptId){
+        this.updateAddress(data);
+      }else{
+        this.addAddress(data);
+      }
+    }
+
+    addAddress(data:any){
+
       //call add address api
       this.authService.addAddress(data).subscribe({
         next: (res) => {
@@ -115,7 +118,55 @@ export class AddAddressComponent {
         },
         error: (error) => console.error(error)
       });
+
+    }
+    updateAddress(data:any){
+
+      this.authService.updateAddress(data,this.encryptId,this.id).subscribe(
+        {
+          next:(res)=>{
+            console.log(res);
+
+            
+            this.router.navigate(['users/manageAddresses'])
+
+          },
+          error:(error)=>console.log(error)
+
+        }
+      )
+
+    }
+
+
+
+  displayAddress() {
+
+    this.authService.address$.subscribe({
+      next:(res)=>{
+
+        this.id=res.id
+        console.log(res);
+
+
+
+        this.addAddressForm.patchValue({
+          addressOne: res.address_line_1,
+          addressTwo: res.address_line_2,
+          area: res.area,
+          city: res.city,
+          state: res.state,
+          country: res.country,
+          postal_code: res.postal_code,
+          landmark: res.landmark,
+          tag: res.tag,
+        });
+
+      }
+    })
+
     }
 
 
 }
+

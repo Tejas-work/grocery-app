@@ -5,6 +5,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 import { ProductHeaderComponent } from 'src/app/shared/components/product-header/product-header.component';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 
 
@@ -26,6 +27,7 @@ import { ProductHeaderComponent } from 'src/app/shared/components/product-header
     CategoryComponent,
     ProductDetailsComponent,
     ProductHeaderComponent
-  ]
+  ],
+  providers:[ProductsService]
 })
 export class CatalogueModule { }

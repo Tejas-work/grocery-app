@@ -39,16 +39,11 @@ logOut() {
     //check user is login or not
     authService.isLogin$.subscribe((res)=>{
       this.isLogin=res;
-
       const jsonString = sessionStorage.getItem('user');
       if(jsonString){
       const userObj = JSON.parse(jsonString);
         this.userName=userObj.first_name+" "+userObj.last_name
       }
-
-
-
-
     })
 
 
@@ -97,7 +92,7 @@ logOut() {
 
   getCalculation() {
     this.cartService.items$.subscribe(items => {
-      this.subTotal = items.reduce((total, item) => total + (item.quantityCount * item.price), 0);
+      this.subTotal = items.reduce((total, item) => total + (item.qty * item.product_amount), 0);
       console.log(this.subTotal);
       this.gst = (this.subTotal * 18) / 100;
       this.total = this.subTotal + this.gst;

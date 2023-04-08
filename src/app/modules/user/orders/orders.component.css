@@ -12,7 +12,7 @@
 table{
   width: 100%;
 }
-td{
+td,th{
   text-align: center;
   margin: 10px 0px;
   background-color: #D3D0D0 ;
@@ -22,7 +22,7 @@ td{
 
 p{
   margin: 0;
-  border-right: 1px solid black;
+  /* border-right: 1px solid black; */
 }
 
 h6 {

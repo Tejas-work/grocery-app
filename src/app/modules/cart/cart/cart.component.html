@@ -80,28 +80,27 @@
         <tr *ngFor="let grocery of category.value.items">
           <td class="one">
             <p style="font-size: 17px">
-              <span style="font-size: 12px">{{ grocery.store }}</span
-              ><br />{{ grocery.grocery_name }}
+              <span style="font-size: 12px">{{ grocery.store }}</span><br />{{ grocery.product_name}}
             </p>
-            <h6>{{ grocery.quantity }}</h6>
+            <!-- <h6>{{ grocery.qty }}</h6> -->
           </td>
-          <td *ngIf="grocery.discountPrice">
+          <!-- <td *ngIf="grocery.discountPrice">
             <h6> {{ grocery.discountPrice | currency : "CAD" : "symbol-narrow"}}</h6>
             <p style="font-size: 17px">
 
               <span style="text-decoration: line-through">
                 {{grocery.price| currency : "CAD" : "symbol-narrow" }}</span>
             </p>
-          </td>
+          </td> -->
           <td *ngIf="!grocery.discountPrice">
-            <h6> {{ grocery.price | currency : "CAD" : "symbol-narrow"}}</h6>
+            <h6> {{ grocery.product_amount| currency : "CAD" : "symbol-narrow"}}</h6>
           </td>
           <td style="font-size: 17px">
             <button class="btn" (click)="decrease(grocery)">-</button>
 
             <!-- <input type="text" name="count" id="" class="count" [(ngModel)]="count" (change)="changeCount()" > -->
-            <span class="count" (change)="changeCount()">{{
-              grocery.quantityCount
+            <span class="count">{{
+              grocery.qty
             }}</span>
             <button class="increase btn" (click)="increase(grocery)">+</button>
           </td>
@@ -109,7 +108,7 @@
             {{ grocery.subtotal | currency : "CAD" : "symbol-narrow" }}
             <i
               class="fa-solid fa-xmark"
-              (click)="removeCartItem(grocery.id)"
+              (click)="removeCartItem(grocery.product_id)"
               style="margin-left: 30px"
             ></i>
           </td>

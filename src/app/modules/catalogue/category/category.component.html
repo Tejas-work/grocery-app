@@ -1,49 +1,51 @@
-<app-product-header [title]="groceryCategory"></app-product-header>
+<app-product-header [title]="productCategory"></app-product-header>
 <div class="filter">
   <div class="icon">
     <i class="fa-solid fa-filter"  (click)="display()"></i>
   </div>
   <div class="options" [style.display]="isChange ? 'block':'none'">
     <p style="text-align: center;">Filter Option</p>
-    <div class="option">
+    <!-- <div class="option">
       <ul>
         <p style="font-size: 16px;">Brand</p>
         <li *ngFor="let brand of brands"><input type="checkbox" name="Brand" id="" value="{{brand}}"  (change)="onBrandChecked($event)">{{brand}}</li>
 
       </ul>
-    </div>
+    </div> -->
   </div>
 </div>
 <section>
   <ul class="category">
-    <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category]">{{ category }}</a></li>
+    <li > <a [routerLink]="['/groceries','All1','All']"> All</a></li>
+    <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category.slug,category.title]">{{ category?.title}}</a></li>
 
   </ul>
-  <h5 style="margin: 50px;">Total grocery : {{groceries.length}}</h5>
+  <!-- <h5 style="margin: 50px;">Total product : {{products.length}}</h5> -->
   <div class="container">
-    <ng-container *ngIf="groceries">
+    <ng-container *ngIf="products">
 
-        <div id="card" *ngFor="let grocery of groceries" >
-          <img src="{{grocery.imageUrl}}" alt="" (click)="navigateDetails(grocery.id)">
-         <p class="cate">{{grocery.category}}</p>
-         <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
-         <p>Rating : {{grocery.rating}}☆</p>
-         <p (click)="getBrandProduct(grocery.category,grocery.store)">By<u style="color: #3BB77E;cursor: pointer;"> {{grocery.store}}</u></p>
+        <div id="card" *ngFor="let product of products" >
+          <img src="assets/Rectangle 19.png" alt="" (click)="navigateDetails(product.id)">
+         <!-- <p class="cate">{{productCategory}}</p> -->
+         <h6>{{product.title}}</h6>
+         <!-- <p>Rating : {{product.rating}}☆</p> -->
+         <!-- <p (click)="getBrandProduct(product.category,product.store)">By<u style="color: #3BB77E;cursor: pointer;"> {{product.store}}</u></p> -->
          <div class="cart">
            <div class="price">
-             <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"
-               [style.text-decoration]="grocery.discountPrice ? 'line-through' : 'none'">
-               {{grocery.price | currency}}
+             <p><span *ngIf="product.discount_amount">{{product.discount_amount| currency}}</span><span class="original-price"
+               [style.text-decoration]="product.discount_amount!='0' ? 'line-through' : 'none'">
+
+               {{product.amount | currency}}
              </span>
              </p>
            </div>
-           <button (click)="addCart(grocery)" class="add"><i class="fa-solid fa-cart-shopping"></i>add</button>
+           <button (click)="addCart(product)" class="add"><i class="fa-solid fa-cart-shopping"></i>add</button>
          </div>
        </div>
 
     </ng-container>
-    <div *ngIf="!(groceries && groceries.length>0)">
-      <h1>Grocery not found</h1>
+    <div *ngIf="!(products && products.length>0)">
+      <h1>Product not found</h1>
     </div>
 
   </div>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { CartService } from 'src/app//shared/services/cart.service';
 import { CartItem } from 'src/app/shared/models/cartItem.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,16 +11,11 @@ import { CartItem } from 'src/app/shared/models/cartItem.model';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
-  categories:any;
+
   categoriesAll:any;
   count: number = 0
-  changeCount() {
-    console.log(this.count);
 
-  }
-  checkOut() {
-    this.router.navigate(['checkOut']);
-  }
+
 
 
 
@@ -34,6 +30,7 @@ export class CartComponent {
 
   constructor(
     private cartService: CartService,
+    private authService:AuthService,
     private router: Router
 
 
@@ -45,18 +42,6 @@ export class CartComponent {
   async ngOnInit() {
     window.scrollTo(0, 0);
     this.getCalculation();
-
-    try {
-        this.cartService.getAllCategories().subscribe({
-        next:(res)=>{
-          this.categories=res;
-          console.log(this.categories);
-
-        }
-      });
-    } catch (error) {
-      console.error('Error:', error);
-    }
 
   }
 
@@ -76,14 +61,14 @@ export class CartComponent {
 
   increase(item: CartItem) {
     this.count++;
-    item.quantityCount++;
+    item.qty++;
     this.updateQuantityCount(item);
-    // this.getItemsByCategory();
+    this.getItemsByCategory();
   }
   decrease(item: CartItem) {
-    if (item.quantityCount > 1) {
+    if (item.qty > 1) {
       this.count--;
-      item.quantityCount--;
+      item.qty--;
       this.updateQuantityCount(item);
       // this.getItemsByCategory();
 
@@ -97,6 +82,7 @@ export class CartComponent {
       {
         next: (res) => {
           console.log("update QuantityCount", res);
+          // this.getCartItems();
         },
         error: (error) => console.log(error)
 
@@ -113,16 +99,17 @@ export class CartComponent {
         // if (res) {
         //   this.getItemsByCategory();
         // }
+        // this.getCartItems();
 
       },
       error: (error) => {
         console.log(error);
       }
     })
-    this.getCartItems();
+
   }
 
-  //removeItem in component
+
 
 
 
@@ -130,7 +117,7 @@ export class CartComponent {
 
   getCalculation() {
     this.cartService.items$.subscribe(items => {
-      this.subTotal = items.reduce((total, item) => total + (item.quantityCount * item.price), 0);
+      this.subTotal = items.reduce((total, item) => total + (item.qty * item.product_amount), 0);
       console.log(this.subTotal);
       this.gst = (this.subTotal * 18) / 100;
       this.total = this.subTotal + this.gst;
@@ -154,6 +141,12 @@ export class CartComponent {
     });
   }
 
+
+  checkOut() {
+    this.router.navigate(['checkOut']);
+
+
+  }
 
 
 

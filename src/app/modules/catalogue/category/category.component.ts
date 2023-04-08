@@ -1,30 +1,50 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app//shared/services/cart.service';
 import { GroceriesService } from 'src/app/shared/services/groceries.service';
-import { Grocery } from 'src/app/shared/models/grocery.model';
+import { Product } from 'src/app/shared/models/product.model';
 import { ToastrService } from 'ngx-toastr';
+import { ProductsService } from 'src/app/shared/services/products.service';
+import { Category } from 'src/app/shared/models/category.model';
+
+
+
 @Component({
+
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit {
-getBrandProduct(category: string,brand: string) {
-  debugger
+  getBrandProduct(category: string, brand: string) {
+    debugger
 
-this.router.navigate(['groceries',category, brand])
-}
-categories:string[]=['']
-  groceries: Grocery[] = [];
-  total:number=0;
-  duplicate:Grocery[]=[]
+    this.router.navigate(['products', category, brand])
+  }
+
+
+
+
+  /*
+  categories all categories data
+  [
+    {
+        "id": 1,
+        "title": "category-1",
+        "parent_id": null
+    }
+  ]
+  */
+  categories: Category[] = []
+  products: any;
+  total: number = 0;
+  duplicate: any;
   brands: string[] = [];
-  groceryCategory: string ='';
+  productCategory: string = '';
   word: string | undefined;
   selectedBrands: string[] = [];
-  brand: string='';
-  addCartMsg="Add successfully"
+  brand: string = '';
+  addCartMsg = "Add successfully"
 
 
   constructor(
@@ -32,110 +52,86 @@ categories:string[]=['']
     private cartService: CartService,
     private route: ActivatedRoute,
     private toastr: ToastrService,
+    private productService: ProductsService,
     private router: Router
-  ) {}
+  ) {
 
-  ngOnInit() {
+  }
+
+  async ngOnInit() {
     //start top
     window.scrollTo(0, 0);
+    await this.getAllCategories();
 
     //get category from route and get data
     this.route.params.subscribe((params) => {
-      this.categories=this.groceriesService.getCategories();
       console.warn(params);
-      this.groceryCategory = params['category'];
+      this.productCategory = params['category'];
       this.word = params['word'];
       this.brand = params['brand'];
 
-      if(this.brand){
-        this.getGroceriesByBrandData(this.brand);
-        console.log(this.brand);
+      //   if(this.brand){
+      //     this.getGroceriesByBrandData(this.brand);
+      //     console.log(this.brand);
 
-        }
+      //     }
 
 
-     else if (this.word && this.groceryCategory) {
-        this.getSearchCategoryData(this.groceryCategory, this.word);
-        console.log(this.word);
+      //  else if (this.word && this.productCategory) {
+      //     this.getSearchCategoryData(this.productCategory, this.word);
+      //     console.log(this.word);
 
-      }
-      else if (this.groceryCategory) {
-        this.getGroceriesByCategoryData(this.groceryCategory);
-        console.log(this.groceryCategory);
+      //   }
+      //   else
+      if(this.productCategory=='All'){
+
+        this.productService.getAllProducts().subscribe(
+          {
+            next:(res)=>{
+              console.log(res);
+              this.products=res.data
+
+            }
+          }
+        )
+
+    }
+      else if (this.productCategory) {
+        this.getGroceriesByCategoryData(this.productCategory);
+        console.log(this.productCategory);
 
       }
     });
   }
 
-  // Function to get data for search category
-getSearchCategoryData(category: string, word: string) {
-  this.groceries = this.groceriesService.getSearchCategory(category, word);
-  this.duplicate = this.groceriesService.getSearchCategory(category, word);
-  if (this.groceries && this.groceries.length > 0) {
-    this.updateBrandAndTotal=this.groceries;
-  }
-}
 
-// Function to get data for groceries by category
-getGroceriesByCategoryData(category: string) {
-  this.groceries = this.groceriesService.getGroceriesByCategory(category);
-  this.duplicate = this.groceriesService.getGroceriesByCategory(category);
-  if (this.groceries && this.groceries.length > 0) {
-    this.updateBrandAndTotal=this.groceries;
-  }
+  getGroceriesByCategoryData(category: string) {
 
-}
+    console.log(this.categories);
+    console.log(category != 'All');
 
-getGroceriesByBrandData(brand:string){
-  this.groceries = this.groceriesService.getGroceriesByBrand(brand);
-  this.duplicate = this.groceriesService.getGroceriesByBrand(brand);
-  if (this.groceries && this.groceries.length > 0) {
-    this.updateBrandAndTotal=this.groceries;
-  }
+    if (category != 'All') {
+      let categoryData = this.categories.filter((item) => item.title == category)[0]
+      this.productService.getProductByCategory(categoryData.id).subscribe(
+        {
+          next: (value) => {
+            this.products = value;
+            console.log(value);
 
+          }, error: (error) => console.log(error)
 
-}
-
-set updateBrandAndTotal(groceries:Grocery[]){
-  this.brands = this.groceriesService.getGroceriesBrand(groceries);
-  this.total=groceries.length;
-}
-
-  //filter
-  onBrandChecked(event: Event) {
-    //check brands add
-    console.log(event);
-    const brandElement = event.target as HTMLInputElement;
-    const brandValue = brandElement.value;
-    if (brandElement.checked) {
-      this.selectedBrands.push(brandValue);
+        }
+      )
     }
-    //unchecked brand remove
-    else {
-      const index = this.selectedBrands.indexOf(brandValue);
-      if (index != -1) {
-        this.selectedBrands.splice(index, 1);
-      }
-    }
-    console.log(this.selectedBrands);
 
-    if (this.groceryCategory) {
-      this.getFilterData();
-    }
+
+
+
+
+
   }
 
 
-  getFilterData() {
-    //filter using brands
-    if (this.selectedBrands && this.selectedBrands.length > 0) {
-      this.groceries = this.duplicate.filter((grocery) => {
-        return this.selectedBrands.includes(grocery.store);
-      });
-      console.log(this.groceries);
-    } else {
-      this.groceries = this.duplicate;
-    }
-  }
 
   ngOnChanges() {
     console.log('change');
@@ -143,25 +139,23 @@ set updateBrandAndTotal(groceries:Grocery[]){
 
   navigateDetails(id: number) {
 
-    this.router.navigate(['product-details',id]);
+    this.router.navigate(['product-details', id,this.productCategory]);
 
   }
 
 
-  addCart(grocery:Grocery) {
-    this.cartService.addItem(1,grocery).subscribe(
+  addCart(product: any) {
+    this.cartService.addItem(1,this.productCategory ,product).subscribe(
       {
-        next:(res)=>{
-          console.log('addCart',res);
-
-          this.toastr.success('Item added to cart');
+        next: (res) => {
+          console.log('addCart', res);
         },
-        error:(error)=>{
+        error: (error) => {
 
-          if(error.status==0){
+          if (error.status == 0) {
             this.toastr.error('Server problem. Please contact the authorized person.');
           }
-          if(error.status==500){
+          if (error.status == 500) {
             this.toastr.info('Item added to cart successfully');
 
           }
@@ -172,12 +166,31 @@ set updateBrandAndTotal(groceries:Grocery[]){
         }
       }
     )
-    // this.router.navigate(['cart']);
-    }
+
+  }
 
   isChange = false;
   display() {
     this.isChange = !this.isChange;
+  }
+
+
+
+  //sdfkuhsdhkfsjhdfjsghrhkjsguhrkju
+  ///dfhkujvhsdljg
+  //dsfhkudsjgskg
+  //dskufhks,fgkujs
+
+  async getAllCategories() {
+    try {
+      const res = await this.productService.getAllCategories().toPromise();
+      this.categories = res.data;
+      console.log(this.categories);
+    } catch (error) {
+
+      console.log(error);
+
+    }
   }
 
 

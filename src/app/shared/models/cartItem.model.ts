@@ -1,12 +1,12 @@
 export interface CartItem {
-  id: number;
-  grocery_name: string;
-  store: string;
+  id:number;
+  product_id: number;
+  product_name: string;
+  qty: number;
+  product_amount: number;
+  discount_type: number;
+  discount_amount: number;
   category: string;
-  discountPrice?: number|null;
-  price: number;
-  quantity: number;
   subtotal: number;
-  imageUrl: string;
-  quantityCount:number;
 }
+

@@ -2,89 +2,113 @@
   <nav>
     <div class="brand">
       <a class="navbar-brand" [routerLink]="['']">
-        <img src="../../assets/brand.png" alt="Bootstrap" width="39" height="39">
-        <img src="../../assets/logo.png" alt="Bootstrap" width="196" height="44px">
+        <img
+          src="../../assets/brand.png"
+          alt="Bootstrap"
+          width="39"
+          height="39"
+        />
+        <img
+          src="../../assets/logo.png"
+          alt="Bootstrap"
+          width="196"
+          height="44px"
+        />
       </a>
     </div>
     <div class="searchbar">
       <div class="categories">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            {{selectedCategory}}
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ selectedCategory }}
           </button>
           <ul class="dropdown-menu">
-            <li *ngFor="let category of categories"><a class="dropdown-item" (click)="getSelectedCategory(category)">{{
-                category }}</a></li>
-
+            <li *ngFor="let category of categories">
+              <a
+                class="dropdown-item"
+                (click)="getSelectedCategory(category)"
+                >{{ category }}</a
+              >
+            </li>
           </ul>
         </div>
       </div>
       <div class="bar">
         <form action="" (submit)="onSubmit($event)">
-          <input type="text" id="" [(ngModel)]="myValue" name="Input" placeholder="Search for items...">
+          <input
+            type="text"
+            id=""
+            [(ngModel)]="myValue"
+            name="Input"
+            placeholder="Search for items..."
+          />
           <button type="submit"><i class="fa fa-search"></i></button>
         </form>
       </div>
     </div>
 
-    <div class="cart">
-      <span class="totalItems">{{cartItemsCount}}</span>
-      <i class="fa-solid fa-cart-shopping" (click)="navigateCart()"></i>
-      <div class="dropdown">
-        <button class="btn  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          My cart <br><span class="total">{{total|currency}}</span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
+    <ng-container *ngIf="isLogin">
+      <div class="cart">
+        <span class="totalItems">{{ cartItemsCount }}</span>
+        <i class="fa-solid fa-cart-shopping" (click)="navigateCart()"></i>
+        <button
+          >
+            My cart <br /><span class="total">{{ total | currency }}</span>
+          </button>
       </div>
 
-
-
-    </div>
-
-    <ng-container *ngIf="isLogin">
       <a (click)="logOut()">LogOut</a>
-
 
       <div class="profile">
         <div class="dropdown">
-          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{userName}}
+          <button
+            class="btn dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {{ userName }}
           </button>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="users/profile">Edit Profile</a></li>
-            <li><a class="dropdown-item" routerLink="users/changePassword">change Password</a></li>
+            <li>
+              <a class="dropdown-item" routerLink="users/profile"
+                >Edit Profile</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="users/changePassword"
+                >change Password</a
+              >
+            </li>
           </ul>
         </div>
       </div>
-
     </ng-container>
     <ng-container *ngIf="!isLogin">
       <a routerLink="/login">Login</a>
       <a routerLink="/signUp">Sign Up</a>
-
     </ng-container>
-
-
   </nav>
 
   <nav class="barSecond">
-
     <div class="brows">
-      <i class="fa fa-th-large"></i> &nbsp; <a [routerLink]="['/groceries','All']">Brows All Categories</a>
+      <i class="fa fa-th-large"></i> &nbsp;
+      <a [routerLink]="['/groceries', 'All1', 'All']">Brows All Categories</a>
     </div>
 
     <div class="contact">
-
-      <a href="tel:+1234567890p1234"><span class="number">
-          <i class="fa-solid fa-phone"></i>+12345678901234</span></a>
+      <a href="tel:+1234567890p1234"
+        ><span class="number">
+          <i class="fa-solid fa-phone"></i>+12345678901234</span
+        ></a
+      >
 
       24/7 support center
     </div>
   </nav>
-
 </header>

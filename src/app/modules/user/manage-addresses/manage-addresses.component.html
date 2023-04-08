@@ -5,12 +5,14 @@
       <div class="card" style="margin: 20px;">
         <h6>{{address?.tag}}</h6>
         <div class="address">
-          {{address?.address_line_1}} 
+          {{address?.address_line_1}}<br>
+          {{address?.area}} {{address?.landmark}}<br>
+          {{address?.city}} 
         </div>
         <div class="action">
           <button>deliver Here</button>
-          <i class="fa-solid fa-trash"></i>
-          <i class="fa-solid fa-pen"></i>
+          <i class="fa-solid fa-trash" (click)="delete(address.id)"></i>
+          <i class="fa-solid fa-pen" (click)="edit(address.id)"></i>
         </div>
       </div>
 

@@ -30,10 +30,10 @@
   <div class="row">
     <div class="col">
       <label for="country">country</label><br>
-      <select formControlName="country" name="country">
+      <!-- <select formControlName="country" name="country">
         <option *ngFor="let item of countries" [value]="item[1]">{{item[0]}}</option>
-      </select>
-      <!-- <input type="text" name="" id="" formControlName="country"> -->
+      </select> -->
+      <input type="text" name="" id="" formControlName="country">
       <div *ngIf="country!.invalid && country!.touched">
         <small [style.display]="country?.errors?.['required']">
           Please enter country

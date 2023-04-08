@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
-        // canActivate: [AuthGuard]
+
       },
       {
         path: 'changePassword',
@@ -38,6 +38,10 @@ const routes: Routes = [
       },
       {
         path:'addAddress',
+        component:AddAddressComponent
+      },
+      {
+        path:'addAddress/:id',
         component:AddAddressComponent
       }
     ]

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -8,9 +9,10 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class ManageAddressesComponent {
 
+
   addresses:any;
 
-  constructor(private authService:AuthService) {
+  constructor(private authService:AuthService,private router:Router) {
     this.authService.user$.subscribe(
       {
         next:(res)=>{
@@ -31,5 +33,24 @@ export class ManageAddressesComponent {
   ngOnInit(){
 
   }
+
+//delete address
+  delete(id:number) {
+    this.authService.deleteAddress(id);
+  }
+
+
+  edit(id:number) {
+    this.authService.encrypt(id).subscribe(
+      {
+        next:(res)=>{
+          console.log(res.data);
+          this.authService.getAddress(id);
+          this.router.navigate(['users/addAddress',res.data]);
+        }
+      }
+    )
+    }
+
 
 }

@@ -18,11 +18,17 @@ export class AuthInterceptor implements HttpInterceptor {
     if (token) {
       request = request.clone({
        setHeaders: {
-         token: token,
-         'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
+         token: token
        },
-     });
+     }
+     );
 
+    }else{
+      request = request.clone({
+        setHeaders: {
+          'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
+        },
+      });
     }
     console.log(request);
 

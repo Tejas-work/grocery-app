@@ -7,51 +7,58 @@ import { CartService } from 'src/app/shared/services/cart.service';
 @Component({
   selector: 'app-check-out',
   templateUrl: './check-out.component.html',
-  styleUrls: ['./check-out.component.css']
+  styleUrls: ['./check-out.component.css'],
 })
 export class CheckOutComponent {
+  addresses: any;
+  checkOutForm!: FormGroup;
 
-  addresses:any;
-  checkOutForm!:FormGroup
-
-  constructor(private router:Router,private cartService:CartService,private authService:AuthService,private fb:FormBuilder) {
-    this.authService.user$.subscribe(
-      {
-        next:(res)=>{
-          console.log(res);
-
-          this.addresses=res.addresses;
-          console.log(this.addresses);
-
-        },
-        error:(error)=>console.log(error)
-
-      }
-    )
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+    private authService: AuthService,
+    private fb: FormBuilder
+  ) {
 
 
-    this.checkOutForm=this.fb.group(
-      {
-        deliveryAddress:['',[Validators.required]]
-      }
-    )
+    this.checkOutForm = this.fb.group({
+      deliveryAddress: ['', [Validators.required]],
+    });
+  }
 
-
-
-
+  ngOnInit(){
+    this.getAddress();
   }
 
 
-  get  deliveryAddress() {
+
+  getAddress(){
+    this.authService.user$.subscribe({
+      next: (res) => {
+        console.log(res);
+
+        this.addresses = res.addresses;
+        console.log(this.addresses);
+      },
+      error: (error) => console.log(error),
+    });
+
+  }
+
+  get deliveryAddress() {
     return this.checkOutForm.get('deliveryAddress');
   }
-success() {
-  this.cartService.clearCart();
-this.router.navigate(['success']);
 
-}
-cancel() {
-  this.router.navigate(['']);
-}
 
+  success() {
+    if (this.checkOutForm.valid) {
+
+      this.cartService.order(this.deliveryAddress?.value,this.deliveryAddress?.value);
+      this.deliveryAddress?.setValue('');
+    }
+  }
+
+  cancel() {
+    this.router.navigate(['']);
+  }
 }

@@ -15,24 +15,15 @@ goCart() {
 
 
 
-  grocery: Grocery = {
-    id: 0,
-    grocery_name: '',
-    store: '',
-    price: 0,
-    rating: 0,
-    quantity: '',
-    category: '',
-    imageUrl: ''
-  }
+  grocery:any;
 
   addedInCartItem: any[] = [];
   checkCart=true;
 
-  quantityCount: Number = 1;
+  quantityCount: number = 1;
   button_text = "Add Cart";
   add=true;
-
+  category:string='';
   constructor(
     private groceriesService: GroceriesService,
     private cartService: CartService,
@@ -42,7 +33,7 @@ goCart() {
 
     this.cartService.items$.subscribe({
       next: (res) => {
-        this.addedInCartItem = res.map((item) => item.id);
+        this.addedInCartItem = res.map((item) => item.product_id);
         console.log("details",this.addedInCartItem);
       },
       error: (error) => console.log(error)
@@ -52,7 +43,8 @@ goCart() {
   async ngOnInit() {
     window.scrollTo(0, 0);
     this.route.params.subscribe((param) => {
-      let check = this.groceriesService.getGrocery(Number(param['id']))
+      let check = this.groceriesService.getGrocery(Number(param['id']));
+      this.category=param[this.category];
       if (check) {
         this.grocery = check;
       }
@@ -65,10 +57,11 @@ goCart() {
   addCart() {
     console.log(this.quantityCount);
 
-    this.cartService.addItem(this.quantityCount, this.grocery).subscribe(
+    this.cartService.addItem(this.quantityCount,this.category, this.grocery).subscribe(
       {
         next: (res) => {
           console.log('addCart', res);
+          this.router.navigate(['cart']);
 
         },
         error: (error) => {
@@ -77,7 +70,7 @@ goCart() {
       }
     )
 
-    this.router.navigate(['cart']);
+
   }
 
 

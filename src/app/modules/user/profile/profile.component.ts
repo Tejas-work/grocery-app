@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -12,15 +12,21 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class ProfileComponent implements OnInit {
 
   profileForm!: FormGroup;
-  title: any;
+
+  @Output() pageTitleChanged = new EventEmitter<string>();
+  pageTitle = 'Profile';
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService
-  ) {}
+  ) {
+
+
+  }
 
   ngOnInit() {
+    this.pageTitleChanged.emit(this.pageTitle);
     this.profileForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -31,7 +37,7 @@ export class ProfileComponent implements OnInit {
 
     });
 
-    this.title = this.route.snapshot.data['title'];
+
 
      this.authService.getUserDetails().subscribe({
       next: (res) => {

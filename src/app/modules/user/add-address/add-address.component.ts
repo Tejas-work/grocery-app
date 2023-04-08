@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AddAddress } from 'src/app/shared/models/addAddress.model';
@@ -12,7 +12,8 @@ import { FormService } from 'src/app/shared/services/form.service';
 })
 export class AddAddressComponent {
 
-
+  @Output() pageTitleChanged = new EventEmitter<string>();
+  pageTitle = 'Add Address';
   addAddressForm!: FormGroup;
   countries: [] = [];
   encryptId:string=''
@@ -50,6 +51,7 @@ export class AddAddressComponent {
 
   }
   ngOnInit(){
+    this.pageTitleChanged.emit(this.pageTitle);
 
     }
 
@@ -127,7 +129,7 @@ export class AddAddressComponent {
           next:(res)=>{
             console.log(res);
 
-            
+
             this.router.navigate(['users/manageAddresses'])
 
           },

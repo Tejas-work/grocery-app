@@ -8,20 +8,24 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 })
 export class DashboardComponent {
 
-title:any='Profile';
+title:any;
   constructor(private route:ActivatedRoute,private router: Router){
+
 
   }
 
+  onActivate(component: any) {
+    this.title = component.pageTitle;
+  }
   ngOnInit(){
 
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        console.log('Navigation ended successfully:', event.url);
-        const array = event.url.split('/');
-        this.title = array.pop();
-      }
-    });
+    // this.router.events.subscribe((event) => {
+    //   if (event instanceof NavigationEnd) {
+    //     console.log('Navigation ended successfully:', event.url);
+    //     const array = event.url.split('/');
+    //     this.title = array.pop();
+    //   }
+    // });
 
 
 

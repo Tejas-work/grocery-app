@@ -8,13 +8,11 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-
-
- message:any;
-  loginForm!:FormGroup
+  message: any;
+  loginForm!: FormGroup;
 
   get userName() {
     return this.loginForm.get('userName');
@@ -23,50 +21,34 @@ export class LoginComponent {
     return this.loginForm.get('password');
   }
 
-  constructor(private fb:FormBuilder,private authService:AuthService,private toastr: ToastrService,private router:Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
+    });
   }
-
-  ngOnInit(){
-    this.loginForm=this.fb.group({
-      userName:['',Validators.required],
-      password:['',Validators.required],
-    })
-  }
-
 
   onSubmit() {
-
     let user: LogIn = {
       username: this.userName?.value,
-      password: this.password?.value
-    }
+      password: this.password?.value,
+    };
 
     console.log(user);
-    this.authService.logIn(user).subscribe(
-      {next:(res)=>{
-        let token = res.data.token;
-        let user = res.data.user
-        this.toastr.success('LogIn successfully');
+    this.authService.logIn(user).subscribe({
+      next: (res) => {
         console.log(res);
-
-      console.log(res.data);
-
-      sessionStorage.setItem('token',token);
-      sessionStorage.setItem('user',JSON.stringify(user));
-
-
-      this.router.navigate(['']);
-
-
-
-
-    },
-  error:(error)=>{
-    this.message=error.error.message;
-  }});
-
-
+      },
+      error: (error) => {
+        this.message = error.error.message;
+      },
+    });
   }
-
 }

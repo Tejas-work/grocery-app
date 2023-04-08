@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
@@ -9,7 +9,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class ManageAddressesComponent {
 
-
+  @Output() pageTitleChanged = new EventEmitter<string>();
+  pageTitle = 'Manage Addresses';
   addresses:any;
 
   constructor(private authService:AuthService,private router:Router) {
@@ -31,6 +32,7 @@ export class ManageAddressesComponent {
   }
 
   ngOnInit(){
+    this.pageTitleChanged.emit(this.pageTitle);
 
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, Form, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { matchPassword } from 'src/app/shared/validators /matchPassword.validator';
@@ -12,6 +12,8 @@ export class ChangePasswordComponent {
   changePassword!: FormGroup;
 
   message: string = '';
+  @Output() pageTitleChanged = new EventEmitter<string>();
+  pageTitle = 'Change Password';
 
 
 
@@ -22,6 +24,7 @@ export class ChangePasswordComponent {
 
 
   ngOnInit() {
+    this.pageTitleChanged.emit(this.pageTitle);
     this.changePassword = this.fb.group(
       {
         currentPassword: ['', Validators.required],

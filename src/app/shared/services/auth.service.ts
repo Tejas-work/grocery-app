@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
-import { BehaviorSubject, take, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, of, take, tap, throwError } from 'rxjs';
 import { Register } from '../models/register.model';
 import { LogIn } from '../models/login.model';
 import { Router } from '@angular/router';
@@ -13,11 +13,10 @@ import { CartService } from './cart.service';
 })
 export class AuthService {
   base_url = environment.base_url;
-  headers = new HttpHeaders(
-    {
-      'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
-    }
-  )
+  headers = new HttpHeaders({
+    'ngrok-skip-browser-warning': 'skip-browser-warning',
+    'Access-Control-Allow-Origin': '*',
+  });
   register_url = environment.register;
   logIn_url = environment.logIn;
   getUser_url = environment.get_user;
@@ -63,28 +62,23 @@ export class AuthService {
   logIn(data: LogIn) {
     try {
       return this.http.post<any>(this.base_url + this.logIn_url, data).pipe(
-        tap(() => {
+        tap((res) => {
           this.isLogin.next(true);
+          let token = res.data.token;
+          let user = res.data.user;
+          console.log(res);
 
-          this.cartService.moveToCart().subscribe(
-            {
-              next: (res: any) => {
-                console.log("post in cart");
+          console.log(res.data);
+          sessionStorage.setItem('token', token);
+          sessionStorage.setItem('user', JSON.stringify(user));
 
-                console.log(res.cart);
-                let user = sessionStorage.getItem('user');
-                let userName: string;
-                if (user) {
-                  let userObj = JSON.parse(user)
-                  userName = userObj.username
-                  this.http.delete<any>("http://localhost:3000/users/" + userName).subscribe();
-                }
-
-
-              },
-              error: (error) => console.log(error)
-            }
-          )
+          this.cartService.moveToCart().subscribe({
+            next: (res: any) => {
+              console.log('post in cart');
+              console.log(res.cart);
+            },
+            error: (error) => console.log(error),
+          });
 
           // console.log(this.isLogin.getValue());
           this.toastr.success('You have successfully logged in!');
@@ -97,68 +91,54 @@ export class AuthService {
 
   //logout
   logOut() {
-
-
     let user = sessionStorage.getItem('user');
     let userName: string;
     if (user) {
-      let userObj = JSON.parse(user)
-      userName = userObj.username
+      let userObj = JSON.parse(user);
+      userName = userObj.username;
     }
-
-
 
     if (sessionStorage.getItem('token')) {
-
-
-
       //mange cart
-      this.cartService.items$.pipe(take(1)).subscribe(
-        {
-          next: (res) => {
-            const body = {
-              id: userName,
-              cart: res
-            }
-            this.cartService.moveToUser(body).subscribe(
-              {
-                next: (res) => {
-                  console.log(res);
-                  this.cartService.clearCart();
-                  sessionStorage.removeItem('token');
-                  sessionStorage.removeItem('user');
+      this.cartService.items$.pipe(take(1)).subscribe({
+        next: (res) => {
+          const body = {
+            id: userName,
+            cart: res,
+          };
+          this.cartService.moveToUser(body).subscribe({
+            next: (res) => {
+              console.log(res);
+              this.cartService.clearCart();
+              sessionStorage.removeItem('token');
+              sessionStorage.removeItem('user');
 
-                  this.isLogin.next(false);
-                  this.toastr.success(
-                    'You have successfully logged out.',
-                    'Logout Successful'
-                  );
-                  console.log(this.isLogin.getValue());
-                  this.router.navigate(['']);
-
-                }, error: (error) => console.log(error)
-
-              }
-            )
-          }, error: (error) => console.log(error)
-        }
-      )
+              this.isLogin.next(false);
+              this.toastr.success(
+                'You have successfully logged out.',
+                'Logout Successful'
+              );
+              console.log(this.isLogin.getValue());
+              this.router.navigate(['']);
+            },
+            error: (error) => console.log(error),
+          });
+        },
+        error: (error) => console.log(error),
+      });
       // console.log('logout');
-
-
     }
-
-
   }
 
   getUserDetails() {
-
     try {
-      return this.http.get<any>(this.base_url + this.getUser_url, { headers: this.headers }).pipe(
-        tap((res) => {
-          this.user.next(res.data);
-        })
-      );
+      return this.http
+        .get<any>(this.base_url + this.getUser_url, { headers: this.headers })
+        .pipe(
+          tap((res) => {
+            this.user.next(res.data);
+          })
+        );
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -181,7 +161,9 @@ export class AuthService {
 
   updateProfile(data: any) {
     try {
-      return this.http.put(this.base_url + this.updateProfile_url, data, { headers: this.headers });
+      return this.http.put(this.base_url + this.updateProfile_url, data, {
+        headers: this.headers,
+      });
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -197,16 +179,20 @@ export class AuthService {
     try {
       console.log(this.base_url + this.add_address_url);
 
-      return this.http.post(this.base_url + this.add_address_url, data, { headers: this.headers }).pipe(
-        tap(() => {
-          const data = this.user.getValue();
-          console.log(data);
-          data.addresses.push(data);
-          this.user.next(data);
-
-          this.toastr.success('Your address has been added successfully');
+      return this.http
+        .post(this.base_url + this.add_address_url, data, {
+          headers: this.headers,
         })
-      );
+        .pipe(
+          tap(() => {
+            const data = this.user.getValue();
+            console.log(data);
+            data.addresses.push(data);
+            this.user.next(data);
+
+            this.toastr.success('Your address has been added successfully');
+          })
+        );
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -239,7 +225,8 @@ export class AuthService {
         const encryptId = res.data;
         const headers = new HttpHeaders({
           address_id: String(encryptId),
-          'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
+          'ngrok-skip-browser-warning': 'skip-browser-warning',
+          'Access-Control-Allow-Origin': '*',
         });
 
         this.http
@@ -269,7 +256,8 @@ export class AuthService {
   encrypt(id: number) {
     const headers = new HttpHeaders({
       id: String(id),
-      'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
+      'ngrok-skip-browser-warning': 'skip-browser-warning',
+      'Access-Control-Allow-Origin': '*',
     });
 
     return this.http.get<any>(this.base_url + this.encrypt_url, { headers });
@@ -291,18 +279,14 @@ export class AuthService {
     });
   }
 
-
   orders_get_url = environment.order_get;
   getOrders() {
     try {
-      return this.http.get<any>(this.base_url + this.orders_get_url, { headers: this.headers });
+      return this.http.get<any>(this.base_url + this.orders_get_url, {
+        headers: this.headers,
+      });
     } catch (error: any) {
-      return throwError(() => new Error(error))
+      return throwError(() => new Error(error));
     }
   }
-
-
-
-
-
 }

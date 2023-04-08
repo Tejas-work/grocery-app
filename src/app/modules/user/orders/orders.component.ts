@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -7,7 +7,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent {
-
+  @Output() pageTitleChanged = new EventEmitter<string>();
+  pageTitle = 'Orders';
   showTable2Index: number | null = null;
   showData(orderIndex: number) {
     if(orderIndex==this.showTable2Index){
@@ -27,7 +28,7 @@ export class OrdersComponent {
   }
 
   ngOnInit(){
-
+    this.pageTitleChanged.emit(this.pageTitle);
     this.authService.getOrders().subscribe(
       {
         next:(res)=>{

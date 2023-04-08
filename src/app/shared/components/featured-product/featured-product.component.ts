@@ -47,7 +47,7 @@ export class FeaturedProductComponent {
 
   navigateDetails(id: number) {
 
-    this.router.navigate(['product-details',id]);
+    this.router.navigate(['product-details', id,'All']);
 
   }
   addCart(grocery:Grocery) {

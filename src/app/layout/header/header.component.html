@@ -31,10 +31,10 @@
             <li *ngFor="let category of categories">
               <a
                 class="dropdown-item"
-                (click)="getSelectedCategory(category)"
-                >{{ category }}</a
+                (click)="getSelectedCategory(category?.title)"
+                >{{ category?.title}}</a
               >
-            </li>
+
           </ul>
         </div>
       </div>

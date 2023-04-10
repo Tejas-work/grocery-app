@@ -71,7 +71,9 @@ export class AuthService {
           console.log(res.data);
           sessionStorage.setItem('token', token);
           sessionStorage.setItem('user', JSON.stringify(user));
-
+          this.toastr.success('You have successfully logged in!');
+          this.isLogin.next(true);
+          this.router.navigate(['']);
           this.cartService.moveToCart().subscribe({
             next: (res: any) => {
               console.log('post in cart');
@@ -81,7 +83,7 @@ export class AuthService {
           });
 
           // console.log(this.isLogin.getValue());
-          this.toastr.success('You have successfully logged in!');
+
         })
       );
     } catch (error: any) {
@@ -121,7 +123,11 @@ export class AuthService {
               console.log(this.isLogin.getValue());
               this.router.navigate(['']);
             },
-            error: (error) => console.log(error),
+            error: (error) => {
+              sessionStorage.removeItem('token');
+              sessionStorage.removeItem('user');
+              console.log(error)
+            },
           });
         },
         error: (error) => console.log(error),

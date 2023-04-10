@@ -50,26 +50,29 @@ export class FeaturedProductComponent {
     this.router.navigate(['product-details', id,'All']);
 
   }
-  addCart(grocery:Grocery) {
-    // this.cartService.addItem(1,grocery).subscribe(
-    //   {
-    //     next:(res)=>{
-    //       console.log('addCart',res);
-    //     },
-    //     error:(error)=>{
-    //       console.log(error);
+  addCart(product: any) {
+    this.cartService.addItem(1,'All' ,product).subscribe(
+      {
+        next: (res) => {
+          console.log('addCart', res);
+        },
+        error: (error) => {
 
-    //       if(error.status==0){
-    //         this.toastr.error('Server problem. Please contact the authorized person.');
-    //       }
-    //       if(error.status==500){
-    //         this.toastr.info('Item added to cart successfully');
+          if (error.status == 0) {
+            this.toastr.error('Server problem. Please contact the authorized person.');
+          }
+          if (error.status == 500) {
+            this.toastr.info('Item added to cart successfully');
 
-    //       }
-    //     }
-    //   }
-    // )
-    // this.router.navigate(['cart']);
-    }
+          }
+          console.log(error.status);
+
+
+
+        }
+      }
+    )
+
+  }
 
 }

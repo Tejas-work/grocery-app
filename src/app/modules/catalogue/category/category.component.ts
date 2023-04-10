@@ -77,13 +77,15 @@ export class CategoryComponent implements OnInit {
       //     }
 
 
-      //  else if (this.word && this.productCategory) {
-      //     this.getSearchCategoryData(this.productCategory, this.word);
-      //     console.log(this.word);
+      console.log(this.productCategory,this.word);
 
-      //   }
-      //   else
-      if(this.productCategory=='All'){
+     if (this.word && this.productCategory) {
+          this.getSearchCategoryData(this.productCategory, this.word);
+          console.log(this.word);
+
+        }
+
+      else if(this.productCategory=='All'){
 
         this.productService.getAllProducts().subscribe(
           {
@@ -131,7 +133,31 @@ export class CategoryComponent implements OnInit {
 
   }
 
+  getSearchCategoryData(category: string, word: string) {
+    console.log(this.categories);
+    console.log(category != 'All');
 
+    if (category != 'All') {
+      let categoryData = this.categories.filter((item) => item.title == category)[0]
+      this.productService.getProductByCategory(categoryData.id).subscribe(
+        {
+          next: (value) => {
+            let search = value.filter((product:any) => {
+              return (
+               product.title.toLowerCase().indexOf(word.toLowerCase()) != -1
+              );
+            });
+            this.products = search;
+            console.log(search);
+
+          }, error: (error) => console.log(error)
+
+        }
+      )
+    }
+
+
+  }
 
   ngOnChanges() {
     console.log('change');

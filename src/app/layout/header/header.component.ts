@@ -2,8 +2,10 @@ import { Component, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { CartService } from 'src/app//shared/services/cart.service';
+import { Category } from 'src/app/shared/models/category.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { GroceriesService } from 'src/app/shared/services/groceries.service';
+import { ProductsService } from 'src/app/shared/services/products.service';
 
 
 @Component({
@@ -20,7 +22,7 @@ logOut() {
 }
   //check LogIn
 
-
+  categories:Category[]=[]
   isLogin: boolean = false;
   subTotal: number = 0;
   gst: number = 0;
@@ -31,7 +33,7 @@ logOut() {
   cartItemsCount = 0;
 
 
-  constructor(private groceriesService: GroceriesService, private cartService: CartService, private router: Router,private authService:AuthService) {
+  constructor(private groceriesService: GroceriesService, private cartService: CartService, private router: Router,private authService:AuthService,private productService:ProductsService) {
     this.cartService.items$.subscribe((res) => {
       this.cartItemsCount = res.length
     })
@@ -57,20 +59,31 @@ logOut() {
 
 
 
-    this.categories = this.groceriesService.getCategories();
+    this.getAllCategories();
     this.getCalculation();
 
   }
+
 
 
   navigateCart() {
     this.router.navigate(['cart']);
   }
 
+  getAllCategories(){
+    this.productService.getAllCategories().subscribe(
+      {
+        next:(res)=>{
+          this.categories=res.data;
+          console.log(this.categories);
+
+        }
+      }
+    );
+  }
 
 
-
-  getSelectedCategory(category: string) {
+  getSelectedCategory(category: any) {
     this.selectedCategory = category;
   }
 
@@ -84,7 +97,7 @@ logOut() {
     event.preventDefault();
     const inputValue = this.myValue;
     if (inputValue) {
-      this.router.navigate(['groceries/grocery-search', this.selectedCategory, inputValue])
+      this.router.navigate(['groceries/search/grocery-search', this.selectedCategory, inputValue])
     }
 
   }
@@ -98,7 +111,7 @@ logOut() {
       this.total = this.subTotal + this.gst;
     });
   }
-  categories: string[] = ['']
+
 
 
 

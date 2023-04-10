@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, catchError, map, switchMap, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +40,14 @@ export class ProductsService {
 
   getAllCategories() {
     try {
-      return this.http.get<any>(this.base_url + this.categories_url,{headers:this.headers});
+      return this.http.get<any>(this.base_url + this.categories_url,{headers:this.headers}).pipe(
+       tap((res)=>{
+        console.log("here here");
+
+        console.log(res);
+
+       })
+      );
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -88,4 +96,7 @@ export class ProductsService {
 
     return this.http.get<any>(this.base_url + this.encrypt_url, { headers });
   }
+
+
+
 }

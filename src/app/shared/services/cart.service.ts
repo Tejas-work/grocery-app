@@ -205,17 +205,17 @@ let user= sessionStorage.getItem('user');
 
   clearCart() {
     this.items.getValue().forEach((item) => {
-      console.log(item.product_id);
+      console.log(item.id);
 
       try {
         this.http
-          .delete(this.base + this.base_cartItems + '/' + item.product_id)
+          .delete(this.base + this.base_cartItems + '/' + item.id)
           .pipe(
             tap(() => {
               //update items BehaviorSubject
               const items = this.items.getValue();
               const index = items.findIndex(
-                (i) => i.product_id === item.product_id
+                (i) => i.id === item.id
               );
               if (index !== -1) {
                 items.splice(index, 1);
@@ -400,7 +400,7 @@ moveToCart() {
                 {
                   next: (res) => {
                     console.log('deleted');
-                    this.router.navigate(['']);
+
                   },
                   error: (error) => console.log(error),
                 });

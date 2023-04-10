@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class CartComponent {
 
-  categoriesAll:any;
+
   count: number = 0
 
 

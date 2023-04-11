@@ -1,95 +1,103 @@
 /* @import "ngx-spinner/spinner-bars"; */
 
-
-.filter{
+.filter {
   text-align: right;
   font-size: 30px;
   padding: 20px;
   position: relative;
 }
-.options{
+
+.options {
   width: 200px;
-  background-color: #F2F3F2;
+  background-color: #f2f3f2;
   padding: 10px;
   position: absolute;
   bottom: -91px;
   right: 40px;
-display: none;
-border-radius: 10px;
+  display: none;
+  border-radius: 10px;
 }
-.option{
+
+.option {
   font-size: 12px;
   text-align: left;
 }
-ul,p{
+
+ul,
+p {
   margin: 0;
   padding: 0;
-
 }
 
-input[type=checkbox]{
+input[type="checkbox"] {
   margin-right: 5px;
 }
 
-.container{
+.container {
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   gap: 20px;
 }
 
-
-#card
-{
+#card {
   width: 242px;
-  height: 345px;
+  height: 230px;
   padding: 10px;
-  border: 1px solid #ADADAD ;
+  border: 1px solid #adadad;
 }
 
-.cart{
+.cart {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 
-span{
-  color: #3BB77E;
+span {
+  color: #3bb77e;
 }
 
-button{
-  background-color: #3BB77E;
+button {
+  background-color: #3bb77e;
   color: white;
   border: 0;
   padding: 5px 10px;
-
 }
 
-.original-price{
-  color: #ADADAD
-  ;
+.original-price {
+  color: #adadad;
 }
 
-.cate
-{
+.cate {
   font-size: 10px;
-  color: #ADADAD;
-
+  color: #adadad;
 }
 
-
-.add:hover{
+.add:hover {
   background-color: white;
-  border: 1px solid #3BB77E;
+  border: 1px solid #3bb77e;
   color: black;
 }
 
-ul.category{
+ul.category {
   list-style-type: none;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.category li{
+
+.category li {
   margin-right: 10px;
+}
+
+
+.category li a {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.category li a:hover {
+  background-color: #3bb77e;
+  color: white;
+  border: 0;
 }

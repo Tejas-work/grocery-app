@@ -2,7 +2,7 @@ export const environment = {
   base:' http://localhost:3000',
   base_cartItems:'/cartItems',
   base_groceries:'/groceries',
-  base_url:'https://1f85-117-217-127-105.ngrok-free.app/api/v1',
+  base_url:'https://7a12-117-217-127-105.ngrok-free.app/api/v1',
   get_user:"/customer/customer-details",
   register:'/customer/register',
   logIn:'/customer/login',

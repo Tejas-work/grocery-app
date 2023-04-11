@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { LocalCartService } from 'src/app/shared/services/local-cart.service';
 
 @Component({
   selector: 'app-check-out',
@@ -16,7 +17,7 @@ export class CheckOutComponent {
 
   constructor(
     private router: Router,
-    private cartService: CartService,
+    private cartService:LocalCartService,
     private authService: AuthService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService

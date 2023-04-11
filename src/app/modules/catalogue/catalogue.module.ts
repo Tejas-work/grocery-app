@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductHeaderComponent } from 'src/app/shared/components/product-header/product-header.component';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { LocalCartService } from 'src/app/shared/services/local-cart.service';
 
 
 

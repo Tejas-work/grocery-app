@@ -6,9 +6,10 @@ import { Register } from '../models/register.model';
 import { LogIn } from '../models/login.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CartService } from './cart.service';
+
 import { EncryptApiResponse } from '../models/encrypt.model';
 import { UserCartItem } from '../models/cartItem.model';
+import { LocalCartService } from './local-cart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +37,7 @@ export class AuthService {
     private http: HttpClient,
     private toastr: ToastrService,
     private router: Router,
-    private cartService: CartService
+    private cartService: LocalCartService
   ) {
     if (sessionStorage.getItem('token')) {
       this.isLogin.next(true);
@@ -76,15 +77,9 @@ export class AuthService {
           this.toastr.success('You have successfully logged in!');
           this.isLogin.next(true);
           this.router.navigate(['']);
-          this.cartService.moveToCart().subscribe({
-            next: (res: any) => {
-              console.log('post in cart');
-              console.log(res.cart);
-            },
-            error: (error) => console.log(error),
-          });
 
-          // console.log(this.isLogin.getValue());
+          //get User cart
+          this.cartService.checkCart();
         })
       );
     } catch (error: any) {
@@ -102,37 +97,13 @@ export class AuthService {
     }
 
     if (sessionStorage.getItem('token')) {
-      //mange cart
-      this.cartService.items$.pipe(take(1)).subscribe({
-        next: (res) => {
-          const body:UserCartItem = {
-            id: userName,
-            cart: res,
-          };
-
-          sessionStorage.removeItem('token');
-          sessionStorage.removeItem('user');
-          this.cartService.moveToUser(body).subscribe({
-            next: (res) => {
-              console.log(res);
-
-              this.isLogin.next(false);
-              this.toastr.success(
-                'You have successfully logged out.',
-                'Logout Successful'
-              );
-              console.log(this.isLogin.getValue());
-              this.router.navigate(['']);
-            },
-            error: (error) => {
-              // sessionStorage.removeItem('token');
-              // sessionStorage.removeItem('user');
-              console.log(error);
-            },
-          });
-        },
-        error: (error) => console.log(error),
-      });
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
+      this.toastr.success(
+        'You have successfully logged out.',
+        'Logout Successful'
+      );
+      this.isLogin.next(false);
       // console.log('logout');
     }
   }
@@ -267,7 +238,9 @@ export class AuthService {
       'Access-Control-Allow-Origin': '*',
     });
 
-    return this.http.get<EncryptApiResponse>(this.base_url + this.encrypt_url, { headers });
+    return this.http.get<EncryptApiResponse>(this.base_url + this.encrypt_url, {
+      headers,
+    });
   }
 
   address = new BehaviorSubject<any>('');

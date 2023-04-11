@@ -44,7 +44,7 @@ export class CartService {
   total: number = 0;
 
   isLogin: boolean = false;
-  headers= new HttpHeaders(
+  headers = new HttpHeaders(
     {
       'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
     }
@@ -52,23 +52,23 @@ export class CartService {
   userName: any;
 
   //constructor
-  constructor(private http: HttpClient, private toastr: ToastrService,private router:Router) {
-//check is login or
+  constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) {
+    //check is login or
 
-let user= sessionStorage.getItem('user');
+    let user = sessionStorage.getItem('user');
 
     if (user) {
-      let userObj=JSON.parse(user)
-      this.userName=userObj.username
-       this.getItems().subscribe({
-      next: (res) => {
-        this.items.next(res);
+      let userObj = JSON.parse(user)
+      this.userName = userObj.username
+      this.getItems().subscribe({
+        next: (res) => {
+          this.items.next(res);
 
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
 
     }
 
@@ -80,7 +80,7 @@ let user= sessionStorage.getItem('user');
 
   getItems() {
     try {
-      return this.http.get<CartItem[]>(this.base+this.base_cartItems).pipe(
+      return this.http.get<CartItem[]>(this.base + this.base_cartItems).pipe(
         tap((res) => {
           console.log(res);
 
@@ -94,7 +94,7 @@ let user= sessionStorage.getItem('user');
   }
 
   addItem(quantityCount: number, category: string, product: Product): Observable<boolean> {
-    
+
 
     let cartItem: CartItem = {
       id: product.id,
@@ -138,7 +138,7 @@ let user= sessionStorage.getItem('user');
 
 
   updateQuantityCount(item: CartItem) {
-    if (item.discount_amount!=0) {
+    if (item.discount_amount != 0) {
       item.subtotal = item.discount_amount * item.qty;
     } else {
       item.subtotal = item.product_amount * item.qty;
@@ -189,17 +189,7 @@ let user= sessionStorage.getItem('user');
     }
   }
 
-  getTotalPrice(): number {
-    let total = 0;
-    this.items$.subscribe((items) => {
-      items.forEach((item) => {
-        total += item.qty * item.product_amount;
-      });
-    });
-    console.log(total);
-
-    return total;
-  }
+ 
 
   clearCart() {
     this.items.getValue().forEach((item) => {
@@ -352,71 +342,16 @@ let user= sessionStorage.getItem('user');
     });
   }
 
-  moveToUser(body:UserCartItem){
-    try {
 
-      return this.http.post("http://localhost:3000/users",body);
-
-    } catch (error:any) {
-      return throwError(()=>new Error(error))
-
-    }
-  }
   private items = new BehaviorSubject<CartItem[]>([]);
-items$ = this.items.asObservable();
+  items$ = this.items.asObservable();
 
-moveToCart() {
-  let user= sessionStorage.getItem('user');
-  if (user) {
-    let userObj=JSON.parse(user)
-    this.userName=userObj.username
+
+
+
+  updateItems(data: CartItem[]) {
+    this.items.next(data);
+    console.log(this.items.getValue());
   }
-
-  console.log('con');
-
-
-
-
-  return this.http.get<UserCartItem>("http://localhost:3000/users/" + this.userName).pipe(
-    tap((res) => {
-      console.log("get data");
-      console.log(res);
-
-      console.log(res?.cart);
-      if (Array.isArray(res?.cart) && res?.cart.length > 0) {
-        const data = this.items.getValue();
-        const requests:any = [];
-        res?.cart.forEach((item: any) => {
-          data.push(item);
-          requests.push(this.http.post<any>(this.base + this.base_cartItems, item));
-        });
-        forkJoin(requests).subscribe(
-          {
-            next: (res) => {
-              console.log(res);
-              this.http.delete<any>('http://localhost:3000/users/' + this.userName).subscribe(
-                {
-                  next: (res) => {
-                    console.log('deleted');
-
-                  },
-                  error: (error) => console.log(error),
-                });
-            },
-            error: (error) => console.log(error)
-          });
-        this.updateItems(data);
-      }
-    }),
-    catchError((error) => throwError(() => new Error(error))),
-    finalize(() => console.log("HTTP request completed."))
-  );
-}
-
-
-updateItems(data: CartItem[]) {
-  this.items.next(data);
-  console.log(this.items.getValue());
-}
 
 }

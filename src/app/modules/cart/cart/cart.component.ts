@@ -5,6 +5,7 @@ import { take } from 'rxjs';
 import { CartService } from 'src/app//shared/services/cart.service';
 import { CartItem } from 'src/app/shared/models/cartItem.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { LocalCartService } from 'src/app/shared/services/local-cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -30,19 +31,19 @@ export class CartComponent {
 
 
   constructor(
-    private cartService: CartService,
-    private authService:AuthService,
+    private cartService: LocalCartService,
     private router: Router,
     private spinner: NgxSpinnerService
 
 
   ) {
-    this.getCartItems();
-    // this.getAll()
+
+
   }
 
-  async ngOnInit() {
+ ngOnInit() {
     window.scrollTo(0, 0);
+    this.getCartItems();
     this.getCalculation();
 
   }
@@ -83,35 +84,13 @@ export class CartComponent {
 
   //updateQuantityCount call service
   updateQuantityCount(item: CartItem) {
-    this.cartService.updateQuantityCount(item).subscribe(
-      {
-        next: (res) => {
-          console.log("update QuantityCount", res);
-
-          // this.getCartItems();
-        },
-        error: (error) => console.log(error)
-
-      }
-    )
+    this.cartService.updateQuantityCount(item);
   }
 
   //removeItem call service
   removeCartItem(id: number) {
 
-    this.cartService.removeItem(id).subscribe({
-      next: (res) => {
-        console.log('remove item cartComponent', res);
-        // if (res) {
-        //   this.getItemsByCategory();
-        // }
-        // this.getCartItems();
-
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    })
+    this.cartService.removeItem(id)
 
   }
 

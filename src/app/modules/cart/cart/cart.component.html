@@ -76,12 +76,12 @@
   </div>
 
   <div class="row">
-    <div class="col">Delivery Charges⍰</div>
-    <div class="col">....</div>
+    <div class="col">GST</div>
+    <div class="col">{{gst|currency}}</div>
   </div>
   <div class="row total">
     <div class="col">Total</div>
-    <div class="col">{{ subTotal | currency : "CAD" : "symbol-narrow" }}</div>
+    <div class="col">{{ total | currency : "CAD" : "symbol-narrow" }}</div>
   </div>
   <div class="row " *ngIf="items.length"  (click)="checkOut()">
    <div class="col checkBtn">

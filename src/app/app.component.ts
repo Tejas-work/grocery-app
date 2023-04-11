@@ -39,14 +39,14 @@ export class AppComponent {
     // });
 
 
-    if (sessionStorage.getItem('token')) {
-      this.windowCloseService.beforeUnloadEvent$().subscribe((event) => {
-        // Do something when the user closes the tab
+    // if (sessionStorage.getItem('token')) {
+    //   this.windowCloseService.beforeUnloadEvent$().subscribe((event) => {
+    //     // Do something when the user closes the tab
 
-        this.authService.logOut();
-        console.log('Tab closed');
-      });
-    }
+    //     this.authService.logOut();
+    //     console.log('Tab closed');
+    //   });
+    // }
   }
 
 

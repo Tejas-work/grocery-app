@@ -1,6 +1,6 @@
 {
-    "cSpell.words": [
-        "adipisicing",
-        "updatequantity"
-    ]
+  "cSpell.words": ["adipisicing", "Toastr", "updatequantity"],
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

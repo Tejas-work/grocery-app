@@ -16,6 +16,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/shared/interceptor/auth.interceptor';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
+import { LocalCartService } from 'src/app/shared/services/local-cart.service';
 
 
 
@@ -46,7 +47,7 @@ import { AuthGuard } from 'src/app/shared/guards/auth.guard';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }, AuthGuard
+    }, AuthGuard,LocalCartService
   ],
   exports: [ProfileComponent, SidebarComponent]
 })

@@ -44,9 +44,7 @@ export class ExploreCategoriesComponent {
     );
   }
 
-  ngAfterViewInit() {
-
-  }
+ 
 
 
 }

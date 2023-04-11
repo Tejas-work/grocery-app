@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import 'bootstrap'
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -58,7 +58,8 @@ import { ProductsService } from './shared/services/products.service';
         UserModule,
         IvyCarouselModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
     ],
 })
 export class AppModule { }

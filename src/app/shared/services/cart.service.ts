@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CartItem } from '../models/cartItem.model';
+import { CartItem, UserCartItem } from '../models/cartItem.model';
 import { Grocery } from '../models/grocery.model';
 import {
   HttpClient,
   HttpClientModule,
+  HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http';
 import { environment } from 'src/environments/environment.development';
@@ -23,8 +24,9 @@ import {
 } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../models/product.model';
-import { Order, OrderProduct } from '../models/order.model';
+import { Order, OrderApiResponse, OrderProduct } from '../models/order.model';
 import { Router } from '@angular/router';
+import { EncryptApiResponse } from '../models/encrypt.model';
 
 @Injectable({
   providedIn: 'root',
@@ -78,8 +80,10 @@ let user= sessionStorage.getItem('user');
 
   getItems() {
     try {
-      return this.http.get<any>(this.base+this.base_cartItems).pipe(
+      return this.http.get<CartItem[]>(this.base+this.base_cartItems).pipe(
         tap((res) => {
+          console.log(res);
+
           this.getCartGroceriesItemsId();
           this.items.next(res);
         })
@@ -90,13 +94,7 @@ let user= sessionStorage.getItem('user');
   }
 
   addItem(quantityCount: number, category: string, product: Product): Observable<boolean> {
-    if(!sessionStorage.getItem('token')){
-      console.log(!sessionStorage.getItem('token'));
-
-      this.router.navigate(['']);
-      this.toastr.warning("please login");
-      return of(false);
-    }
+    
 
     let cartItem: CartItem = {
       id: product.id,
@@ -140,7 +138,7 @@ let user= sessionStorage.getItem('user');
 
 
   updateQuantityCount(item: CartItem) {
-    if (item.discount_amount) {
+    if (item.discount_amount!=0) {
       item.subtotal = item.discount_amount * item.qty;
     } else {
       item.subtotal = item.product_amount * item.qty;
@@ -261,17 +259,17 @@ let user= sessionStorage.getItem('user');
 
     let order_products;
 
-    // Encrypt the deliveryId and billingId
+
     const deliveryIdEncrypted$ = this.encrypt(deliveryId);
     const billingIdEncrypted$ = this.encrypt(billingId);
 
-    // Combine the observables for deliveryId and billingId encryption
+
     const combined$ = forkJoin([deliveryIdEncrypted$, billingIdEncrypted$]);
 
-    // Subscribe to the combined observable
+
     combined$.subscribe({
       next: ([deliveryIdEncrypted, billingIdEncrypted]) => {
-        // Get the items and calculate the order total
+
 
         this.items$.pipe(take(1)).subscribe({
           next: (res) => {
@@ -312,7 +310,7 @@ let user= sessionStorage.getItem('user');
             });
 
             this.http
-              .post<any>(this.base_api + this.order_url, orders, { headers })
+              .post<OrderApiResponse>(this.base_api + this.order_url, orders, { headers })
               .subscribe({
                 next: (response) => {
                   console.log('Order created successfully!', response);
@@ -340,7 +338,7 @@ let user= sessionStorage.getItem('user');
       'Access-Control-Allow-Origin': '*',
     });
 
-    return this.http.get<any>(this.base_url + this.encrypt_url, { headers });
+    return this.http.get<EncryptApiResponse>(this.base_url + this.encrypt_url, { headers });
   }
 
   getCalculation() {
@@ -354,7 +352,7 @@ let user= sessionStorage.getItem('user');
     });
   }
 
-  moveToUser(body:any){
+  moveToUser(body:UserCartItem){
     try {
 
       return this.http.post("http://localhost:3000/users",body);
@@ -379,7 +377,7 @@ moveToCart() {
 
 
 
-  return this.http.get<any>("http://localhost:3000/users/" + this.userName).pipe(
+  return this.http.get<UserCartItem>("http://localhost:3000/users/" + this.userName).pipe(
     tap((res) => {
       console.log("get data");
       console.log(res);

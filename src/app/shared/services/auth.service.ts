@@ -7,6 +7,8 @@ import { LogIn } from '../models/login.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from './cart.service';
+import { EncryptApiResponse } from '../models/encrypt.model';
+import { UserCartItem } from '../models/cartItem.model';
 
 @Injectable({
   providedIn: 'root',
@@ -83,7 +85,6 @@ export class AuthService {
           });
 
           // console.log(this.isLogin.getValue());
-
         })
       );
     } catch (error: any) {
@@ -104,16 +105,16 @@ export class AuthService {
       //mange cart
       this.cartService.items$.pipe(take(1)).subscribe({
         next: (res) => {
-          const body = {
+          const body:UserCartItem = {
             id: userName,
             cart: res,
           };
+
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('user');
           this.cartService.moveToUser(body).subscribe({
             next: (res) => {
               console.log(res);
-              this.cartService.clearCart();
-              sessionStorage.removeItem('token');
-              sessionStorage.removeItem('user');
 
               this.isLogin.next(false);
               this.toastr.success(
@@ -124,9 +125,9 @@ export class AuthService {
               this.router.navigate(['']);
             },
             error: (error) => {
-              sessionStorage.removeItem('token');
-              sessionStorage.removeItem('user');
-              console.log(error)
+              // sessionStorage.removeItem('token');
+              // sessionStorage.removeItem('user');
+              console.log(error);
             },
           });
         },
@@ -266,7 +267,7 @@ export class AuthService {
       'Access-Control-Allow-Origin': '*',
     });
 
-    return this.http.get<any>(this.base_url + this.encrypt_url, { headers });
+    return this.http.get<EncryptApiResponse>(this.base_url + this.encrypt_url, { headers });
   }
 
   address = new BehaviorSubject<any>('');

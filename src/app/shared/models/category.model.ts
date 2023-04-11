@@ -5,3 +5,10 @@ export interface Category {
   slug: string;
   title: string;
 }
+
+export interface CategoryApiResponse {
+  status: number;
+  success: boolean;
+  message: string;
+  data: Category[];
+}

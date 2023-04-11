@@ -28,7 +28,7 @@ logOut() {
   gst: number = 0;
   total: number = 0;
   userName:string='';
-  selectedCategory: string = 'All'
+  selectedCategory: string =''
 
   cartItemsCount = 0;
 
@@ -74,8 +74,12 @@ logOut() {
     this.productService.getAllCategories().subscribe(
       {
         next:(res)=>{
-          this.categories=res.data;
-          console.log(this.categories);
+          if (res?.data) {
+            console.log(res);
+
+            this.categories = res.data;
+            console.log(this.categories);
+          }
 
         }
       }

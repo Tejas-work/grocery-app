@@ -9,7 +9,11 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class OrdersComponent {
   @Output() pageTitleChanged = new EventEmitter<string>();
   pageTitle = 'Orders';
+
+
   showTable2Index: number | null = null;
+
+
   showData(orderIndex: number) {
     if(orderIndex==this.showTable2Index){
       this.showTable2Index=null;

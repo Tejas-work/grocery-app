@@ -6,7 +6,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { FormsModule } from '@angular/forms';
 import { ProductHeaderComponent } from 'src/app/shared/components/product-header/product-header.component';
 import { ProductsService } from 'src/app/shared/services/products.service';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 
@@ -21,6 +21,7 @@ import { ProductsService } from 'src/app/shared/services/products.service';
     CommonModule,
     CatalogueRoutingModule,
     FormsModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
 
 
   ],exports:[

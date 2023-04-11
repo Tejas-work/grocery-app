@@ -3,7 +3,7 @@
     <h3>Featured Products
     </h3>
     <ul>
-      <li > <a [routerLink]="['/groceries','All1','All']"> All</a></li>
+      <!-- <li > <a [routerLink]="['/groceries','All1','All']"> All</a></li> -->
       <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category.slug,category.title]">{{ category?.title}}</a></li>
 
     </ul>
@@ -20,7 +20,7 @@
           <p class="cate">{{grocery.category}}</p>
           <h6>{{grocery.grocery_name}}{{grocery.quantity}}</h6>
           <p>Rating : {{grocery.rating}}☆</p>
-          <p>By <a [routerLink]="['groceries-brand/All' , grocery.store]">{{grocery.store}}</a></p>
+          <p>By <a [routerLink]="['groceries-brand/All' , grocery.store]">{{grocery.store || ""}}</a></p>
           <div class="cart">
             <div class="price">
               <p><span>{{grocery.discountPrice | currency}}</span><span class="original-price"

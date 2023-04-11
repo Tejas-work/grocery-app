@@ -38,10 +38,10 @@ countries:[]=[]
       next: (res) => {
         console.log(res);
 
-        // Extract the subdivisions array from the response
+    
         const subdivisions = res[0].subdivisions;
 
-        // Extract the names of the subdivisions into an array
+
         this.states = Object.values(subdivisions).map((subdivision: any) => subdivision.name);
 
         console.log(this.states);

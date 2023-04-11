@@ -1,3 +1,12 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
 <app-product-header [title]="productCategory"></app-product-header>
 <div class="filter">
   <div class="icon">
@@ -14,9 +23,10 @@
     </div> -->
   </div>
 </div>
+
 <section>
   <ul class="category">
-    <li > <a [routerLink]="['/groceries','All1','All']"> All</a></li>
+    <!-- <li > <a [routerLink]="['/groceries','All1','All']"> All</a></li> -->
     <li *ngFor="let category of categories"><a [routerLink]="['/groceries', category.slug,category.title]">{{ category?.title}}</a></li>
 
   </ul>

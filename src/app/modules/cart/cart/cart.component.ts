@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { take } from 'rxjs';
 import { CartService } from 'src/app//shared/services/cart.service';
 import { CartItem } from 'src/app/shared/models/cartItem.model';
@@ -31,7 +32,8 @@ export class CartComponent {
   constructor(
     private cartService: CartService,
     private authService:AuthService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
 
 
   ) {
@@ -47,12 +49,15 @@ export class CartComponent {
 
 
   getCartItems() {
+    this.spinner.show();
     this.cartService.items$.subscribe({
       next: (res) => {
         this.items = res;
         this.getItemsByCategory();
         console.log(this.itemsByCategories)
+        this.spinner.hide();
       }, error: (error) => {
+        this.spinner.hide();
         console.error(error);
       }
     })
@@ -82,6 +87,7 @@ export class CartComponent {
       {
         next: (res) => {
           console.log("update QuantityCount", res);
+
           // this.getCartItems();
         },
         error: (error) => console.log(error)

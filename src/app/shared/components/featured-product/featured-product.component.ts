@@ -15,30 +15,34 @@ import { Category } from '../../models/category.model';
   styleUrls: ['./featured-product.component.css']
 })
 export class FeaturedProductComponent {
-  categories:Category[]=[]
+  categories: Category[] = []
   groceries: Grocery[] = [];
 
-  constructor(private groceriesService:GroceriesService,private cartService: CartService,
-    private route: ActivatedRoute,private toastr: ToastrService,
-    private router: Router,private productService:ProductsService){
+  constructor(private groceriesService: GroceriesService, private cartService: CartService,
+    private route: ActivatedRoute, private toastr: ToastrService,
+    private router: Router, private productService: ProductsService) {
 
-   this.groceries=this.groceriesService.getGroceryList().slice(0,15);
-   this.getAllCategories();
+    this.groceries = this.groceriesService.getGroceryList().slice(0, 15);
+    this.getAllCategories();
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
   }
   ngAfterViewInit() {
 
   }
 
-  getAllCategories(){
+  getAllCategories() {
     this.productService.getAllCategories().subscribe(
       {
-        next:(res)=>{
-          this.categories=res.data;
-          console.log(this.categories);
+        next: (res) => {
+          if (res?.data) {
+            console.log(res);
+
+            this.categories = res.data;
+            console.log(this.categories);
+          }
 
         }
       }
@@ -47,11 +51,11 @@ export class FeaturedProductComponent {
 
   navigateDetails(id: number) {
 
-    this.router.navigate(['product-details', id,'All']);
+    this.router.navigate(['product-details', id, 'All']);
 
   }
   addCart(product: any) {
-    this.cartService.addItem(1,'All' ,product).subscribe(
+    this.cartService.addItem(1, 'All', product).subscribe(
       {
         next: (res) => {
           console.log('addCart', res);

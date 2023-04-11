@@ -10,3 +10,8 @@ export interface CartItem {
   subtotal: number;
 }
 
+
+export interface UserCartItem{
+  id:string,
+  cart:CartItem[]
+}

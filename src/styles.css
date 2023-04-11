@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'ngx-toastr/toastr';
+
 *{
   margin: 0;
   padding: 0;
@@ -21,5 +22,32 @@ body{
 
 
 .toast-container {
-  top: 100px; /* adjust the value as needed */
+  top: 100px;
 }
+
+
+
+/* .spinner {
+  text-align: center;
+}
+
+.spinner > div {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  border-radius: 100%;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+.spinner .spinner-bar {
+  background-color: #fff;
+}
+
+@keyframes sk-scaleout {
+  0% { transform: scale(0); }
+  100% {
+    transform: scale(1.0);
+    opacity: 0;
+  }
+} */

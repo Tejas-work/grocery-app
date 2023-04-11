@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { CartService } from 'src/app/shared/services/cart.service';
 
@@ -17,7 +18,8 @@ export class CheckOutComponent {
     private router: Router,
     private cartService: CartService,
     private authService: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) {
 
 
@@ -33,12 +35,15 @@ export class CheckOutComponent {
 
 
   getAddress(){
+    this.spinner.show();
+
     this.authService.user$.subscribe({
       next: (res) => {
         console.log(res);
 
         this.addresses = res.addresses;
         console.log(this.addresses);
+        this.spinner.hide();
       },
       error: (error) => console.log(error),
     });

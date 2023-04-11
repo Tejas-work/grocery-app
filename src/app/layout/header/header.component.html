@@ -53,9 +53,9 @@
     </div>
 
     <ng-container *ngIf="isLogin">
-      <div class="cart">
+      <div class="cart" (click)="navigateCart()">
         <span class="totalItems">{{ cartItemsCount }}</span>
-        <i class="fa-solid fa-cart-shopping" (click)="navigateCart()"></i>
+        <i class="fa-solid fa-cart-shopping" ></i>
         <button
           >
             My cart <br /><span class="total">{{ total | currency }}</span>

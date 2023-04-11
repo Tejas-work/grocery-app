@@ -1,9 +1,17 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, catchError, map, switchMap, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { Category } from '../models/category.model';
+import { Category, CategoryApiResponse } from '../models/category.model';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +22,10 @@ export class ProductsService {
   productByCategory = new BehaviorSubject<any>([]);
   productByCategory$ = this.productByCategory.asObservable;
 
-
-
-  headers= new HttpHeaders(
-    {
-      'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
-    }
-  )
+  headers = new HttpHeaders({
+    'ngrok-skip-browser-warning': 'skip-browser-warning',
+    'Access-Control-Allow-Origin': '*',
+  });
   constructor(private http: HttpClient, private toastr: ToastrService) {
     this.getAllProducts().subscribe({
       next: (res) => {
@@ -40,14 +45,9 @@ export class ProductsService {
 
   getAllCategories() {
     try {
-      return this.http.get<any>(this.base_url + this.categories_url,{headers:this.headers}).pipe(
-       tap((res)=>{
-        console.log("here here");
-
-        console.log(res);
-
-       })
-      );
+      return this.http.get<CategoryApiResponse>(this.base_url + this.categories_url, {
+        headers: this.headers,
+      });
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -55,11 +55,15 @@ export class ProductsService {
 
   getAllProducts() {
     try {
-      return this.http.get<any>(this.base_url + this.product_all_url,{headers:this.headers}).pipe(
-        tap((res) => {
-          this.products.next(res);
+      return this.http
+        .get<any>(this.base_url + this.product_all_url, {
+          headers: this.headers,
         })
-      );
+        .pipe(
+          tap((res) => {
+            this.products.next(res);
+          })
+        );
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -68,20 +72,20 @@ export class ProductsService {
   product_by_category_url = environment.getProduct_category;
 
   getProductByCategory(id: number) {
-    return this.encrypt(id).
-    pipe(
+    return this.encrypt(id).pipe(
       switchMap((res) => {
         const encryptId = res.data;
         const headers = new HttpHeaders({
           category_id: String(encryptId),
-          'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
+          'ngrok-skip-browser-warning': 'skip-browser-warning',
+          'Access-Control-Allow-Origin': '*',
         });
-        return this.http.get<any>(this.base_url + this.product_by_category_url, { headers }).pipe(
-          map((res) => res.data.map((item:any) => item.product))
-        );
+        return this.http
+          .get<any>(this.base_url + this.product_by_category_url, { headers })
+          .pipe(map((res) => res.data.map((item: any) => item.product)));
       }),
       catchError((error: any) => {
-        return throwError(()=>new Error(error));
+        return throwError(() => new Error(error));
       })
     );
   }
@@ -91,12 +95,10 @@ export class ProductsService {
   encrypt(id: number) {
     const headers = new HttpHeaders({
       id: String(id),
-      'ngrok-skip-browser-warning': 'skip-browser-warning', 'Access-Control-Allow-Origin': '*'
+      'ngrok-skip-browser-warning': 'skip-browser-warning',
+      'Access-Control-Allow-Origin': '*',
     });
 
     return this.http.get<any>(this.base_url + this.encrypt_url, { headers });
   }
-
-
-
 }

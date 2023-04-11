@@ -6,6 +6,7 @@ import { Product } from 'src/app/shared/models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { Category } from 'src/app/shared/models/category.model';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 
@@ -53,7 +54,8 @@ export class CategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private toastr: ToastrService,
     private productService: ProductsService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -61,6 +63,12 @@ export class CategoryComponent implements OnInit {
   async ngOnInit() {
     //start top
     window.scrollTo(0, 0);
+
+
+    // setTimeout(() => {
+    //   /** spinner ends after 5 seconds */
+    //   this.spinner.hide();
+    // }, 5000);
     await this.getAllCategories();
 
     //get category from route and get data
@@ -108,7 +116,7 @@ export class CategoryComponent implements OnInit {
 
 
   getGroceriesByCategoryData(category: string) {
-
+    this.spinner.show();
     console.log(this.categories);
     console.log(category != 'All');
 
@@ -119,6 +127,7 @@ export class CategoryComponent implements OnInit {
           next: (value) => {
             this.products = value;
             console.log(value);
+            this.spinner.hide();
 
           }, error: (error) => console.log(error)
 
@@ -159,9 +168,7 @@ export class CategoryComponent implements OnInit {
 
   }
 
-  ngOnChanges() {
-    console.log('change');
-  }
+
 
   navigateDetails(id: number) {
 
@@ -210,8 +217,16 @@ export class CategoryComponent implements OnInit {
   async getAllCategories() {
     try {
       const res = await this.productService.getAllCategories().toPromise();
-      this.categories = res.data;
-      console.log(this.categories);
+      if(res){
+        if (res?.data) {
+          console.log(res);
+
+          this.categories = res.data;
+          console.log(this.categories);
+        }
+
+      }
+
     } catch (error) {
 
       console.log(error);

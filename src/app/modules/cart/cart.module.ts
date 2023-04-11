@@ -5,6 +5,7 @@ import { CatalogueModule } from '../catalogue/catalogue.module';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { SuccessComponent } from './success/success.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
     CartComponent,
@@ -15,7 +16,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     CatalogueModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
+
   ],
   exports:[CartComponent]
 })

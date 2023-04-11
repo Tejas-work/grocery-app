@@ -32,8 +32,12 @@ export class ExploreCategoriesComponent {
     this.productService.getAllCategories().subscribe(
       {
         next:(res)=>{
-          this.categories=res.data;
-          console.log(this.categories);
+          if (res?.data) {
+            console.log(res);
+
+            this.categories = res.data;
+            console.log(this.categories);
+          }
 
         }
       }

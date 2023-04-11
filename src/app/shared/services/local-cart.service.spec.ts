@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WindowService } from './window.service';
+import { LocalCartService } from './local-cart.service';
 
-describe('WindowService', () => {
-  let service: WindowService;
+describe('LocalCartService', () => {
+  let service: LocalCartService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WindowService);
+    service = TestBed.inject(LocalCartService);
   });
 
   it('should be created', () => {

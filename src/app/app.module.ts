@@ -27,7 +27,7 @@ import { AuthService } from './shared/services/auth.service';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormService } from './shared/services/form.service';
+
 import { ProductsService } from './shared/services/products.service';
 import { LocalCartService } from './shared/services/local-cart.service';
 
@@ -46,7 +46,7 @@ import { LocalCartService } from './shared/services/local-cart.service';
         TrendingItemsComponent,
         GoodThingsComponent,
     ],
-    providers: [CartService, GroceriesService,AuthService,FormService,ProductsService,LocalCartService],
+    providers: [CartService, GroceriesService,AuthService,ProductsService,LocalCartService],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

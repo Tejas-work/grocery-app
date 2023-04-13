@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CartService } from 'src/app//shared/services/cart.service';
-import { GroceriesService } from 'src/app/shared/services/groceries.service';
-import { Product } from 'src/app/shared/models/product.model';
-import { ToastrService } from 'ngx-toastr';
 import { ProductsService } from 'src/app/shared/services/products.service';
 import { Category } from 'src/app/shared/models/category.model';
 import { NgxSpinnerService } from 'ngx-spinner';

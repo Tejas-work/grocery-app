@@ -12,6 +12,7 @@ import {
 import { environment } from 'src/environments/environment.development';
 import { Category, CategoryApiResponse } from '../models/category.model';
 import { Product } from '../models/product.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class ProductsService {
     'ngrok-skip-browser-warning': 'skip-browser-warning',
     'Access-Control-Allow-Origin': '*',
   });
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private toastr: ToastrService, private spinner: NgxSpinnerService) {
     this.getAllProducts().subscribe({
       next: (res) => {
         console.log(res);
@@ -45,9 +46,12 @@ export class ProductsService {
 
   getAllCategories() {
     try {
-      return this.http.get<CategoryApiResponse>(this.base_url + this.categories_url, {
-        headers: this.headers,
-      });
+      return this.http.get<CategoryApiResponse>(
+        this.base_url + this.categories_url,
+        {
+          headers: this.headers,
+        }
+      );
     } catch (error: any) {
       return throwError(() => new Error(error));
     }

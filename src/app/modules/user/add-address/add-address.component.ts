@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AddAddress } from 'src/app/shared/models/addAddress.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { FormService } from 'src/app/shared/services/form.service';
+
 
 @Component({
   selector: 'app-add-address',
@@ -20,7 +20,7 @@ export class AddAddressComponent {
   id:number=0
 
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private formService: FormService,private route:ActivatedRoute,private router:Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService,private route:ActivatedRoute,private router:Router) {
 
     this.addAddressForm = this.fb.group(
       {

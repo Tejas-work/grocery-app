@@ -63,8 +63,9 @@
       </div>
 
       <a (click)="logOut()">LogOut</a>
+      <a  class="profile" routerLink="users/profile"> {{ userName }}</a>
 
-      <div class="profile">
+      <!-- <div class="profile">
         <div class="dropdown">
           <button
             class="btn dropdown-toggle"
@@ -87,7 +88,7 @@
             </li>
           </ul>
         </div>
-      </div>
+      </div> -->
     </ng-container>
     <ng-container *ngIf="!isLogin">
       <a routerLink="/login">Login</a>

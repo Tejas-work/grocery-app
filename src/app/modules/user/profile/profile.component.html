@@ -28,6 +28,7 @@
       <div class="col">
         <label for="">Alternate Contact Email</label><br>
         <input type="email" name="altEmail" id="" formControlName="altEmail">
+        <br>
         <small *ngIf="altEmail?.errors?.['email']">
           Please enter a valid email address
         </small>
@@ -39,13 +40,13 @@
 
       <div class="col">
         <label for="">Alternate Contact Number</label><br>
-        <input type="text" name="altContact" id="" formControlName="altContact">
+        <input type="text" name="altContact" id="" formControlName="altContact" maxlength="10">
         <small *ngIf="altContact?.errors?.['minlength']">
-          Alternate Contact Number must be at least {{altContact?.errors?.['minlength'].requiredLength}} characters long
-        </small>
+          <br> Alternate Contact Number must be at least {{altContact?.errors?.['minlength'].requiredLength}} characters long
+        </small><br>
         <small *ngIf="altContact?.errors?.['maxlength']">
           Alternate Contact Number cannot be more than {{altContact?.errors?.['maxlength'].requiredLength}} characters long
-        </small>
+        </small><br>
         <small *ngIf="altContact?.errors?.['pattern']">
           Contact must contain only digits (0-9)
         </small>
@@ -58,9 +59,11 @@
       <div class="col">
         <label for="">Date of Birth</label><br>
         <input type="date" name="" id="" formControlName="dob">
+
         <div *ngIf="dob!.invalid && dob!.touched">
+
           <small [style.display]="dob?.errors?.['required']">
-            Please enter dob
+           Please enter Date of Birth
           </small>
         </div>
       </div>

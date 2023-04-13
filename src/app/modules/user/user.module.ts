@@ -17,6 +17,8 @@ import { AuthInterceptor } from 'src/app/shared/interceptor/auth.interceptor';
 import { AddAddressComponent } from './add-address/add-address.component';
 import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 import { LocalCartService } from 'src/app/shared/services/local-cart.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 
 
@@ -39,6 +41,8 @@ import { LocalCartService } from 'src/app/shared/services/local-cart.service';
     ReactiveFormsModule,
     CatalogueModule,
     HttpClientModule,
+    NgxSpinnerModule
+
 
 
   ],

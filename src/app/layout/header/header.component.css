@@ -118,11 +118,24 @@ height: 52px;
 .number{
 
   color: #3BB77E;
+
 }
 
 
 
+.profile{
+  width: 90px;
+  padding: 10px 20px;
+}
+.profile:hover{
 
+  background-color: #3BB77E;
+  color: white;
+  border-radius: 10px;
+
+
+
+}
 
 
 /* .content h1{

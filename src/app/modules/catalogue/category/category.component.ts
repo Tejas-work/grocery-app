@@ -116,6 +116,21 @@ export class CategoryComponent implements OnInit {
         },
         error: (error) => console.log(error),
       });
+    } else {
+      this.productService.getAllProducts().subscribe({
+        next: (res) => {
+          if (res.data) {
+            let search = res.data.filter((product: any) => {
+              return (
+                product.title.toLowerCase().indexOf(word.toLowerCase()) != -1
+              );
+            });
+            this.products = search;
+            console.log(search);
+          }
+        },
+        error: (error) => console.log(error),
+      });
     }
   }
 

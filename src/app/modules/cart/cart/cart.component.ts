@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmBoxEvokeService, ConfirmBoxInitializer, DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { take } from 'rxjs';
-import { CartService } from 'src/app//shared/services/cart.service';
+
 import { CartItem } from 'src/app/shared/models/cartItem.model';
-import { AuthService } from 'src/app/shared/services/auth.service';
+
 import { LocalCartService } from 'src/app/shared/services/local-cart.service';
 
 @Component({
@@ -35,10 +35,12 @@ export class CartComponent {
     private cartService: LocalCartService,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private confirmBoxEvokeService: ConfirmBoxEvokeService
+
 
 
   ) {
+
+
 
 
   }

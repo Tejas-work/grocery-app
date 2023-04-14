@@ -1,5 +1,20 @@
-.container{
+.container {
   width: 400px;
   margin: auto;
   text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 10px;
+  color: white;
+  background-color: #3bb77e;
+  border: 1px solid #3bb77e;
+}
+
+button:hover {
+  background-color: white;
+  color: black;
+  border-radius: 10px;
 }

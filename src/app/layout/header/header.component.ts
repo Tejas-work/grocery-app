@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 import { Category } from 'src/app/shared/models/category.model';
@@ -25,7 +26,7 @@ export class HeaderComponent {
   gst: number = 0;
   total: number = 0;
   userName: string = '';
-  selectedCategory: string = '';
+  selectedCategory: string = 'All';
 
   cartItemsCount = 0;
 
@@ -33,7 +34,8 @@ export class HeaderComponent {
     private cartService: LocalCartService,
     private router: Router,
     private authService: AuthService,
-    private productService: ProductsService
+    private productService: ProductsService,
+    private toastr: ToastrService,
   ) {
 
 
@@ -101,6 +103,9 @@ export class HeaderComponent {
   onSubmit(event: Event) {
     event.preventDefault();
     const inputValue = this.myValue;
+    if (this.selectedCategory == "Select Category") {
+      this.toastr.error("Please select category for search")
+    }
     if (inputValue) {
       this.router.navigate([
         'groceries/search/grocery-search',

@@ -29,9 +29,12 @@
         <label for="">Alternate Contact Email</label><br>
         <input type="email" name="altEmail" id="" formControlName="altEmail">
         <br>
-        <small *ngIf="altEmail?.errors?.['email']">
-          Please enter a valid email address
-        </small>
+        <div *ngIf="altEmail?.invalid && altEmail?.touched">
+          <small *ngIf="altEmail?.errors?.['email']">
+            Please enter a valid email address
+          </small>
+        </div>
+
       </div>
 
 
@@ -41,15 +44,17 @@
       <div class="col">
         <label for="">Alternate Contact Number</label><br>
         <input type="text" name="altContact" id="" formControlName="altContact" maxlength="10">
-        <small *ngIf="altContact?.errors?.['minlength']">
-          <br> Alternate Contact Number must be at least {{altContact?.errors?.['minlength'].requiredLength}} characters long
-        </small><br>
-        <small *ngIf="altContact?.errors?.['maxlength']">
-          Alternate Contact Number cannot be more than {{altContact?.errors?.['maxlength'].requiredLength}} characters long
-        </small><br>
-        <small *ngIf="altContact?.errors?.['pattern']">
-          Contact must contain only digits (0-9)
-        </small>
+        <div *ngIf="altContact?.invalid && altContact?.touched">
+          <small *ngIf="altContact?.errors?.['minlength']">
+           Alternate Contact Number must be at least {{altContact?.errors?.['minlength'].requiredLength}} characters long
+          </small><br>
+          <small *ngIf="altContact?.errors?.['maxlength']">
+            Alternate Contact Number cannot be more than {{altContact?.errors?.['maxlength'].requiredLength}} characters long
+          </small>
+          <small *ngIf="altContact?.errors?.['pattern']">
+            Contact must contain only digits (0-9)
+          </small>
+        </div>
       </div>
 
 
@@ -78,7 +83,7 @@
             Password must be at least {{ password?.errors?.['minlength'].requiredLength }} characters long<br>
           </small>
           <small *ngIf="password?.errors?.['pattern']">
-            <br> must contain at least one uppercase letter,<br> one lowercase letter, and one number
+            must contain at least one uppercase letter,<br> one lowercase letter, and one number
           </small>
         </div>
 

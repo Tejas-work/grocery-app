@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
         ],
       ],
       dob: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(1)]],
+      password: ['', [Validators.required, Validators.minLength(1),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
     });
   }
 

@@ -12,30 +12,35 @@ import { LocalCartService } from 'src/app/shared/services/local-cart.service';
   styleUrls: ['./check-out.component.css'],
 })
 export class CheckOutComponent {
-  addresses: any;
+  addresses: any[]=[];
   checkOutForm!: FormGroup;
+  cartItemsCount: number = 0;
+  subTotal: number=0;
+  gst: number=0;
+  total: number=0;
 
   constructor(
     private router: Router,
-    private cartService:LocalCartService,
+    private cartService: LocalCartService,
     private authService: AuthService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService
-  ) {
+  ) {}
 
+  ngOnInit() {
+    this.check();
+    this.getAddress();
+    this.formInitial();
+    this.getCalculation()
+  }
 
+  formInitial() {
     this.checkOutForm = this.fb.group({
       deliveryAddress: ['', [Validators.required]],
     });
   }
 
-  ngOnInit(){
-    this.getAddress();
-  }
-
-
-
-  getAddress(){
+  getAddress() {
     this.spinner.show();
 
     this.authService.user$.subscribe({
@@ -48,23 +53,47 @@ export class CheckOutComponent {
       },
       error: (error) => console.log(error),
     });
-
   }
 
   get deliveryAddress() {
     return this.checkOutForm.get('deliveryAddress');
   }
 
-
   success() {
     if (this.checkOutForm.valid) {
-
-      this.cartService.order(this.deliveryAddress?.value,this.deliveryAddress?.value);
+      this.cartService.order(
+        this.deliveryAddress?.value,
+        this.deliveryAddress?.value
+      );
       this.deliveryAddress?.setValue('');
     }
+  }
+
+  check() {
+    this.cartService.items$.subscribe((res) => {
+      if (!(res?.length > 0)) {
+        this.router.navigate(['']);
+      }
+    });
   }
 
   cancel() {
     this.router.navigate(['']);
   }
+
+  getCalculation() {
+    this.cartService.items$.subscribe((items) => {
+
+      this.subTotal = items.reduce(
+        (total, item) => total + item.qty * item.product_amount,
+        0
+      );
+      console.log(this.subTotal);
+      this.gst = (this.subTotal * 18) / 100;
+      this.total = this.subTotal + this.gst;
+    });
+  }
+  addAddressNavigate() {
+    this.router.navigate(['users/addAddress']);
+    }
 }

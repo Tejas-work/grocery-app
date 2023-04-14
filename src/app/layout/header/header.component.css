@@ -123,10 +123,10 @@ height: 52px;
 
 
 
-.profile{
+.profile,.logOut{
   padding: 10px 20px;
 }
-.profile:hover{
+.profile:hover,.logOut:hover{
 
   background-color: #3BB77E;
   color: white;
@@ -135,6 +135,7 @@ height: 52px;
 
 
 }
+
 
 
 /* .content h1{

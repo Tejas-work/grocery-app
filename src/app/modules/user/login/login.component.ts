@@ -28,7 +28,22 @@ export class LoginComponent {
     private router: Router
   ) {}
 
+  check() {
+    this.authService.isLogin$.subscribe(
+      {
+        next: (res) => {
+  
+
+          if (res) {
+            this.router.navigate(['']);
+          }
+        }
+      }
+    )
+
+  }
   ngOnInit() {
+    this.check()
     this.loginForm = this.fb.group({
       userName: ['', Validators.required],
       password: ['', Validators.required],

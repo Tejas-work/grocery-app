@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalCartService } from 'src/app/shared/services/local-cart.service';
 
 @Component({
   selector: 'app-success',
@@ -7,11 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./success.component.css'],
 })
 export class SuccessComponent {
-  constructor(private router: Router) {}
+  home() {
+    this.cartService.cartCheck.next(false)
+  this.router.navigate(['']);
+}
+  constructor(private router: Router,private cartService: LocalCartService) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.router.navigate(['']);
-    }, 3000);
+
   }
 }

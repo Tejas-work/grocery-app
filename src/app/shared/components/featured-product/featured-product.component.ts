@@ -1,5 +1,5 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import {  Router } from '@angular/router';
 import { GroceriesService } from 'src/app/shared/services/groceries.service';
 import { Grocery } from 'src/app/shared/models/grocery.model';
 import { ToastrService } from 'ngx-toastr';

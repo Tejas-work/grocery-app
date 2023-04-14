@@ -36,6 +36,7 @@ import {
   ConfirmBoxConfigModule,
   ToastNotificationConfigModule
 } from '@costlydeveloper/ngx-awesome-popup';
+import { CartGuard } from './shared/guards/cart.guard';
 
 
 
@@ -53,7 +54,7 @@ import {
         TrendingItemsComponent,
         GoodThingsComponent,
     ],
-    providers: [CartService, GroceriesService,AuthService,ProductsService,LocalCartService],
+    providers: [CartService, GroceriesService,AuthService,ProductsService,LocalCartService,CartGuard],
     bootstrap: [AppComponent],
     imports: [
         BrowserModule,

@@ -24,6 +24,7 @@ import {
   AddressUpdateResponse,
 } from '../models/Address.model';
 import { getOrders } from '../models/order.model';
+import { ConfirmBoxInitializer, DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 
 @Injectable({
   providedIn: 'root',
@@ -115,15 +116,36 @@ export class AuthService {
     }
 
     if (sessionStorage.getItem('token')) {
-      sessionStorage.removeItem('token');
-      sessionStorage.removeItem('user');
-      this.toastr.success(
-        'You have successfully logged out.',
-        'Logout Successful'
-      );
-      this.router.navigate([''])
-      this.isLogin.next(false);
-      // console.log('logout');
+      const confirmBox = new ConfirmBoxInitializer();
+      confirmBox.setTitle('Are you sure?');
+      confirmBox.setMessage('Do you want to LogOut?');
+      confirmBox.setButtonLabels('YES', 'NO');
+
+      // Choose layout color type
+      confirmBox.setConfig({
+        layoutType: DialogLayoutDisplay.DANGER, // SUCCESS | INFO | NONE | DANGER | WARNING
+      });
+
+      // Simply open the popup and listen which button is clicked
+      confirmBox.openConfirmBox$().subscribe((resp: any) => {
+        // IConfirmBoxPublicResponse
+        console.log('Clicked button response: ', resp);
+
+        if (resp.success) {
+
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('user');
+          this.toastr.success(
+            'You have successfully logged out.',
+            'Logout Successful'
+          );
+          this.router.navigate([''])
+          this.isLogin.next(false);
+          // console.log('logout');
+
+        }
+      })
+
     }
   }
 

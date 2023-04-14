@@ -18,3 +18,25 @@ border-radius: 19px;
 .green{
   background: #53B175;
 }
+
+input{
+  margin-right: 10px;
+}
+.address{
+  font-size: 25px;
+  color: #53B175;
+}
+
+button{
+  background-color: white;
+  padding: 8px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+
+#address{
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+}

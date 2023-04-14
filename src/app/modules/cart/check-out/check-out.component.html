@@ -1,37 +1,43 @@
 <app-product-header [title]="'CheckOut'"></app-product-header>
-<div class="container">
-  <h6 style="margin-bottom: 20px;">
-    Select Delivery Address
-  </h6>
-  <form (submit)="success()" [formGroup]="checkOutForm">
+<div class="container" >
+
+  <ng-container *ngIf="addresses">
+    <ng-container *ngIf="addresses.length>0">
+      <h6 style="margin-bottom: 20px;text-decoration: underline;">
+        Select Delivery Address
+      </h6>
+      <form (submit)="success()" [formGroup]="checkOutForm">
 
 
-    <div id="row" *ngFor="let address of addresses">
-      <input type="radio" name="deliveryAddress" id="" value="{{address.id}}"
-        formControlName="deliveryAddress">{{address.address_line_1+"
-      ,"+address.area+","+address.postal_code}}
-    </div>
+        <div id="row" class="address" *ngFor="let address of addresses">
+          <input type="radio" name="deliveryAddress" id="" value="{{address.id}}"
+            formControlName="deliveryAddress">{{address.address_line_1+"
+          ,"+address.area+","+address.postal_code}}
+        </div>
 
 
-    <p>By placing an order you agree to our
-      Terms And Conditions</p>
-    <h5>Payment Method: Cash On Delivery</h5>
-    <h5>Grand Total: 6789</h5>
+        <p>By placing an order you agree to our
+          Terms And Conditions</p>
+        <h5>Payment Method: Cash On Delivery</h5>
+        <h5>Grand Total: <span style="color: #53B175;"> {{total|currency}}</span></h5>
 
-    <div *ngIf="deliveryAddress?.invalid && deliveryAddress?.touched">
-      <small *ngIf="deliveryAddress?.errors?.['required']">
-        deliveryAddress is required<br>
-      </small>
-    </div>
-    <div>
-      <a class="btn" (click)="cancel()">cancel</a>&nbsp;
-      <button type="submit" class="btn green" [disabled]="checkOutForm.invalid">Place an Order</button>
-    </div>
-
-
-
-  </form>
-
-
+        <div *ngIf="deliveryAddress?.invalid && deliveryAddress?.touched">
+          <small *ngIf="deliveryAddress?.errors?.['required']">
+            deliveryAddress is required<br>
+          </small>
+        </div>
+        <div>
+          <a class="btn" (click)="cancel()">cancel</a>&nbsp;
+          <button type="submit" class="btn green" [disabled]="checkOutForm.invalid">Place an Order</button>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="!(addresses.length>0)">
+      <div id="address">
+        <button  (click)="addAddressNavigate()">Add Address</button>
+      </div>
+    </ng-container>
+  </ng-container>
 
 </div>
+

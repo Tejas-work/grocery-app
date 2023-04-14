@@ -8,6 +8,7 @@ import { SuccessComponent } from './modules/cart/success/success.component';
 import { SignUpComponent } from './modules/user/sign-up/sign-up.component';
 import { LoginComponent } from './modules/user/login/login.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { CartGuard } from './shared/guards/cart.guard';
 
 const routes: Routes = [
   {
@@ -32,7 +33,7 @@ const routes: Routes = [
   {
     path:'success',
     component:SuccessComponent,
-    canActivate:[AuthGuard]
+    canActivate:[CartGuard]
   },{
     path:'users',loadChildren:()=>import('./modules/user/user.module').then(c => c.UserModule)
 

@@ -12,6 +12,10 @@ import { Order, OrderApiResponse } from '../models/order.model';
   providedIn: 'root',
 })
 export class LocalCartService {
+  cartCheck = new BehaviorSubject<boolean>(false);
+  cartCheck$ = this.cartCheck.asObservable();
+
+
   cart: UserCartItem[] = [];
   userIndex: number = 0;
 
@@ -247,6 +251,7 @@ export class LocalCartService {
                   console.log('Order created successfully!', response);
                   this.toastr.success('Order placed successfully!');
                   this.clearCart();
+                  this.cartCheck.next(true);
                   this.router.navigate(['success']);
                 },
                 error: (error) => {

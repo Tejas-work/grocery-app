@@ -28,6 +28,7 @@
             {{ selectedCategory }}
           </button>
           <ul class="dropdown-menu">
+   
             <li *ngFor="let category of categories">
               <a
                 class="dropdown-item"
@@ -61,7 +62,7 @@
         </button>
       </div>
 
-      <a (click)="logOut()" style="cursor: pointer;">LogOut</a>
+      <a (click)="logOut()" class="logOut" style="cursor: pointer;">LogOut</a>
       <a class="profile" routerLink="users/profile"> {{ userName }}</a>
     </ng-container>
     <ng-container *ngIf="!isLogin">

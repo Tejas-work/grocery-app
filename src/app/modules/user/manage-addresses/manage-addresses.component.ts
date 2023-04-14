@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmBoxInitializer, DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
+import { AddAddressResponse } from 'src/app/shared/models/Address.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -15,7 +16,7 @@ this.router.navigate(['users/addAddress']);
 
   @Output() pageTitleChanged = new EventEmitter<string>();
   pageTitle = 'Manage Addresses';
-  addresses:any;
+  addresses:any[]=[];
 
   constructor(private authService:AuthService,private router:Router) {
     this.authService.user$.subscribe(

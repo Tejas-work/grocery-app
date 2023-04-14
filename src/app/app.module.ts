@@ -30,6 +30,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ProductsService } from './shared/services/products.service';
 import { LocalCartService } from './shared/services/local-cart.service';
+import {
+  NgxAwesomePopupModule,
+  DialogConfigModule,
+  ConfirmBoxConfigModule,
+  ToastNotificationConfigModule
+} from '@costlydeveloper/ngx-awesome-popup';
+
 
 
 
@@ -60,7 +67,11 @@ import { LocalCartService } from './shared/services/local-cart.service';
         IvyCarouselModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot(),
-        NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
+      NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+      NgxAwesomePopupModule.forRoot(), // Essential, mandatory main module.
+      DialogConfigModule.forRoot(), // Needed for instantiating dynamic components.
+      ConfirmBoxConfigModule.forRoot(), // Needed for instantiating confirm boxes.
+      ToastNotificationConfigModule.forRoot()
     ],
 })
 export class AppModule { }

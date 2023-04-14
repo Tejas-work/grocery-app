@@ -117,6 +117,8 @@ export class AddAddressComponent {
       this.authService.addAddress(data).subscribe({
         next: (res) => {
           console.log(res + "addaddress from component");
+          this.router.navigate(['users/manageAddresses'])
+          this.addAddressForm.reset()
         },
         error: (error) => console.error(error)
       });
@@ -128,9 +130,8 @@ export class AddAddressComponent {
         {
           next:(res)=>{
             console.log(res);
-
-
             this.router.navigate(['users/manageAddresses'])
+            this.addAddressForm.reset()
 
           },
           error:(error)=>console.log(error)
@@ -147,7 +148,8 @@ export class AddAddressComponent {
     this.authService.address$.subscribe({
       next:(res)=>{
 
-        this.id=res.id
+        if (res && res.id) {
+          this.id=res.id
         console.log(res);
 
 
@@ -163,6 +165,7 @@ export class AddAddressComponent {
           landmark: res.landmark,
           tag: res.tag,
         });
+       }
 
       }
     })

@@ -10,12 +10,23 @@ import { LocalCartService } from 'src/app/shared/services/local-cart.service';
   styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent {
+  change() {
+    if (this.quantityCount <= 0) {
+      this.errorMessage=true
+
+
+    } else {
+      this.errorMessage=false;
+
+    }
+
+}
   goCart() {
     this.router.navigate(['cart']);
   }
 
   grocery: any;
-
+  errorMessage:boolean=false;
   addedInCartItem: any[] = [];
   checkCart = true;
 
@@ -51,8 +62,17 @@ export class ProductDetailsComponent {
 
   addCart() {
     console.log(this.quantityCount);
+    if (this.quantityCount < 0) {
+      this.errorMessage=true
 
-    this.cartService.addItem(this.quantityCount, this.category, this.grocery);
+
+    } else {
+      this.cartService.addItem(this.quantityCount, this.category, this.grocery);
+
+    }
+    this.errorMessage = true;
+
+
     // .subscribe(
     //   {
     //     next: (res) => {

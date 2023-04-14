@@ -108,10 +108,16 @@
     <div class="row">
       <div class="col">
         <label for="tag">tag</label><br>
-        <input type="text" name="" id="" formControlName="tag">
+        <!-- <input type="text" name="" id="" formControlName="tag"> -->
+        <select formControlName="tag" style="width: 160px;margin-top: 10px;">
+          <option value="">select tag</option>
+          <option value="HOME">Home</option>
+          <option value="OFFICE">Office</option>
+          <option value="OTHER">Other</option>
+        </select>
         <div *ngIf="tag!.invalid && tag!.touched">
           <small [style.display]="tag?.errors?.['required']">
-            Please enter tag
+            Please select tag
           </small>
         </div>
       </div>

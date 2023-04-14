@@ -11,11 +11,19 @@ import { EncryptApiResponse } from '../models/encrypt.model';
 
 import { LocalCartService } from './local-cart.service';
 import { CustomerDetailsResponse } from '../models/customerDetails.model';
-import { ChangePasswordRequest, ChangePasswordResponse } from '../models/changePassword.model';
+import {
+  ChangePasswordRequest,
+  ChangePasswordResponse,
+} from '../models/changePassword.model';
 import { UserUpdate, UserUpdateResponse } from '../models/userUpdate.model';
-import { AddAddress, AddAddressResponse, AddressDeleteResponse, AddressUpdateRequest, AddressUpdateResponse } from '../models/Address.model';
-import { ApiOrder, Customer, OrderApiResponse, getOrders } from '../models/order.model';
-
+import {
+  AddAddress,
+  AddAddressResponse,
+  AddressDeleteResponse,
+  AddressUpdateRequest,
+  AddressUpdateResponse,
+} from '../models/Address.model';
+import { getOrders } from '../models/order.model';
 
 @Injectable({
   providedIn: 'root',
@@ -46,8 +54,8 @@ export class AuthService {
     private cartService: LocalCartService
   ) {
     if (sessionStorage.getItem('token')) {
-      this.isLogin.next(true);
       this.getUserDetails().subscribe();
+      this.isLogin.next(true);
     }
   }
 
@@ -70,24 +78,28 @@ export class AuthService {
 
   logIn(data: LogIn) {
     try {
-      return this.http.post<LoginResponse>(this.base_url + this.logIn_url, data).pipe(
-        tap((res) => {
-          this.isLogin.next(true);
-          let token = res.data.token;
-          let user = res.data.user;
-          console.log(res);
+      return this.http
+        .post<LoginResponse>(this.base_url + this.logIn_url, data)
+        .pipe(
+          tap((res) => {
+            if (res && res.data.token && res.data.user) {
+              this.isLogin.next(true);
+              let token = res.data.token;
+              let user = res.data.user;
+              console.log(res);
+              this.getUserDetails().subscribe();
+              console.log(res.data);
+              sessionStorage.setItem('token', token);
+              sessionStorage.setItem('user', JSON.stringify(user));
+              this.toastr.success('You have successfully logged in!');
+              this.isLogin.next(true);
+              this.router.navigate(['']);
 
-          console.log(res.data);
-          sessionStorage.setItem('token', token);
-          sessionStorage.setItem('user', JSON.stringify(user));
-          this.toastr.success('You have successfully logged in!');
-          this.isLogin.next(true);
-          this.router.navigate(['']);
-
-          //get User cart
-          this.cartService.checkCart();
-        })
-      );
+              //get User cart
+              this.cartService.checkCart();
+            }
+          })
+        );
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -109,6 +121,7 @@ export class AuthService {
         'You have successfully logged out.',
         'Logout Successful'
       );
+      this.router.navigate([''])
       this.isLogin.next(false);
       // console.log('logout');
     }
@@ -117,7 +130,9 @@ export class AuthService {
   getUserDetails() {
     try {
       return this.http
-        .get<CustomerDetailsResponse>(this.base_url + this.getUser_url, { headers: this.headers })
+        .get<CustomerDetailsResponse>(this.base_url + this.getUser_url, {
+          headers: this.headers,
+        })
         .pipe(
           tap((res) => {
             this.user.next(res.data);
@@ -132,7 +147,10 @@ export class AuthService {
   changePassword(data: ChangePasswordRequest) {
     try {
       return this.http
-        .put<ChangePasswordResponse>(this.base_url + this.changePassword_url, data)
+        .put<ChangePasswordResponse>(
+          this.base_url + this.changePassword_url,
+          data
+        )
         .pipe(
           tap(() => {
             this.toastr.success('Your password has been changed successfully');
@@ -145,9 +163,13 @@ export class AuthService {
 
   updateProfile(data: UserUpdate) {
     try {
-      return this.http.put<UserUpdateResponse>(this.base_url + this.updateProfile_url, data, {
-        headers: this.headers,
-      });
+      return this.http.put<UserUpdateResponse>(
+        this.base_url + this.updateProfile_url,
+        data,
+        {
+          headers: this.headers,
+        }
+      );
     } catch (error: any) {
       return throwError(() => new Error(error));
     }
@@ -168,13 +190,21 @@ export class AuthService {
           headers: this.headers,
         })
         .pipe(
-          tap(() => {
-            const data = this.user.getValue();
-            console.log(data);
-            data.addresses.push(data);
+          tap((res) => {
+            if (res && res.data) {
+              console.log(res);
+
+              const data = this.user.getValue();
+              console.log(data);
+
+            console.log(data.addresses);
+            data.addresses.push(res.data);
             this.user.next(data);
 
             this.toastr.success('Your address has been added successfully');
+
+            }
+
           })
         );
     } catch (error: any) {
@@ -189,7 +219,11 @@ export class AuthService {
 
     try {
       return this.http
-        .put<AddressUpdateResponse>(this.base_url + this.address_edit_url, data, { headers })
+        .put<AddressUpdateResponse>(
+          this.base_url + this.address_edit_url,
+          data,
+          { headers }
+        )
         .pipe(
           tap((res) => {
             console.log(res);
@@ -214,7 +248,10 @@ export class AuthService {
         });
 
         this.http
-          .delete<AddressDeleteResponse>(this.base_url + this.address_delete_url, { headers })
+          .delete<AddressDeleteResponse>(
+            this.base_url + this.address_delete_url,
+            { headers }
+          )
           .subscribe({
             next: () => {
               const data = this.user.getValue();
@@ -223,7 +260,7 @@ export class AuthService {
               if (index !== -1) {
                 addresses.splice(index, 1);
                 this.user.next(data);
-                this.toastr.warning('Address deleted successfully!', 'Success');
+                // this.toastr.warning('Address deleted successfully!', 'Success');
               }
             },
             error: (err) => {
@@ -255,9 +292,11 @@ export class AuthService {
   getAddress(id: number) {
     this.user$.subscribe({
       next: (value) => {
-        let data = value.addresses.find((address: any) => address.id == id);
-        console.log(value);
-        this.address.next(data);
+        if (value) {
+          let data = value.addresses.find((address: any) => address.id == id);
+          console.log(value);
+          this.address.next(data);
+        }
       },
       error: (err) => {
         console.log(err);

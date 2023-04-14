@@ -30,12 +30,18 @@ export class OrdersComponent {
 
   ngOnInit() {
     this.pageTitleChanged.emit(this.pageTitle);
+    this.getOrders();
+  }
+
+  getOrders() {
     this.spinner.show();
     this.authService.getOrders().subscribe({
       next: (res) => {
-        this.orders = res.data.orders;
-        console.log(this.orders);
-        this.spinner.hide();
+        if (res && res.data.orders) {
+          this.orders = res.data.orders;
+          console.log(this.orders);
+          this.spinner.hide();
+        }
       },
       error: (error) => {
         console.log(error);

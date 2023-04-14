@@ -18,10 +18,12 @@ import { LocalCartService } from 'src/app/shared/services/local-cart.service';
     CatalogueModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
+
+
 
   ],
- 
+
   exports:[CartComponent]
 })
 export class CartModule { }

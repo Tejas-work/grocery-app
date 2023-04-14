@@ -8,7 +8,6 @@
 </ngx-spinner>
 <app-product-header [title]="'Cart'"></app-product-header>
 
-
 <div class="container">
   <ng-container *ngIf="items && items.length > 0">
     <table>
@@ -22,7 +21,8 @@
         <tr style="background-color: #dbdada; font-size: 17px">
           <td colspan="4" style="font-size: 17px">
             {{ category.key }} &nbsp;<span style="font-size: 12px"
-              >{{ category.value.items.length }} items {{
+              >{{ category.value.items.length }} items
+              {{
                 category.value.total | currency : "CAD" : "symbol-narrow"
               }}</span
             >
@@ -31,7 +31,8 @@
         <tr *ngFor="let grocery of category.value.items">
           <td class="one">
             <p style="font-size: 17px">
-              <span style="font-size: 12px">{{ grocery.store }}</span><br />{{ grocery.product_name}}
+              <span style="font-size: 12px">{{ grocery.store }}</span
+              ><br />{{ grocery.product_name }}
             </p>
             <!-- <h6>{{ grocery.qty }}</h6> -->
           </td>
@@ -44,15 +45,15 @@
             </p>
           </td> -->
           <td *ngIf="!grocery.discountPrice">
-            <h6> {{ grocery.product_amount| currency : "CAD" : "symbol-narrow"}}</h6>
+            <h6>
+              {{ grocery.product_amount | currency : "CAD" : "symbol-narrow" }}
+            </h6>
           </td>
           <td style="font-size: 17px">
             <button class="btn" (click)="decrease(grocery)">-</button>
 
             <!-- <input type="text" name="count" id="" class="count" [(ngModel)]="count" (change)="changeCount()" > -->
-            <span class="count">{{
-              grocery.qty
-            }}</span>
+            <span class="count">{{ grocery.qty }}</span>
             <button class="increase btn" (click)="increase(grocery)">+</button>
           </td>
           <td style="font-size: 17px">
@@ -66,27 +67,27 @@
         </tr>
       </ng-container>
     </table>
-  </ng-container>
+
+  <div class="container two">
+    <div class="row">
+      <div class="col">Sub Total</div>
+      <div class="col">{{ subTotal | currency : "CAD" : "symbol-narrow" }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col">GST</div>
+      <div class="col">{{ gst | currency }}</div>
+    </div>
+    <div class="row total">
+      <div class="col">Total</div>
+      <div class="col">{{ total | currency : "CAD" : "symbol-narrow" }}</div>
+    </div>
+    <div class="row" *ngIf="items.length" (click)="checkOut()">
+      <div class="col checkBtn">CheckOut</div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="items.length==0">
+  <h1 style="text-align: center;">Your cart is empty</h1>
+</ng-container>
 </div>
-
-<div class="container two">
-  <div class="row">
-    <div class="col">Sub Total</div>
-    <div class="col">{{ subTotal | currency : "CAD" : "symbol-narrow" }}</div>
-  </div>
-
-  <div class="row">
-    <div class="col">GST</div>
-    <div class="col">{{gst|currency}}</div>
-  </div>
-  <div class="row total">
-    <div class="col">Total</div>
-    <div class="col">{{ total | currency : "CAD" : "symbol-narrow" }}</div>
-  </div>
-  <div class="row " *ngIf="items.length"  (click)="checkOut()">
-   <div class="col checkBtn">
-    CheckOut
-   </div>
-  </div>
-</div>
-

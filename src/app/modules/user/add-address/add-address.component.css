@@ -5,7 +5,7 @@
 }
 
 
-input{
+input,select{
   min-width: 413px;
   background-color: #F0F0F0;
   border:1px solid #D4D4D4;

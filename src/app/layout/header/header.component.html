@@ -32,9 +32,9 @@
               <a
                 class="dropdown-item"
                 (click)="getSelectedCategory(category?.title)"
-                >{{ category?.title}}</a
+                >{{ category?.title }}</a
               >
-
+            </li>
           </ul>
         </div>
       </div>
@@ -55,40 +55,14 @@
     <ng-container *ngIf="isLogin">
       <div class="cart" (click)="navigateCart()">
         <span class="totalItems">{{ cartItemsCount }}</span>
-        <i class="fa-solid fa-cart-shopping" ></i>
-        <button
-          >
-            My cart <br /><span class="total">{{ total | currency }}</span>
-          </button>
+        <i class="fa-solid fa-cart-shopping"></i>
+        <button class="btn btn-transparent btn-outline-transparent">
+          My cart <br /><span class="total">{{ total | currency }}</span>
+        </button>
       </div>
 
-      <a (click)="logOut()">LogOut</a>
-      <a  class="profile" routerLink="users/profile"> {{ userName }}</a>
-
-      <!-- <div class="profile">
-        <div class="dropdown">
-          <button
-            class="btn dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            {{ userName }}
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <a class="dropdown-item" routerLink="users/profile"
-                >Edit Profile</a
-              >
-            </li>
-            <li>
-              <a class="dropdown-item" routerLink="users/changePassword"
-                >change Password</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div> -->
+      <a (click)="logOut()" style="cursor: pointer;">LogOut</a>
+      <a class="profile" routerLink="users/profile"> {{ userName }}</a>
     </ng-container>
     <ng-container *ngIf="!isLogin">
       <a routerLink="/login">Login</a>

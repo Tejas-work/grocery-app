@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmBoxInitializer, DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -8,6 +9,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./manage-addresses.component.css']
 })
 export class ManageAddressesComponent {
+addAddressNavigate() {
+this.router.navigate(['users/addAddress']);
+}
 
   @Output() pageTitleChanged = new EventEmitter<string>();
   pageTitle = 'Manage Addresses';
@@ -37,8 +41,29 @@ export class ManageAddressesComponent {
   }
 
 //delete address
-  delete(id:number) {
-    this.authService.deleteAddress(id);
+  delete(id: number) {
+    const confirmBox = new ConfirmBoxInitializer();
+    confirmBox.setTitle('Are you sure?');
+    confirmBox.setMessage('Do you want to Delete?');
+    confirmBox.setButtonLabels('DELETE', 'NO');
+
+    // Choose layout color type
+    confirmBox.setConfig({
+      layoutType: DialogLayoutDisplay.DANGER, // SUCCESS | INFO | NONE | DANGER | WARNING
+    });
+
+    // Simply open the popup and listen which button is clicked
+    confirmBox.openConfirmBox$().subscribe((resp: any) => {
+      // IConfirmBoxPublicResponse
+      console.log('Clicked button response: ', resp);
+
+      if (resp.success) {
+
+        this.authService.deleteAddress(id);
+
+      }
+    })
+
   }
 
 

@@ -1,5 +1,6 @@
 <div class="container">
   <div class="card-grp">
+  <ng-container *ngIf="addresses.length>0">
     <ng-container *ngFor="let address of addresses">
 
       <div class="card" style="margin: 20px;">
@@ -7,7 +8,7 @@
         <div class="address">
           {{address?.address_line_1}}<br>
           {{address?.area}} {{address?.landmark}}<br>
-          {{address?.city}} 
+          {{address?.city}}
         </div>
         <div class="action">
           <button>deliver Here</button>
@@ -17,6 +18,13 @@
       </div>
 
     </ng-container>
+
+  </ng-container>
+
+  <ng-container *ngIf="addresses.length==0">
+    <button (click)="addAddressNavigate()">Add Address</button>
+  </ng-container>
+
 
   </div>
 </div>

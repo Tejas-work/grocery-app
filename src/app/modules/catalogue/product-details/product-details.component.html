@@ -32,18 +32,25 @@
           id=""
           class="count"
           [(ngModel)]="quantityCount"
+          value="1"
+          min="1"
+
           style="
             -moz-appearance: textfield;
             -webkit-appearance: none;
             appearance: none;
           "
+          (input)="change()"
         />
-        <button class="add" *ngIf="!checkCart" (click)="addCart()">
+        <button class="add" *ngIf="!checkCart && !errorMessage" (click)="addCart()">
           Add cart
         </button>
+
         <button class="add" *ngIf="checkCart" (click)="goCart()">
           Go to Cart
         </button>
+
+        <small *ngIf="errorMessage" style="color: red;" >Please enter valid quantity</small>
       </div>
     </div>
   </div>

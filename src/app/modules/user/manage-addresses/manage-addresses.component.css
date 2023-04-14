@@ -1,6 +1,6 @@
 .card-grp{
- display: flex;
- align-items: center;
+ display: grid;
+ grid-template-columns: auto auto auto;
 
 }
 .card{

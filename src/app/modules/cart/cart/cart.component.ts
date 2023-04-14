@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmBoxEvokeService, ConfirmBoxInitializer, DialogLayoutDisplay } from '@costlydeveloper/ngx-awesome-popup';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { take } from 'rxjs';
 import { CartService } from 'src/app//shared/services/cart.service';
@@ -33,7 +34,8 @@ export class CartComponent {
   constructor(
     private cartService: LocalCartService,
     private router: Router,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private confirmBoxEvokeService: ConfirmBoxEvokeService
 
 
   ) {
@@ -89,9 +91,27 @@ export class CartComponent {
 
   //removeItem call service
   removeCartItem(id: number) {
+    const confirmBox = new ConfirmBoxInitializer();
+    confirmBox.setTitle('Are you sure?');
+    confirmBox.setMessage('Do you want to Delete?');
+    confirmBox.setButtonLabels('DELETE', 'CANCEL');
 
-    this.cartService.removeItem(id)
+    // Choose layout color type
+    confirmBox.setConfig({
+      layoutType: DialogLayoutDisplay.DANGER, // SUCCESS | INFO | NONE | DANGER | WARNING
+    });
 
+    // Simply open the popup and listen which button is clicked
+    confirmBox.openConfirmBox$().subscribe((resp: any) => {
+      // IConfirmBoxPublicResponse
+      console.log('Clicked button response: ', resp);
+
+      if (resp.success) {
+
+        this.cartService.removeItem(id)
+
+      }
+    })
   }
 
 

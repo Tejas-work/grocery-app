@@ -11,7 +11,7 @@ import {
 } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Category, CategoryApiResponse } from '../models/category.model';
-import { Product } from '../models/product.model';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({

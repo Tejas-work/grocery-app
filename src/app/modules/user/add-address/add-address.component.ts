@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import { AddAddress } from 'src/app/shared/models/addAddress.model';
+import { AddAddress } from 'src/app/shared/models/Address.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 

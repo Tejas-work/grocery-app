@@ -2,14 +2,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { BehaviorSubject, catchError, of, take, tap, throwError } from 'rxjs';
-import { Register } from '../models/register.model';
-import { LogIn } from '../models/login.model';
+import { Register, RegisterResponse } from '../models/register.model';
+import { LogIn, LoginResponse } from '../models/login.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { EncryptApiResponse } from '../models/encrypt.model';
-import { UserCartItem } from '../models/cartItem.model';
+
 import { LocalCartService } from './local-cart.service';
+import { CustomerDetailsResponse } from '../models/customerDetails.model';
+import { ChangePasswordRequest, ChangePasswordResponse } from '../models/changePassword.model';
+import { UserUpdate, UserUpdateResponse } from '../models/userUpdate.model';
+import { AddAddress, AddAddressResponse, AddressDeleteResponse, AddressUpdateRequest, AddressUpdateResponse } from '../models/Address.model';
+import { ApiOrder, Customer, OrderApiResponse, getOrders } from '../models/order.model';
+
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +54,7 @@ export class AuthService {
   registration(data: Register) {
     try {
       return this.http
-        .post<Register>(this.base_url + this.register_url, data)
+        .post<RegisterResponse>(this.base_url + this.register_url, data)
         .pipe(
           tap(() => {
             this.toastr.success(
@@ -64,7 +70,7 @@ export class AuthService {
 
   logIn(data: LogIn) {
     try {
-      return this.http.post<any>(this.base_url + this.logIn_url, data).pipe(
+      return this.http.post<LoginResponse>(this.base_url + this.logIn_url, data).pipe(
         tap((res) => {
           this.isLogin.next(true);
           let token = res.data.token;
@@ -111,7 +117,7 @@ export class AuthService {
   getUserDetails() {
     try {
       return this.http
-        .get<any>(this.base_url + this.getUser_url, { headers: this.headers })
+        .get<CustomerDetailsResponse>(this.base_url + this.getUser_url, { headers: this.headers })
         .pipe(
           tap((res) => {
             this.user.next(res.data);
@@ -123,10 +129,10 @@ export class AuthService {
   }
 
   //change password call api and data is oldPassword and newPassword
-  changePassword(data: any) {
+  changePassword(data: ChangePasswordRequest) {
     try {
       return this.http
-        .put<any>(this.base_url + this.changePassword_url, data)
+        .put<ChangePasswordResponse>(this.base_url + this.changePassword_url, data)
         .pipe(
           tap(() => {
             this.toastr.success('Your password has been changed successfully');
@@ -137,9 +143,9 @@ export class AuthService {
     }
   }
 
-  updateProfile(data: any) {
+  updateProfile(data: UserUpdate) {
     try {
-      return this.http.put(this.base_url + this.updateProfile_url, data, {
+      return this.http.put<UserUpdateResponse>(this.base_url + this.updateProfile_url, data, {
         headers: this.headers,
       });
     } catch (error: any) {
@@ -153,12 +159,12 @@ export class AuthService {
   encrypt_url = environment.encrypt;
   address_edit_url = environment.address_edit;
   //Add address
-  addAddress(data: any) {
+  addAddress(data: AddAddress) {
     try {
       console.log(this.base_url + this.add_address_url);
 
       return this.http
-        .post(this.base_url + this.add_address_url, data, {
+        .post<AddAddressResponse>(this.base_url + this.add_address_url, data, {
           headers: this.headers,
         })
         .pipe(
@@ -176,14 +182,14 @@ export class AuthService {
     }
   }
 
-  updateAddress(data: any, encryptId: string, id: number) {
+  updateAddress(data: AddressUpdateRequest, encryptId: string, id: number) {
     const headers = new HttpHeaders({
       address_id: String(encryptId),
     });
 
     try {
       return this.http
-        .put(this.base_url + this.address_edit_url, data, { headers })
+        .put<AddressUpdateResponse>(this.base_url + this.address_edit_url, data, { headers })
         .pipe(
           tap((res) => {
             console.log(res);
@@ -208,9 +214,9 @@ export class AuthService {
         });
 
         this.http
-          .delete<any>(this.base_url + this.address_delete_url, { headers })
+          .delete<AddressDeleteResponse>(this.base_url + this.address_delete_url, { headers })
           .subscribe({
-            next: (res) => {
+            next: () => {
               const data = this.user.getValue();
               let addresses = data.addresses;
               const index = addresses.findIndex((i: any) => i.id === id);
@@ -262,7 +268,7 @@ export class AuthService {
   orders_get_url = environment.order_get;
   getOrders() {
     try {
-      return this.http.get<any>(this.base_url + this.orders_get_url, {
+      return this.http.get<getOrders>(this.base_url + this.orders_get_url, {
         headers: this.headers,
       });
     } catch (error: any) {

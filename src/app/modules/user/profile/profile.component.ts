@@ -1,16 +1,13 @@
-
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-
   profileForm!: FormGroup;
 
   @Output() pageTitleChanged = new EventEmitter<string>();
@@ -18,49 +15,51 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private authService: AuthService
-  ) {
-
-
-  }
+  ) { }
 
   ngOnInit() {
     this.pageTitleChanged.emit(this.pageTitle);
+    this.formInitial();
+    this.getUser();
+  }
+
+  formInitial() {
     this.profileForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       altEmail: ['', Validators.email],
-      altContact: ['', [Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[0-9]+$/)]],
+      altContact: [
+        '',
+        [
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern(/^[0-9]+$/),
+        ],
+      ],
       dob: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(1)]],
-
     });
-
-
-
-     this.authService.getUserDetails().subscribe({
-      next: (res) => {
-        const data = res.data;
-        console.log(data);
-
-        this.profileForm.patchValue({
-          firstName: data.first_name,
-          lastName: data.last_name,
-        });
-
-      },
-      error: (error) => {
-        console.log("get user component", error);
-
-      }
-    })
-
-
   }
 
+  getUser() {
+    this.authService.getUserDetails().subscribe({
+      next: (res) => {
+        if (res && res.data) {
+          const data = res.data;
+          console.log(data);
 
-
+          this.profileForm.patchValue({
+            firstName: data.first_name,
+            lastName: data.last_name,
+          });
+        }
+      },
+      error: (error) => {
+        console.log('get user component', error);
+      },
+    });
+  }
   get firstName() {
     return this.profileForm.get('firstName');
   }
@@ -85,40 +84,23 @@ export class ProfileComponent implements OnInit {
     return this.profileForm.get('password');
   }
 
-  onSubmit(){
-
-
-    const data={
+  onSubmit() {
+    const data = {
       first_name: this.firstName?.value,
-      last_name:this.lastName?.value,
+      last_name: this.lastName?.value,
       password: this.password?.value,
       date_of_birth: this.dob?.value,
       secondary_mobile_number: this.altContact?.value,
-      secondary_email: this.altEmail?.value
-    }
+      secondary_email: this.altEmail?.value,
+    };
 
-
-    this.authService.updateProfile(data).subscribe(
-      {
-        next:(res)=>{
-          console.log(res);
-
-        },
-        error(err) {
-          console.log(err);
-
-        },
-      }
-    )
-
+    this.authService.updateProfile(data).subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error(err) {
+        console.log(err);
+      },
+    });
   }
-
-
-
-
-
-
 }
-
-
-

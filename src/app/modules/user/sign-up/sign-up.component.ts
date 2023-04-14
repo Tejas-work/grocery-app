@@ -6,6 +6,7 @@ import { Register } from 'src/app/shared/models/register.model';
 
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { matchPassword } from 'src/app/shared/validators /matchPassword.validator';
+import { patternPassword } from 'src/app/shared/validators /patternPassword.validator';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -28,7 +29,7 @@ export class SignUpComponent {
       rePassword: ['', [Validators.required, Validators.minLength(8)]]
     },
       {
-        validators: matchPassword('password', 'rePassword')
+        validators: [patternPassword('password'),matchPassword('password', 'rePassword')]
       }
 
     )

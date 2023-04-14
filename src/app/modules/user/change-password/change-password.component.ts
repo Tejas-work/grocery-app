@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { AbstractControl, Form, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { matchPassword } from 'src/app/shared/validators /matchPassword.validator';
+import { patternPassword } from 'src/app/shared/validators /patternPassword.validator';
 
 @Component({
   selector: 'app-change-password',
@@ -32,7 +33,8 @@ export class ChangePasswordComponent {
         confirmNewPassword: ['', [Validators.required]]
       },
       {
-        validators: matchPassword('newPassword', 'confirmNewPassword')
+        validators: [patternPassword('newPassword'),matchPassword('newPassword', 'confirmNewPassword')],
+
       }
     )
   }

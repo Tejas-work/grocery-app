@@ -82,8 +82,8 @@
           <small *ngIf="password?.errors?.['minlength']">
             Password must be at least {{ password?.errors?.['minlength'].requiredLength }} characters long<br>
           </small>
-          <small *ngIf="password?.errors?.['pattern']">
-            must contain at least one uppercase letter,<br> one lowercase letter, and one number
+          <small *ngIf="password?.hasError('match')">
+            {{ password?.errors?.['message'] }}
           </small>
         </div>
 

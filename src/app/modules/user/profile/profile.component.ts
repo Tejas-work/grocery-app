@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { patternPassword } from 'src/app/shared/validators /patternPassword.validator';
 
 @Component({
   selector: 'app-profile',
@@ -13,10 +14,7 @@ export class ProfileComponent implements OnInit {
   @Output() pageTitleChanged = new EventEmitter<string>();
   pageTitle = 'Profile';
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService
-  ) { }
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit() {
     this.pageTitleChanged.emit(this.pageTitle);
@@ -38,7 +36,18 @@ export class ProfileComponent implements OnInit {
         ],
       ],
       dob: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(1),Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(1),
+
+        ],
+      ],
+    },
+    {
+      validators: [patternPassword('password')],
+
     });
   }
 
